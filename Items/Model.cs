@@ -1,19 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Items
+﻿namespace Items
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// A collection of items and categories
+    /// </summary>
     public class Model
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Model"/> class.
+        /// </summary>
+        public Model()
+        {
+            this.Items = new Dictionary<string, Item>();
+            this.Categories = new Dictionary<string, Category>();
+        }
+
         /// <summary>
         /// Gets or sets the items.
         /// </summary>
         /// <value>
         /// The items.
         /// </value>
-        public Dictionary<String, Item> Items
+        public Dictionary<string, Item> Items
         {
             get;
             set;
@@ -25,28 +37,33 @@ namespace Items
         /// <value>
         /// The categories.
         /// </value>
-        public Dictionary<String, Category> Categories
+        public Dictionary<string, Category> Categories
         {
             get;
             set;
         }
 
-        public Model()
-        {
-            Items = new Dictionary<string, Item>();
-            Categories = new Dictionary<string, Category>();
-        }
-
+        /// <summary>
+        /// Adds the item.
+        /// </summary>
+        /// <param name="item">The item.</param>
         public void AddItem(Item item)
         {
-            Items.Add(item.Name, item);
+            this.Items.Add(item.Name, item);
         }
 
+        /// <summary>
+        /// Adds the category.
+        /// </summary>
+        /// <param name="category">The category.</param>
         public void AddCategory(Category category)
         {
-            Categories.Add(category.Name, category);
+            this.Categories.Add(category.Name, category);
         }
 
+        /// <summary>
+        /// Validates this instance.
+        /// </summary>
         public void Validate()
         {
             // Iterate through the model

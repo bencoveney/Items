@@ -1,23 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Items
+﻿namespace Items
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// Dictates what needs to be met in order for something to happen/be allowed to happen
+    /// </summary>
     public class Condition
     {
-        //readonly?
-        public String Name
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        public string Name
         {
             get;
             set;
         }
 
-        // pointers to attributes of other items
-        // static values
-        // enums
-        // Readonly?
+        /// <summary>
+        /// Gets or sets the inputs.
+        /// </summary>
+        /// <value>
+        /// The inputs.
+        /// </value>
         public List<object> Inputs
         {
             get;

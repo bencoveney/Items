@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Items
+﻿namespace Items
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     /// <summary>
     /// Defines an attribute's type
     /// </summary>
@@ -13,7 +13,7 @@ namespace Items
         /// <summary>
         /// Gets a textual representation of the type
         /// </summary>
-        String Name
+        string Name
         {
             get;
         }

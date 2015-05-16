@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Items
+﻿namespace Items
 {
-    public partial class CollectionAttribute : IAttribute
-    {
-        public String DatabaseColumnName;
-    }
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
-    public partial class ValueAttribute : IAttribute
+    /// <summary>
+    /// A type which is natively represented in c#
+    /// </summary>
+    /// <typeparam name="T">The system type</typeparam>
+    public partial class SystemType<T>
+        : IType
     {
-        public String DatabaseColumnName;
-    }
-
-    public partial class SystemType<T> : IType
-    {
-        public String SqlDataType;
+        /// <summary>
+        /// Gets or sets the type of the SQL data.
+        /// </summary>
+        /// <value>
+        /// The type of the SQL data.
+        /// </value>
+        public string SqlDataType { get; set; }
     }
 }

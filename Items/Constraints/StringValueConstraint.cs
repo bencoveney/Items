@@ -1,34 +1,93 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Items
+﻿namespace Items
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// Lists the types of comparison that can be performed against a string
+    /// </summary>
+    public enum StringComparison
+    {
+        /// <summary>
+        /// The match
+        /// </summary>
+        Match = 1,
+
+        /// <summary>
+        /// The doesn't match
+        /// </summary>
+        DoesntMatch = 2,
+
+        /// <summary>
+        /// The begins with
+        /// </summary>
+        BeginsWith = 3,
+
+        /// <summary>
+        /// The doesn't begin with
+        /// </summary>
+        DoesntBeginWith = 4,
+
+        /// <summary>
+        /// The end with
+        /// </summary>
+        EndWith = 5,
+
+        /// <summary>
+        /// The doesn't end with
+        /// </summary>
+        DoesntEndWith = 6,
+
+        /// <summary>
+        /// The contains
+        /// </summary>
+        Contains = 7,
+
+        /// <summary>
+        /// The doesn't contain
+        /// </summary>
+        DoesntContain = 8,
+
+        /// <summary>
+        /// The is contained by
+        /// </summary>
+        IsContainedBy = 9,
+
+        /// <summary>
+        /// The is not contained by
+        /// </summary>
+        IsNotContainedBy = 10,
+
+        /// <summary>
+        /// The matches regex
+        /// </summary>
+        MatchesRegex = 11,
+
+        /// <summary>
+        /// The doesn't match regex
+        /// </summary>
+        DoesntMatchRegex = 12
+    }
+
     /// <summary>
     /// Performs a string comparison against the specified static value
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class StringValueConstraint
         : IConstraint
     {
         /// <summary>
-        /// Lists the types of comparison that can be performed against a string
+        /// Initializes a new instance of the <see cref="StringValueConstraint"/> class.
         /// </summary>
-        public enum StringComparison
+        /// <param name="comparison">The comparison.</param>
+        /// <param name="comparer">The comparer.</param>
+        /// <param name="value">The value.</param>
+        public StringValueConstraint(StringComparison comparison, StringComparer comparer, string value)
         {
-            Match = 1,
-            DoesntMatch = 2,
-            BeginsWith = 3,
-            DoesntBeginWith = 4,
-            EndWith = 5,
-            DoesntEndWith = 6,
-            Contains = 7,
-            DoesntContain = 8,
-            IsContainedBy = 9,
-            IsNotContainedBy = 10,
-            MatchesRegex = 11,
-            DoesntMatchRegex = 12 
+            this.Comparison = comparison;
+            this.Comparer = comparer;
+            this.Value = value;
         }
 
         /// <summary>
@@ -37,14 +96,14 @@ namespace Items
         /// <value>
         /// The value.
         /// </value>
-        public String Value
+        public string Value
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// The type of comparison the constraint will perform
+        /// Gets the type of comparison the constraint will perform
         /// </summary>
         /// <value>
         /// The comparison.
@@ -56,7 +115,7 @@ namespace Items
         }
 
         /// <summary>
-        /// Settings for culture and case sensitivity
+        /// Gets settings for culture and case sensitivity
         /// </summary>
         /// <value>
         /// The comparer.
@@ -65,19 +124,6 @@ namespace Items
         {
             get;
             private set;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StringValueConstraint"/> class.
-        /// </summary>
-        /// <param name="comparison">The comparison.</param>
-        /// <param name="comparer">The comparer.</param>
-        /// <param name="value">The value.</param>
-        public StringValueConstraint(StringComparison comparison, StringComparer comparer, String value)
-        {
-            Comparison = comparison;
-            Comparer = comparer;
-            Value = value;
         }
     }
 }

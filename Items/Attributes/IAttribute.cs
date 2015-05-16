@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Items
+﻿namespace Items
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     /// <summary>
     /// A named piece of data which an item possesses
     /// </summary>
     public interface IAttribute
     {
-        //TODO something like this?
+        // TODO something like this?
         // public object DefaultValue {get; set;}
 
         /// <summary>
-        /// The name of the data stored in this attribute
+        /// Gets the name of the data stored in this attribute
         /// </summary>
-        String Name
+        string Name
         {
             get;
         }
 
         /// <summary>
-        /// The type of data in this attribute
+        /// Gets type of data in this attribute
         /// Should determine the ways in which the items can be searched for by attribute
         /// </summary>
         IType Type
@@ -31,7 +31,7 @@ namespace Items
         }
 
         /// <summary>
-        /// Gets or sets the conditions which the value of an attribute must satisfy
+        /// Gets the conditions which the value of an attribute must satisfy
         /// </summary>
         List<IConstraint> Constraints
         {
@@ -39,7 +39,7 @@ namespace Items
         }
 
         /// <summary>
-        /// Describes the way an attribute treats null values
+        /// Gets the way an attribute treats null values
         /// </summary>
         Nullability Nullability
         {

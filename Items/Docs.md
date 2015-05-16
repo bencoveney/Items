@@ -164,11 +164,11 @@ Constraints dictate rules about what data (not what type of data) can be put in 
   * !=
   * %
   * !%
-* String Length
+* string Length
   * Longer than
   * Shorter than
   * Exactly (could be a combination)
-* String value - Allows specification of comparison culture
+* string value - Allows specification of comparison culture
   * Match
   * Doesn't match
   * Begins with
@@ -205,12 +205,12 @@ Constraints dictate rules about what data (not what type of data) can be put in 
   - [ ] An example of this is ID, which should probably only populated and validated when the object is added to the database.
 - [ ] Nullability and Constraints have overlapping responsibility.
 - [ ] Constraints can overlap in responsibility.
-- [ ] String value # of instances of in addition to contains.
+- [ ] string value # of instances of in addition to contains.
 - [ ] Allow you allow/disallow the default value?
 
 ### Loading from Database
 
-String length is loaded from the column definition. Unique constraints are used to apply unique attribute constraints.
+string length is loaded from the column definition. Unique constraints are used to apply unique attribute constraints.
 
 Null values arent enforced here (enforced by nullability instead) but some useful info could be inferred from it.
 

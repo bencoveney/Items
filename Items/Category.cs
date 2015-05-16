@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Items
+﻿namespace Items
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     // TODO From model - make into proper category classes
 
     /// <summary>
@@ -15,10 +15,13 @@ namespace Items
     public class Category
         : ItemBase
     {
-        public Category(String name)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Category"/> class.
+        /// </summary>
+        /// <param name="name">The name</param>
+        public Category(string name)
             : base(name)
         {
-
         }
     }
 }

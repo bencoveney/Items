@@ -230,7 +230,7 @@ WHERE
                             String referencedItem = result.GetString(4);
                             String referencedColumn = result.GetString(5);
 
-                            if (String.Equals(referencedItem + "ID", referencedColumn, StringComparison.InvariantCultureIgnoreCase))
+                            if (String.Equals(referencedItem + "ID", referencedColumn, System.StringComparison.InvariantCultureIgnoreCase))
                             {
                                 // If we're referencing the primary key of the item type
                                 // TODO check if we're referencing the key explicity
@@ -318,7 +318,7 @@ WHERE
 
                         // Check whether the column matches the nameID pattern, if it is then strip the ID
                         // this is duplicated code and should be refactored
-                        String attributeName = String.Equals(itemName + "ID", columnName, StringComparison.InvariantCultureIgnoreCase) ? "ID" : columnName;
+                        String attributeName = String.Equals(itemName + "ID", columnName, System.StringComparison.InvariantCultureIgnoreCase) ? "ID" : columnName;
 
                         IAttribute attribute = Model.Items[itemName].Attributes[attributeName];
                         attribute.Constraints.Add(new AttributeConstraint(attribute, CollectionComparison.IsUniqueWithin));

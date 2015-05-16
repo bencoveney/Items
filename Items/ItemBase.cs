@@ -1,84 +1,101 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Items
+﻿namespace Items
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// A basic "thing". A container of data
+    /// </summary>
     public abstract class ItemBase
     {
-        // TODO Singletons?
+        /// <summary>
+        /// The string identifier
+        /// </summary>
+        private ValueAttribute stringIdentifier;
 
         /// <summary>
-        /// The name of the item
+        /// The integer identifier
+        /// </summary>
+        private ValueAttribute integerIdentifier;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ItemBase" /> class.
+        /// Creates the item
+        /// </summary>
+        /// <param name="name">The name.</param>
+        public ItemBase(string name)
+        {
+            this.Name = name;
+            this.Attributes = new Attributes();
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the item
         /// ReadOnly?
         /// </summary>
-        public String Name
+        public string Name
         {
             get;
             set;
         }
 
         /// <summary>
-        /// A special case of unique attribute which can be used to identify the item
+        /// Gets or sets a special case of unique attribute which can be used to identify the item
         /// Should be in the list of attributes
-        /// shold we require an identifier in order to perform lookups?
+        /// should we require an identifier in order to perform lookups?
         /// </summary>
-        private ValueAttribute _stringIdentifier;
         public ValueAttribute StringIdentifer
         {
             get
             {
-                return _stringIdentifier;
+                return this.stringIdentifier;
             }
+
             set
             {
-                if (!(value.Type is SystemType<String>))
-                    throw new ArgumentException("StringIdentifier must be of type SystemType<String>");
+                if (!(value.Type is SystemType<string>))
+                {
+                    throw new ArgumentException("stringIdentifier must be of type SystemType<string>");
+                }
 
-                _stringIdentifier = value;
+                this.stringIdentifier = value;
             }
         }
 
         /// <summary>
-        /// A special case of unique attribute which can be used to identify the item
+        /// Gets or sets a special case of unique attribute which can be used to identify the item
         /// Should be in the list of attributes
-        /// shold we require an identifier in order to perform lookups?
+        /// should we require an identifier in order to perform lookups?
         /// </summary>
-        private ValueAttribute _integerIdentifier;
         public ValueAttribute IntegerIdentifer
         {
             get
             {
-                return _integerIdentifier;
+                return this.integerIdentifier;
             }
+
             set
             {
                 // TODO accept other size ints?
-                if (!(value.Type is SystemType<Int32>))
+                if (!(value.Type is SystemType<int>))
+                {
                     throw new ArgumentException("IntegerIdentifer must be of type SystemType<Int32>");
+                }
 
-                _integerIdentifier = value;
+                this.integerIdentifier = value;
             }
         }
 
         /// <summary>
-        /// The data for the instance of the item
+        /// Gets the data for the instance of the item
         /// Should be dictionary, with the identifier being a key on the dictionary
         /// </summary>
         public Attributes Attributes
         {
             get;
             private set;
-        }
-
-        /// <summary>
-        /// Creates the item
-        /// </summary>
-        public ItemBase(String name)
-        {
-            Name = name;
-            Attributes = new Attributes();
         }
     }
 }

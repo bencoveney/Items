@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Items
+﻿namespace Items
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     /// <summary>
     /// Performs a comparison against the value of the specified attribute on this item instance
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class AttributeValueConstraint
         : IConstraint
     {
-
     }
 }
