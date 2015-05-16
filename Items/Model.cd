@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Items.Model">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <AssociationLine Name="Items" Type="Items.Item" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11" Y="0.938" />
+        <Point X="9.062" Y="0.938" />
+        <Point X="9.062" Y="2.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Categories" Type="Items.Category" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.5" Y="0.875" />
+        <Point X="16.188" Y="0.875" />
+        <Point X="16.188" Y="2.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAASACAAAAAAAAAAAgAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Items" />
+      <Property Name="Categories" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Items.Item">
+    <Position X="8.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Item.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Behaviors" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Items.Category">
+    <Position X="15.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Items.ValueAttribute" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAEAAQAAAAAABAAAQAAAAAAAAA=</HashCode>
+      <FileName>Attributes\ValueAttribute.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="Items.CollectionAttribute" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAEAAQAAAAAABAAAQAAAAAAAAA=</HashCode>
+      <FileName>Attributes\CollectionAttribute.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" Collapsed="true" />
+  </Class>
+  <Class Name="Items.Behaviors" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCIAAAAAAAAEABAQCAAABAQAAAAAAAAAAAAgAIBQIAA=</HashCode>
+      <FileName>Behaviors.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_internalBehaviors" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Items.Behavior">
+    <Position X="12" Y="6.75" Width="1.5" />
+    <AssociationLine Name="Conditions" Type="Items.Condition" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.875" Y="8.497" />
+        <Point X="12.875" Y="9.679" />
+        <Point X="16.25" Y="9.679" />
+        <Point X="16.25" Y="10.25" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Actions" Type="Items.Action" FixedFromPoint="true">
+      <Path>
+        <Point X="12.5" Y="8.497" />
+        <Point X="12.5" Y="10.25" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="BehaviorLevel" Type="Items.BehaviorLevel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.688" Y="8.497" />
+        <Point X="12.688" Y="9.929" />
+        <Point X="14.5" Y="9.929" />
+        <Point X="14.5" Y="10.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAIAAAAAAAABAAAAQAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Behavior.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="BehaviorLevel" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Conditions" />
+      <Property Name="Actions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Items.Attributes" Collapsed="true">
+    <Position X="4" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCIAAAAAAAAEABAQCAAABAQAAAAAAAAAAAAgBABQIAA=</HashCode>
+      <FileName>Attributes\Attributes.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_internalAttributes" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Items.CategoryType" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\CategoryType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Items.SystemType&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DatabaseImplementationDetails.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Items.ItemType" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\ItemType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Items.Action" Collapsed="true">
+    <Position X="12" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Action.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Items.Condition" Collapsed="true">
+    <Position X="15.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Condition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Items.ItemBase">
+    <Position X="12" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAABAQQAAAAAAAAAAABAAQAAAA=</HashCode>
+      <FileName>ItemBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Items.IAttribute">
+    <Position X="4" Y="6.75" Width="1.5" />
+    <AssociationLine Name="Type" Type="Items.IType" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.625" Y="8.046" />
+        <Point X="4.625" Y="8.233" />
+        <Point X="4.333" Y="8.233" Type="JumpStart" />
+        <Point X="4.167" Y="8.233" Type="JumpEnd" />
+        <Point X="1.25" Y="8.233" />
+        <Point X="1.25" Y="9" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAQAAAAAABAAAQAAAAAAAAA=</HashCode>
+      <FileName>Attributes\IAttribute.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Type" />
+      <Property Name="Nullability" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="Items.IType" Collapsed="true">
+    <Position X="0.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IType.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Items.BehaviorLevel" Collapsed="true">
+    <Position X="13.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAA=</HashCode>
+      <FileName>BehaviorLevel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Items.Nullability">
+    <Position X="3.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAEAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nullability.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

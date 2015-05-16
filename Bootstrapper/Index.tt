@@ -1,0 +1,163 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="Items" #>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Model documentation</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<style>
+		body {
+			color: #555;
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
+		h1, .h1,
+		h2, .h2,
+		h3, .h3,
+		h4, .h4,
+		h5, .h5,
+		h6, .h6 {
+			margin-top: 0;
+			font-weight: normal;
+			color: #333;
+		}
+		.header {
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+		.title {
+			margin-top: 30px;
+			margin-bottom: 0;
+			font-size: 60px;
+			font-weight: normal;
+		}
+		.description {
+			font-size: 20px;
+			color: #999;
+			font-family: Georgia, "Times New Roman", Times, serif;
+		}
+		.sidebar {
+			padding: 15px;
+			margin: 0 -15px 15px;
+			background-color: #f5f5f5;
+			border-radius: 4px;
+		}
+		.sidebar p:last-child,
+		.sidebar ul:last-child,
+		.sidebar ol:last-child {
+			margin-bottom: 0;
+		}
+		.attributedescription {
+			font-size: 0.9em;
+			font-weight: normal;
+		}
+	</style>
+  </head>
+  <body>
+	<div class="container">
+		<div class="header">
+			<h1 class="title">Model</h1>
+			<p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porttitor nunc in ligula aliquet venenatis. Vestibulum porta, ligula non vulputate egestas, dolor eros egestas odio, pharetra porta ante urna vitae lectus. Vivamus accumsan convallis erat, vel ullamcorper quam egestas vel. Pellentesque rutrum pulvinar mi euismod ullamcorper. Nulla vehicula elit purus. Fusce commodo tempus tempor. Pellentesque quis mi sit amet odio venenatis elementum. Suspendisse sed arcu non enim volutpat lacinia. Fusce sit amet gravida sapien. Nulla nec est a sapien maximus vestibulum. Pellentesque porttitor eget dolor eu aliquam.</p>
+		</div>
+		<div class="row">
+			<div class="col-sm-8">
+<#	foreach(Item item in model.Items.Values)
+	{ 
+#>
+				<h2><a name="<#= item.Name #>"></a><#= item.Name #></h2>
+				<p>Nulla ut venenatis justo. Etiam sit amet lorem neque. Ut laoreet mattis nisl, et luctus risus porta a. Nunc quis lectus mauris. Quisque mollis tincidunt pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam varius tempus erat at auctor. Curabitur ultrices faucibus lectus porta rutrum. Nullam risus libero, ornare sed eros sed, rhoncus interdum mi. Nulla dapibus viverra molestie. Proin tellus ex, finibus nec dolor vel, blandit mollis est. Fusce elementum mi at ipsum consequat faucibus. Pellentesque lorem libero, dictum ut dignissim id, fringilla quis lectus. Duis at arcu tempus, consequat nulla non, tincidunt dolor.</p>
+				<h3>Attributes</h3>
+<#		foreach(IAttribute attribute in item.Attributes.Values)
+		{
+			WriteAttribute(attribute);
+		}
+	}
+#>		
+			</div>
+			
+			<div class="col-sm-3 col-sm-offset-1">
+				<div class="sidebar">
+					<h2>Jump To</h2>
+					<ul>
+<#	foreach(Item item in model.Items.Values)
+	{ 
+#>
+						<li><a href="#<#= item.Name #>"><#= item.Name #></a></li>
+<#	}
+#>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+<#+ public void WriteAttribute(IAttribute attribute)
+	{
+#>
+		<h4><#= attribute.Name #></h4>
+		<p><#= attribute.Name #> is a <#= attribute.GetType().Name#>. <#= PrettifyType(attribute.Type) #> <#= attribute.Name #> has the following constraints:</p>
+			<ul>
+<#+				foreach(IConstraint constraint in attribute.Constraints)
+				{
+					WriteConstraint(constraint);
+				}
+#>
+			</ul>
+<#+ }
+#>
+
+<#+	public void WriteConstraint(IConstraint constraint)
+	{
+		string constraintTypeName = constraint.GetType().Name;
+	
+		switch (constraintTypeName)
+		{
+			case "AttributeConstraint" :
+				AttributeConstraint attributeConstraint = constraint as AttributeConstraint;
+#>
+				The value must <#= PrettifyAttributeConstraint(attributeConstraint.Comparison) #> the attribute <#= attributeConstraint.Attribute.Name #>.
+<#+
+				break;
+			case "AttributeValueConstraint" :
+				AttributeValueConstraint attributeValueConstraint = constraint as AttributeValueConstraint;
+#>
+				AttributeValueConstraint Implemented="False"
+<#+
+				break;
+			case "NumericValueConstraint" :
+				NumericValueConstraint<Int64> numericValueConstraint = constraint as NumericValueConstraint<Int64>;
+#>
+				NumericValueConstraint Value="<#= numericValueConstraint.Value #>" Comparison="<#= numericValueConstraint.Comparison #>"
+<#+
+				break;
+		case "StringLengthConstraint" :
+				StringLengthConstraint stringLengthConstraint = constraint as StringLengthConstraint;
+#>
+				StringLengthConstraint Value="<#= stringLengthConstraint.Value #>" Comparison="<#= stringLengthConstraint.Comparison #>"
+<#+
+				break;
+		case "StringValueConstraint" :
+				StringValueConstraint stringValueConstraint = constraint as StringValueConstraint;
+#>
+				StringValueConstraint Value="<#= stringValueConstraint.Value #>" Comparison="<#= stringValueConstraint.Comparison #>" Comparer="<#= stringValueConstraint.Comparer #>"
+<#+
+				break;
+		default:
+#>
+				UnknownConstraint
+<#+
+				break;
+		}
+	}
+#>

@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A09F7505-DD95-4F3F-A449-BCBAA897FA9D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Items</RootNamespace>
+    <AssemblyName>Items</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Action.cs" />
+    <Compile Include="DatabaseImplementationDetails.cs" />
+    <Compile Include="Attributes\Attributes.cs" />
+    <Compile Include="Attributes\CollectionAttribute.cs" />
+    <Compile Include="Attributes\ValueAttribute.cs" />
+    <Compile Include="Behavior.cs" />
+    <Compile Include="BehaviorLevel.cs" />
+    <Compile Include="Behaviors.cs" />
+    <Compile Include="Category.cs" />
+    <Compile Include="Condition.cs" />
+    <Compile Include="Constraints\AttributeConstraint.cs" />
+    <Compile Include="Constraints\AttributeValueConstraint.cs" />
+    <Compile Include="Constraints\StringLengthConstraint.cs" />
+    <Compile Include="Constraints\NumericValueConstraint.cs" />
+    <Compile Include="Constraints\StringValueConstraint.cs" />
+    <Compile Include="Constraints\IConstraint.cs" />
+    <Compile Include="ItemBase.cs" />
+    <Compile Include="Types\CategoryType.cs" />
+    <Compile Include="Types\ItemType.cs" />
+    <Compile Include="Model.cs" />
+    <Compile Include="Parameters\DefaultedParameter.cs" />
+    <Compile Include="Attributes\IAttribute.cs" />
+    <Compile Include="Parameters\IParameter.cs" />
+    <Compile Include="Item.cs" />
+    <Compile Include="Nullability.cs" />
+    <Compile Include="Parameters\OptionalParameter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Parameters\RequiredParameter.cs" />
+    <Compile Include="Types\IType.cs" />
+    <Compile Include="Types\SystemType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Docs.md" />
+    <None Include="Model.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

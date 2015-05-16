@@ -1,0 +1,127 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="Items" #>
+<Model>
+<#	foreach(Item item in _model.Items.Values)
+	{ 
+#>
+	<Item Name="<#= item.Name #>">
+		<Attributes>
+<#		foreach(IAttribute attribute in item.Attributes.Values)
+		{
+			WriteAttribute(attribute);
+		}
+#>
+		</Attributes>
+		<Behavior>
+<#		foreach(Behavior behavior in item.Behaviors.Values)
+		{
+#>
+			<Behavior Name="<#= behavior.Name #>">
+				<Type>
+					<!-- how can I get SystemType vs ItemType? SystemType is generic D: -->
+				</Type>
+				<Conditions>
+<#				foreach(Condition condition in behavior.Conditions)
+                {
+#>
+					<Condition Name="<#= condition.Name #>">
+						<!-- WTF does a condition have -->
+						<Inputs>
+					</Condition>
+<#				}
+#>
+				</Conditions>
+				<Parameters>
+<#				foreach(IParameter parameter in behavior.Parameters)
+                {
+#>
+					<!-- TODO Infer type of IParameter? -->
+					<Parameter />
+<#				}
+#>
+				</Conditions>
+				<Nullability>
+			</Behavior>
+<#		}
+#>
+		</Behaviors>
+	</Item>
+<#	}
+#>
+</Model>
+
+<#+ public void WriteAttribute(IAttribute attribute)
+	{
+#>
+		<<#= attribute.GetType().Name #> Name="<#= attribute.Name #>">
+			<Type>
+				<#= TypeToXml(attribute.Type) #>
+			</Type>
+<#+			if(attribute.Constraints.Count > 0)
+            {
+#>
+				<Constraints>
+<#+				foreach(IConstraint constraint in attribute.Constraints)
+				{
+					WriteConstraint(constraint);
+				}
+#>
+				</Constraints>
+<#+         }
+			else
+            {
+#>
+				<Constraints />
+<#+         }
+#>
+			<Nullability>
+				<<#= attribute.Nullability #> />
+			</Nullability>
+		</<#= attribute.GetType().Name #>>
+<#+ }
+#>
+
+<#+	public void WriteConstraint(IConstraint constraint)
+	{
+		string constraintTypeName = constraint.GetType().Name;
+	
+		switch (constraintTypeName)
+		{
+			case "AttributeConstraint" :
+				AttributeConstraint attributeConstraint = constraint as AttributeConstraint;
+#>
+				<AttributeConstraint Attribute="<#= attributeConstraint.Attribute.Name #>" Comparison="<#= attributeConstraint.Comparison #>" />
+<#+
+				break;
+			case "AttributeValueConstraint" :
+				AttributeValueConstraint attributeValueConstraint = constraint as AttributeValueConstraint;
+#>
+				<AttributeValueConstraint Implemented="False" />
+<#+
+				break;
+			case "NumericValueConstraint`1" :
+				NumericValueConstraint<Int64> numericValueConstraint = constraint as NumericValueConstraint<Int64>;
+#>
+				<NumericValueConstraint Value="<#= numericValueConstraint.Value #>" Comparison="<#= numericValueConstraint.Comparison #>" />
+<#+
+				break;
+		case "StringLengthConstraint" :
+				StringLengthConstraint stringLengthConstraint = constraint as StringLengthConstraint;
+#>
+				<StringLengthConstraint Value="<#= stringLengthConstraint.Value #>" Comparison="<#= stringLengthConstraint.Comparison #>" />
+<#+
+				break;
+		case "StringValueConstraint" :
+				StringValueConstraint stringValueConstraint = constraint as StringValueConstraint;
+#>
+				<StringValueConstraint Value="<#= stringValueConstraint.Value #>" Comparison="<#= stringValueConstraint.Comparison #>" Comparer="<#= stringValueConstraint.Comparer #>" />
+<#+
+				break;
+		default:
+#>
+				<UnknownConstraint TypeName="<#=constraintTypeName#>" />
+<#+
+				break;
+		}
+	}
+#>
