@@ -36,7 +36,7 @@ namespace Manual
 
             // Primary key
             ValueAttribute kitchenID = new ValueAttribute("ID", new SystemType<Int32>(), Nullability.Invalid);
-            kitchenID.Constraints.Add(new NumericValueConstraint<Int32>(ValueComparison.GreaterThan, 0)); // Value must be greater than 0
+            kitchenID.Constraints.Add(new NumericValueConstraint<Int32>(NumericValueComparison.GreaterThan, 0)); // Value must be greater than 0
             kitchenID.Constraints.Add(new AttributeConstraint(kitchenID, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             kitchen.Attributes.Add(kitchenID);
             kitchen.IntegerIdentifer = kitchenID;
@@ -65,7 +65,7 @@ namespace Manual
 
             // Primary key
             ValueAttribute containerID = new ValueAttribute("ID", new SystemType<Int32>(), Nullability.Invalid);
-            containerID.Constraints.Add(new NumericValueConstraint<Int32>(ValueComparison.GreaterThan, 0)); // Value must be greater than 0
+            containerID.Constraints.Add(new NumericValueConstraint<Int32>(NumericValueComparison.GreaterThan, 0)); // Value must be greater than 0
             containerID.Constraints.Add(new AttributeConstraint(containerID, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             container.Attributes.Add(containerID);
             container.IntegerIdentifer = containerID;
@@ -120,7 +120,7 @@ namespace Manual
 
             // Primary key
             ValueAttribute personID = new ValueAttribute("ID", new SystemType<Int32>(), Nullability.Invalid);
-            personID.Constraints.Add(new NumericValueConstraint<Int32>(ValueComparison.GreaterThan, 0)); // Value must be greater than 0
+            personID.Constraints.Add(new NumericValueConstraint<Int32>(NumericValueComparison.GreaterThan, 0)); // Value must be greater than 0
             personID.Constraints.Add(new AttributeConstraint(personID, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             person.Attributes.Add(personID);
             person.IntegerIdentifer = personID;
@@ -145,7 +145,7 @@ namespace Manual
 
             // Primary key
             ValueAttribute containerCategoryID = new ValueAttribute("ID", new SystemType<Int32>(), Nullability.Invalid);
-            containerCategoryID.Constraints.Add(new NumericValueConstraint<Int32>(ValueComparison.GreaterThan, 0)); // Value must be greater than 0
+            containerCategoryID.Constraints.Add(new NumericValueConstraint<Int32>(NumericValueComparison.GreaterThan, 0)); // Value must be greater than 0
             containerCategoryID.Constraints.Add(new AttributeConstraint(containerCategoryID, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             containerCategory.Attributes.Add(containerCategoryID);
             containerCategory.IntegerIdentifer = containerCategoryID;

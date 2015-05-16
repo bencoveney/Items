@@ -51,6 +51,7 @@
     <Compile Include="IndexCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="ttincludes\AttributeMethods.ttinclude" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\bootstrap-theme.css" />
@@ -99,6 +100,9 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>Index.cs</LastGenOutput>
     </None>
+    <None Include="ttincludes\Categories.ttinclude" />
+    <None Include="ttincludes\Items.ttinclude" />
+    <None Include="ttincludes\Navigation.ttinclude" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

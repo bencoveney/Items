@@ -25,13 +25,13 @@ namespace Items
             private set;
         }
 
-        public ValueComparison Comparison
+        public NumericValueComparison Comparison
         {
             get;
             private set;
         }
 
-        public NumericValueConstraint(ValueComparison comparison, T value)
+        public NumericValueConstraint(NumericValueComparison comparison, T value)
         {
             Comparison = comparison;
             Value = value;
@@ -41,7 +41,7 @@ namespace Items
     /// <summary>
     /// Lists the type of comparisons that can be performed on a
     /// </summary>
-    public enum ValueComparison
+    public enum NumericValueComparison
     {
         EqualTo = 1,
         GreaterThan = 2,

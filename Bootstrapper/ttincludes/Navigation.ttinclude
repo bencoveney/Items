@@ -1,0 +1,21 @@
+﻿<h2>Items</h2>
+<ul>
+
+<# foreach(Item item in model.Items.Values) { #>
+
+	<li><a href="#<#= item.Name #>"><#= item.Name #></a></li>
+
+<# } #>
+
+</ul>
+
+<h2>Categories</h2>
+<ul>
+
+<# foreach(Category category in model.Categories.Values) { #>
+
+	<li><a href="#<#= category.Name #>"><#= category.Name #></a></li>
+
+<# } #>
+
+</ul>

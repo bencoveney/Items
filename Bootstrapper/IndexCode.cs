@@ -10,6 +10,8 @@ namespace Bootstrapper
 {
     public partial class Index
     {
+        // TODO sort out prettify methods and fix their names. should they be tostring/todescription methods on the object?
+
         private const String CONNECTION_STRING = @"Data Source=BENSDESKTOP\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True";
 
         private Model model;
@@ -45,7 +47,7 @@ namespace Bootstrapper
                 return String.Format("This attribute is a {0} categorisation.", type.Name);
             }
 
-            return "<UnknownType>";
+            return String.Format("This attribute is of unknown type ({0})", typeType.FullName);
         }
 
         public String PrettifyAttributeConstraint(CollectionComparison constraint)
@@ -54,16 +56,52 @@ namespace Bootstrapper
             {
                 case CollectionComparison.DoesntExistIn:
                     return "not exist within";
-                    break;
                 case CollectionComparison.ExistsIn:
                     return "exist within";
-                    break;
                 case CollectionComparison.IsUniqueWithin:
                     return "be unique within";
-                    break;
                 default:
-                    return "ERROR within";
-                    break;
+                    return "ERROR";
+            }
+        }
+
+        public String PrettifyNumericConstraint(NumericValueComparison comparison)
+        {
+            switch (comparison)
+            {
+                case NumericValueComparison.EqualTo:
+                    return "be equal to";
+                case NumericValueComparison.NotEqualTo:
+                    return "not be equal to";
+                case NumericValueComparison.EvenlyDivisibleBy:
+                    return "be evenly divisible by";
+                case NumericValueComparison.NotEvenlyDivisibleBy:
+                    return "not be evenly divisible by";
+                case NumericValueComparison.GreaterThan:
+                    return "be greater than";
+                case NumericValueComparison.GreaterThanOrEqualTo:
+                    return "be greater than or equal to";
+                case NumericValueComparison.LessThan:
+                    return "be less than";
+                case NumericValueComparison.LessThanOrEqualTo:
+                    return "be less than or equal to";
+                default:
+                    return "ERROR";
+            }
+        }
+
+        public String PrettifyLengthConstraint(LengthComparison comparison)
+        {
+            switch (comparison)
+            {
+                case LengthComparison.Exactly:
+                    return "be exactly";
+                case LengthComparison.LongerThan:
+                    return "be longer than";
+                case LengthComparison.ShorterThan:
+                    return "be shorter than";
+                default:
+                    return "ERROR";
             }
         }
     }

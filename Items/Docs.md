@@ -37,7 +37,7 @@ Mainly just a simple data container.
 
 #### Todo
 
-  - [ ] Model validation
+- [ ] Model validation
 
 ### Loading from Database
 
@@ -64,10 +64,10 @@ Represents an object in the model. Has data attributes and behaviours. Allows (a
 
 #### Todo
 
-  - [ ] Identifiers should have to have certain constraints (eg unique).
-  - [ ] The way in which attributes are marked as identifiers could be improved.
-  - [ ] Singletons.
-  - [ ] Support for static behaviour (not tied to an instance of an object but related to it).
+- [ ] Identifiers should have to have certain constraints (eg unique).
+- [ ] The way in which attributes are marked as identifiers could be improved.
+- [ ] Singletons.
+- [ ] Support for static behaviour (not tied to an instance of an object but related to it).
 
 ### Loading from Database
 
@@ -98,12 +98,12 @@ There are two types of attribute: Value attributes and Collection attributes. Va
 
 #### Todo
 
-  - [ ] Nullability isn't specified in a great way.
-    - [ ] Nullability is essentially a constraint and should be represented as such.
-    - [ ] Applicable but empty is usually going to be an in-band value however there is no way for specifying this.
-  - [ ] I have chosen to represent One to Many and Many to Many relationships as a collection attribute on one or both items however other models use a relationship concept which may have merit (and simplify parsing collection tables).
-  - [ ] Some attributes should have a default value (even Items).
-  - [ ] There could be value in providing "calculated" attributes which define an operation to perform in order to get a value/collection. Maybe a special case of behaviour?
+- [ ] Nullability isn't specified in a great way.
+  - [ ] Nullability is essentially a constraint and should be represented as such.
+  - [ ] Applicable but empty is usually going to be an in-band value however there is no way for specifying this.
+- [ ] I have chosen to represent One to Many and Many to Many relationships as a collection attribute on one or both items however other models use a relationship concept which may have merit (and simplify parsing collection tables).
+- [ ] Some attributes should have a default value (even Items).
+- [ ] There could be value in providing "calculated" attributes which define an operation to perform in order to get a value/collection. Maybe a special case of behaviour?
 
 ### Loading from Database
 
@@ -130,8 +130,8 @@ Defines what type of data an attribute represents. This can either be a C# type 
 
 #### Todo
 
-  - [ ] Category type implementation.
-  - [ ] Types currently have a Name however this might be redundant.
+- [ ] Category type implementation.
+- [ ] Types currently have a Name however this might be redundant.
 
 ### Loading from Database
 
@@ -155,58 +155,58 @@ Constraints
 ### Implementation
 
 Constraints dictate rules about what data (not what type of data) can be put in an attribute. Types of constraint currently implemented include:
-  - [ ] Numeric Value - Is generic, allows for dates etc (might fuck up on %).
-    - [ ] ==
-    - [ ] >
-    - [ ] <
-    - [ ] >=
-    - [ ] <=
-    - [ ] !=
-    - [ ] %
-    - [ ] !%
-  - [ ] String Length
-    - [ ] Longer than
-    - [ ] Shorter than
-    - [ ] Exactly (could be a combination)
-  - [ ] String value - Allows specification of comparison culture
-    - [ ] Match
-    - [ ] Doesn't match
-    - [ ] Begins with
-    - [ ] Doesn't begin with
-    - [ ] Ends with
-    - [ ] Doesn't end with
-    - [ ] Contains
-    - [ ] Doesn't contain
-    - [ ] Is contained by
-    - [ ] Is not contained by
-    - [ ] Matched regex
-    - [ ] Doesn't match regex
-  - [ ] Attribute - Checks that your value is/n't present in all instances of an attribute
-    - [ ] Exists in
-    - [ ] Doesn't exist in
-    - [ ] Is unique within
+* Numeric Value - Is generic, allows for dates etc (might fuck up on %).
+  * ==
+  * >
+  * <
+  * >=
+  * <=
+  * !=
+  * %
+  * !%
+* String Length
+  * Longer than
+  * Shorter than
+  * Exactly (could be a combination)
+* String value - Allows specification of comparison culture
+  * Match
+  * Doesn't match
+  * Begins with
+  * Doesn't begin with
+  * Ends with
+  * Doesn't end with
+  * Contains
+  * Doesn't contain
+  * Is contained by
+  * Is not contained by
+  * Matched regex
+  * Doesn't match regex
+* Attribute - Checks that your value is/n't present in all instances of an attribute
+  * Exists in
+  * Doesn't exist in
+  * Is unique within
 
 #### Todo
 
-  - [ ] Logical operators to allow grouping of operators.
-    - [ ] (Check1 AND Check2) OR (Check1 AND Check3).
-    - [ ] NOT(%) instead of !%.
-  - [ ] Attribute value constraints.
-    - [ ] Check against a value of another attribute for a specific item instance.
-    - [ ] eg. This startDate must be before this endDate.
-    - [ ] This isn't a great name for this.
-  - [ ] Constraints which apply to multiple attributes.
-    - [ ] For example wanting to check that the combination of Attribute A and Attribute B is unique rather than just each individually. 
-    - [ ] Could this just be check Attribute A is unique WHERE items have a matching Attribute B.
-    - [ ] Really don't want to re-implement SQL.
-  - [ ] Would there be use in allowing predicates on collection constraints/elsewhere? Needs more thought.
-  - [ ] "Commited".
-    - [ ] Some constraints should always be enforced however some are only relevant once the item instance becomes "commited" to the model.
-    - [ ] An example of this is ID, which should probably only populated and validated when the object is added to the database.
-  - [ ] Nullability and Constraints have overlapping responsibility.
-  - [ ] Constraints can overlap in responsibility.
-  - [ ] String value # of instances of in addition to contains.
-  - [ ] Allow you allow/disallow the default value?
+- [ ] Logical operators to allow grouping of operators.
+  - [ ] (Check1 AND Check2) OR (Check1 AND Check3).
+  - [ ] NOT(%) instead of !%.
+- [ ] Attribute value constraints.
+  - [ ] Check against a value of another attribute for a specific item instance.
+  - [ ] eg. This startDate must be before this endDate.
+  - [ ] This isn't a great name for this.
+- [ ] Constraints which apply to multiple attributes.
+  - [ ] For example wanting to check that the combination of Attribute A and Attribute B is unique rather than just each individually. 
+  - [ ] Could this just be check Attribute A is unique WHERE items have a matching Attribute B.
+  - [ ] Really don't want to re-implement SQL.
+- [ ] Would there be use in allowing predicates on collection constraints/elsewhere? Needs more thought.
+- [ ] "Commited".
+  - [ ] Some constraints should always be enforced however some are only relevant once the item instance becomes "commited" to the model.
+  - [ ] An example of this is ID, which should probably only populated and validated when the object is added to the database.
+- [ ] Nullability and Constraints have overlapping responsibility.
+- [ ] Constraints can overlap in responsibility.
+- [ ] String value # of instances of in addition to contains.
+- [ ] Allow you allow/disallow the default value?
 
 ### Loading from Database
 
@@ -237,7 +237,7 @@ Represents a set of categorisations. These are designed to parallel enumerations
 
 #### Todo
 
-  - [ ] Flags?
+- [ ] Flags?
 
 ### Loading from Database
 
@@ -264,7 +264,7 @@ Details
 
 #### Todo
 
-  - [ ]
+- [ ]
 
 ### Loading from Database
 

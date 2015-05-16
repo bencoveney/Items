@@ -1,0 +1,62 @@
+﻿<#+ public void WriteAttribute(IAttribute attribute) { #>
+
+    <h4><#= attribute.Name #></h4>
+
+    <p><#= attribute.Name #> is a <#= attribute.GetType().Name#>. <#= PrettifyType(attribute.Type) #></p>
+
+    <#+ foreach(IConstraint constraint in attribute.Constraints)
+    {
+        WriteConstraint(constraint);
+    }
+
+}#>
+
+<#+	public void WriteConstraint(IConstraint constraint) {
+
+	string constraintTypeName = constraint.GetType().Name;
+	
+	switch (constraintTypeName)
+	{
+		case "AttributeConstraint" :
+			AttributeConstraint attributeConstraint = constraint as AttributeConstraint; #>
+		
+			<p>The value must <#= PrettifyAttributeConstraint(attributeConstraint.Comparison) #> the attribute <#= attributeConstraint.Attribute.Name #>.</p>
+		
+			<#+ break;
+
+		case "AttributeValueConstraint" :
+			AttributeValueConstraint attributeValueConstraint = constraint as AttributeValueConstraint; #>
+		
+			<p>The value must abide by an attribute value constraint however they have not been implemented fully.</p>
+		
+			<#+ break;
+
+		case "NumericValueConstraint" :
+			NumericValueConstraint<Int64> numericValueConstraint = constraint as NumericValueConstraint<Int64>;#>
+		
+			<p>The value must <#= PrettifyNumericConstraint(numericValueConstraint.Comparison) #> <#= numericValueConstraint.Value #></p>
+		
+			<#+ break;
+
+		case "StringLengthConstraint" :
+			StringLengthConstraint stringLengthConstraint = constraint as StringLengthConstraint; #>
+			
+			<p>The length of the string must <#= PrettifyLengthConstraint(stringLengthConstraint.Comparison) #> <#= stringLengthConstraint.Value #> characters.</p>
+			
+			<#+ break;
+
+		case "StringValueConstraint" :
+			StringValueConstraint stringValueConstraint = constraint as StringValueConstraint; #>
+			
+			<p>StringValueConstraint Value="<#= stringValueConstraint.Value #>" Comparison="<#= stringValueConstraint.Comparison #>" Comparer="<#= stringValueConstraint.Comparer #>"</p>
+			
+			<#+ break;
+		
+		default:#>
+		
+			<p>UnknownConstraint</p>
+			
+			<#+ break;
+	}
+
+} #>
