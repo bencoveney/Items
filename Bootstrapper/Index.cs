@@ -126,14 +126,16 @@ namespace Bootstrapper
             
             #line default
             #line hidden
-            this.Write(@"</h3>
-	<p>Nulla ut venenatis justo. Etiam sit amet lorem neque. Ut laoreet mattis nisl, et luctus risus porta a. Nunc quis lectus mauris. Quisque mollis tincidunt pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam varius tempus erat at auctor. Curabitur ultrices faucibus lectus porta rutrum. Nullam risus libero, ornare sed eros sed, rhoncus interdum mi. Nulla dapibus viverra molestie. Proin tellus ex, finibus nec dolor vel, blandit mollis est. Fusce elementum mi at ipsum consequat faucibus. Pellentesque lorem libero, dictum ut dignissim id, fringilla quis lectus. Duis at arcu tempus, consequat nulla non, tincidunt dolor.</p>
-
-	<h4>Attributes</h4>
-
-");
+            this.Write("</h3>\r\n  \r\n  <p>");
             
-            #line 10 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
+            #line 7 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetDescription(item)));
+            
+            #line default
+            #line hidden
+            this.Write("</p>\r\n  \r\n\t<h4>Attributes</h4>\r\n\r\n");
+            
+            #line 11 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
 	foreach(IAttribute attribute in item.Attributes.Values)
 	{
 		WriteAttribute(attribute);
@@ -144,7 +146,7 @@ namespace Bootstrapper
             #line hidden
             this.Write("\r\n\t<hr />\r\n\r\n");
             
-            #line 18 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
+            #line 19 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
  } 
             
             #line default

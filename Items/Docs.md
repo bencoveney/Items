@@ -26,7 +26,8 @@ General todo list:
 - [ ] Classes like Attributes and Behaviors (in order to string index things) could be improved
 - [ ] Behavior lol.
 - [ ] Don't re-implement C#.
-- [ ] Don't re-implement SQL
+- [ ] Don't re-implement SQL.
+- [ ] Collections should have support for extra data.
 
 Model
 -----

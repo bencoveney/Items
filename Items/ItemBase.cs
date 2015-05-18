@@ -8,7 +8,7 @@
     /// <summary>
     /// A basic "thing". A container of data
     /// </summary>
-    public abstract class ItemBase
+    public abstract partial class ItemBase
     {
         /// <summary>
         /// The string identifier

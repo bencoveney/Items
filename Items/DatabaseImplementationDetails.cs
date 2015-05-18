@@ -20,4 +20,9 @@
         /// </value>
         public string SqlDataType { get; set; }
     }
+
+    public partial class ItemBase
+    {
+        public string Description { get; set; }
+    }
 }

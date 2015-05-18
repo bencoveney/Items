@@ -104,5 +104,17 @@ namespace Bootstrapper
                     return "ERROR";
             }
         }
+
+        public String GetDescription(ItemBase item)
+        {
+            if (String.IsNullOrEmpty(item.Description))
+            {
+                return "Nulla ut venenatis justo. Etiam sit amet lorem neque. Ut laoreet mattis nisl, et luctus risus porta a. Nunc quis lectus mauris. Quisque mollis tincidunt pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam varius tempus erat at auctor. Curabitur ultrices faucibus lectus porta rutrum. Nullam risus libero, ornare sed eros sed, rhoncus interdum mi. Nulla dapibus viverra molestie. Proin tellus ex, finibus nec dolor vel, blandit mollis est. Fusce elementum mi at ipsum consequat faucibus. Pellentesque lorem libero, dictum ut dignissim id, fringilla quis lectus. Duis at arcu tempus, consequat nulla non, tincidunt dolor.";
+            }
+            else
+            {
+                return item.Description;
+            }
+        }
     }
 }
