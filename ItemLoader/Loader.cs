@@ -51,7 +51,19 @@ FROM
     INNER JOIN sys.tables AS t ON fk.parent_object_id = t.object_id
     INNER JOIN sys.columns AS c ON fk.parent_object_id = c.object_id AND fk.parent_column_id = c.column_id
 WHERE
-    fk.referenced_object_id = OBJECT_ID(@itemName)";
+    fk.referenced_object_id = OBJECT_ID(@itemName)
+    AND t.name NOT LIKE '%Collection'";
+
+        private const String COLLECTION_REFERENCES_QUERY = @"
+SELECT
+    c.name AS referencedTable
+FROM
+    sys.foreign_key_columns AS fk
+    INNER JOIN sys.tables AS t ON fk.parent_object_id = t.object_id
+    INNER JOIN sys.columns AS c ON fk.parent_object_id = c.object_id
+        AND fk.parent_column_id = c.column_id
+WHERE
+    t.name = @collectionName";
 
         private const String ITEM_NAMES_QUERY = @"
 SELECT
@@ -62,6 +74,14 @@ WHERE
     Table_Name != 'sysdiagrams'
     AND Table_Name NOT LIKE '%Category'
     AND Table_Name NOT LIKE '%Collection'";
+
+        private const String COLLECTION_NAMES_QUERY = @"
+SELECT
+    Table_Name
+FROM
+    Information_Schema.Tables
+WHERE
+    Table_Name LIKE '%Collection'";
 
         private const String CATEGORY_NAMES_QUERY = @"
 SELECT
@@ -142,6 +162,11 @@ WHERE
                 PopulateAttributesForItemBase(connection, newCategory);
             }
 
+            foreach (String collectionName in GetCollectionNames(connection))
+            {
+                PopulateCollectionAttributes(connection, collectionName);
+            }
+
             PopulateUniqueConstraints(connection);
 
             connection.Close();
@@ -171,7 +196,7 @@ WHERE
         }
 
         /// <summary>
-        /// Gets the item names.
+        /// Gets the category names.
         /// </summary>
         /// <param name="connection">The connection.</param>
         /// <returns></returns>
@@ -191,6 +216,29 @@ WHERE
             }
 
             return categoryNames;
+        }
+
+        /// <summary>
+        /// Gets the collection names.
+        /// </summary>
+        /// <param name="connection">The connection.</param>
+        /// <returns></returns>
+        public List<String> GetCollectionNames(SqlConnection connection)
+        {
+            List<String> collectionNames = new List<string>();
+
+            using (SqlCommand command = new SqlCommand(COLLECTION_NAMES_QUERY, connection))
+            {
+                using (SqlDataReader result = command.ExecuteReader())
+                {
+                    while (result.Read())
+                    {
+                        collectionNames.Add(result.GetString(0));
+                    }
+                }
+            }
+
+            return collectionNames;
         }
 
         /// <summary>
@@ -276,6 +324,30 @@ WHERE
                         item.Attributes.Add(collection);
                     }
                 }
+            }
+        }
+
+        public void PopulateCollectionAttributes(SqlConnection connection, String collectionName)
+        {
+            // Value Attributes
+            using (SqlCommand command = new SqlCommand(COLLECTION_REFERENCES_QUERY, connection))
+            {
+                String[] referencedTables = new String[2];
+
+                command.Parameters.Add("@collectionName", SqlDbType.NVarChar).Value = collectionName;
+                using (SqlDataReader result = command.ExecuteReader())
+                {
+                    for(int i = 0; i < 2; i++)
+                    {
+                        result.Read();
+                        string columnName = result.GetString(0);
+                        string itemName = columnName.Substring(0, columnName.Length - 2);
+                        referencedTables[i] = itemName;
+                    }
+                }
+
+                Model.Items[referencedTables[0]].Attributes.Add(new CollectionAttribute(referencedTables[1] + "s", new ItemType(referencedTables[1]), Nullability.Invalid));
+                Model.Items[referencedTables[1]].Attributes.Add(new CollectionAttribute(referencedTables[0] + "s", new ItemType(referencedTables[0]), Nullability.Invalid));
             }
         }
 
