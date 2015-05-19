@@ -6,10 +6,10 @@
 #>
 	<Item Name="<#= item.Name #>">
 		<Attributes>
-<#		foreach(IAttribute attribute in item.Attributes.Values)
-		{
-			WriteAttribute(attribute);
-		}
+<#			foreach(IAttribute attribute in item.Attributes.Values)
+			{
+				WriteAttribute(attribute);
+			}
 #>
 		</Attributes>
 		<Behavior>
@@ -53,10 +53,10 @@
 <#+ public void WriteAttribute(IAttribute attribute)
 	{
 #>
-		<<#= attribute.GetType().Name #> Name="<#= attribute.Name #>">
-			<Type>
-				<#= TypeToXml(attribute.Type) #>
-			</Type>
+			<<#= attribute.GetType().Name #> Name="<#= attribute.Name #>">
+				<Type>
+					<#= TypeToXml(attribute.Type) #>
+				</Type>
 <#+			if(attribute.Constraints.Count > 0)
             {
 #>
@@ -74,10 +74,10 @@
 				<Constraints />
 <#+         }
 #>
-			<Nullability>
-				<<#= attribute.Nullability #> />
-			</Nullability>
-		</<#= attribute.GetType().Name #>>
+				<Nullability>
+					<<#= attribute.Nullability #> />
+				</Nullability>
+			</<#= attribute.GetType().Name #>>
 <#+ }
 #>
 
@@ -90,36 +90,36 @@
 			case "AttributeConstraint" :
 				AttributeConstraint attributeConstraint = constraint as AttributeConstraint;
 #>
-				<AttributeConstraint Attribute="<#= attributeConstraint.Attribute.Name #>" Comparison="<#= attributeConstraint.Comparison #>" />
+					<AttributeConstraint Attribute="<#= attributeConstraint.Attribute.Name #>" Comparison="<#= attributeConstraint.Comparison #>" />
 <#+
 				break;
 			case "AttributeValueConstraint" :
 				AttributeValueConstraint attributeValueConstraint = constraint as AttributeValueConstraint;
 #>
-				<AttributeValueConstraint Implemented="False" />
+					<AttributeValueConstraint Implemented="False" />
 <#+
 				break;
 			case "NumericValueConstraint`1" :
-				NumericValueConstraint<Int64> numericValueConstraint = constraint as NumericValueConstraint<Int64>;
+				NumericValueConstraint<Int32> numericValueConstraint = (NumericValueConstraint<Int32>)constraint;
 #>
-				<NumericValueConstraint Value="<#= numericValueConstraint.Value #>" Comparison="<#= numericValueConstraint.Comparison #>" />
+					<NumericValueConstraint Value="<#= numericValueConstraint.Value #>" Comparison="<#= numericValueConstraint.Comparison #>" />
 <#+
 				break;
 		case "StringLengthConstraint" :
 				StringLengthConstraint stringLengthConstraint = constraint as StringLengthConstraint;
 #>
-				<StringLengthConstraint Value="<#= stringLengthConstraint.Value #>" Comparison="<#= stringLengthConstraint.Comparison #>" />
+					<StringLengthConstraint Value="<#= stringLengthConstraint.Value #>" Comparison="<#= stringLengthConstraint.Comparison #>" />
 <#+
 				break;
 		case "StringValueConstraint" :
 				StringValueConstraint stringValueConstraint = constraint as StringValueConstraint;
 #>
-				<StringValueConstraint Value="<#= stringValueConstraint.Value #>" Comparison="<#= stringValueConstraint.Comparison #>" Comparer="<#= stringValueConstraint.Comparer #>" />
+					<StringValueConstraint Value="<#= stringValueConstraint.Value #>" Comparison="<#= stringValueConstraint.Comparison #>" Comparer="<#= stringValueConstraint.Comparer #>" />
 <#+
 				break;
 		default:
 #>
-				<UnknownConstraint TypeName="<#=constraintTypeName#>" />
+					<UnknownConstraint TypeName="<#=constraintTypeName#>" />
 <#+
 				break;
 		}

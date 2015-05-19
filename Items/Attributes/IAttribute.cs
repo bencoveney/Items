@@ -8,7 +8,7 @@
     /// <summary>
     /// A named piece of data which an item possesses
     /// </summary>
-    public interface IAttribute
+    public partial interface IAttribute
     {
         // TODO something like this?
         // public object DefaultValue {get; set;}

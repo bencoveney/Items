@@ -28,6 +28,7 @@ General todo list:
 - [ ] Don't re-implement C#.
 - [ ] Don't re-implement SQL.
 - [ ] Collections should have support for extra data.
+- [ ] Collections should probably be relationships.
 
 Model
 -----
@@ -65,7 +66,7 @@ Represents an object in the model. Has data attributes and behaviours. Allows (a
 
 #### Todo
 
-- [ ] Identifiers should have to have certain constraints (eg unique).
+- [x] Identifiers should have to have certain constraints (eg unique).
 - [ ] The way in which attributes are marked as identifiers could be improved.
 - [ ] Singletons.
 - [ ] Support for static behaviour (not tied to an instance of an object but related to it).

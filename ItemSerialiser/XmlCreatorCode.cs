@@ -26,12 +26,12 @@ namespace ItemSerialiser
 
             if (typeType == typeof(ItemType))
             {
-                return String.Format("<ItemType Item={0} />", type.Name);
+                return String.Format("<ItemType Item=\"{0}\" />", type.Name);
             }
 
             if (typeType == typeof(Category))
             {
-                return String.Format("<CategoryType Item={0} />", type.Name);
+                return String.Format("<CategoryType Item=\"{0}\" />", type.Name);
             }
 
             return "<UnknownType>";

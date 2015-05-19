@@ -1,15 +1,70 @@
-﻿<#+ public void WriteAttribute(IAttribute attribute) { #>
+﻿<#+ public void WriteAttribute(IAttribute attribute, bool isIdentifier) { #>
 
-    <h4><#= attribute.Name #></h4>
+	<h3>
 
-    <p><#= attribute.Name #> is a <#= attribute.GetType().Name#>. <#= PrettifyType(attribute.Type) #></p>
+	<#+ if(isIdentifier) { #>
+		<strong>
+	<#+ } #>
 
-    <#+ foreach(IConstraint constraint in attribute.Constraints)
-    {
-        WriteConstraint(constraint);
-    }
+    <#= attribute.Name #></h3>
 
-}#>
+	<#+ if(isIdentifier) { #>
+		</strong>
+	<#+ } #>
+
+    <p><#= attribute.Name #> is a <#= attribute.GetType().Name#>.
+
+	<#+ if(isIdentifier) { #>
+		This attribute is the primary identifier for this item.
+	<#+ } #>
+	
+	<#= PrettifyType(attribute.Type) #> <#= PrettifyNullability(attribute.Nullability) #></p>
+
+	<#+ WriteConstraints(attribute); #>
+
+	<#+ WriteSqlDetails(attribute); #>
+
+<#+ } #>
+
+
+
+<#+ public void WriteConstraints(IAttribute attribute) { #>
+
+	<#+ if (attribute.Constraints.Count == 0) return; #>
+
+	<strong>Constraints</strong>
+
+	<ul>
+
+		<#+ foreach(IConstraint constraint in attribute.Constraints) { WriteConstraint(constraint); } #>
+
+	</ul>
+
+<#+ } #>
+
+
+
+<#+ public void WriteSqlDetails(IAttribute attribute) { #>
+
+	<#+ if(String.IsNullOrEmpty(attribute.Type.SqlDataType) && String.IsNullOrEmpty(attribute.SqlColumn)) return; #>
+
+	<strong>Sql Implementation Details:</strong>
+
+	<ul>
+
+		<#+ if(!String.IsNullOrEmpty(attribute.SqlColumn)) { #>
+		<li>The attribute's column name is <#= attribute.SqlColumn #>.</li>
+		<#+ } #>
+
+		<#+ if(!String.IsNullOrEmpty(attribute.Type.SqlDataType)) { #>
+		<li>The attribute's data type is <#= attribute.Type.SqlDataType #>.</li>
+		<#+ } #>
+
+	</ul>
+
+<#+ } #>
+
+
 
 <#+	public void WriteConstraint(IConstraint constraint) {
 
@@ -20,41 +75,41 @@
 		case "AttributeConstraint" :
 			AttributeConstraint attributeConstraint = constraint as AttributeConstraint; #>
 		
-			<p>The value must <#= PrettifyAttributeConstraint(attributeConstraint.Comparison) #> the attribute <#= attributeConstraint.Attribute.Name #>.</p>
+			<li>The value must <#= PrettifyAttributeConstraint(attributeConstraint.Comparison) #> the attribute <#= attributeConstraint.Attribute.Name #>.</li>
 		
 			<#+ break;
 
 		case "AttributeValueConstraint" :
 			AttributeValueConstraint attributeValueConstraint = constraint as AttributeValueConstraint; #>
 		
-			<p>The value must abide by an attribute value constraint however they have not been implemented fully.</p>
+			<li>The value must abide by an attribute value constraint however they have not been implemented fully.</li>
 		
 			<#+ break;
 
 		case "NumericValueConstraint" :
 			NumericValueConstraint<Int64> numericValueConstraint = constraint as NumericValueConstraint<Int64>;#>
 		
-			<p>The value must <#= PrettifyNumericConstraint(numericValueConstraint.Comparison) #> <#= numericValueConstraint.Value #></p>
+			<li>The value must <#= PrettifyNumericConstraint(numericValueConstraint.Comparison) #> <#= numericValueConstraint.Value #></li>
 		
 			<#+ break;
 
 		case "StringLengthConstraint" :
 			StringLengthConstraint stringLengthConstraint = constraint as StringLengthConstraint; #>
 			
-			<p>The length of the string must <#= PrettifyLengthConstraint(stringLengthConstraint.Comparison) #> <#= stringLengthConstraint.Value #> characters.</p>
+			<li>The length of the string must <#= PrettifyLengthConstraint(stringLengthConstraint.Comparison) #> <#= stringLengthConstraint.Value #> characters.</li>
 			
 			<#+ break;
 
 		case "StringValueConstraint" :
 			StringValueConstraint stringValueConstraint = constraint as StringValueConstraint; #>
 			
-			<p>StringValueConstraint Value="<#= stringValueConstraint.Value #>" Comparison="<#= stringValueConstraint.Comparison #>" Comparer="<#= stringValueConstraint.Comparer #>"</p>
+			<li>StringValueConstraint Value="<#= stringValueConstraint.Value #>" Comparison="<#= stringValueConstraint.Comparison #>" Comparer="<#= stringValueConstraint.Comparer #>"</li>
 			
 			<#+ break;
 		
 		default:#>
 		
-			<p>UnknownConstraint</p>
+			<li>UnknownConstraint</li>
 			
 			<#+ break;
 	}

@@ -5,24 +5,48 @@
     using System.Linq;
     using System.Text;
 
-    /// <summary>
-    /// A type which is natively represented in c#
-    /// </summary>
-    /// <typeparam name="T">The system type</typeparam>
+    public partial interface IType
+    {
+        string SqlDataType { get; set; }
+    }
+
     public partial class SystemType<T>
         : IType
     {
-        /// <summary>
-        /// Gets or sets the type of the SQL data.
-        /// </summary>
-        /// <value>
-        /// The type of the SQL data.
-        /// </value>
+        public string SqlDataType { get; set; }
+    }
+
+    public partial class ItemType
+        : IType
+    {
+        public string SqlDataType { get; set; }
+    }
+
+    public partial class CategoryType
+        : IType
+    {
         public string SqlDataType { get; set; }
     }
 
     public partial class ItemBase
     {
         public string Description { get; set; }
+    }
+
+    public partial interface IAttribute
+    {
+        string SqlColumn { get; set; }
+    }
+
+    public partial class ValueAttribute
+        : IAttribute
+    {
+        public string SqlColumn { get; set; }
+    }
+
+    public partial class CollectionAttribute
+        : IAttribute
+    {
+        public string SqlColumn { get; set; }
     }
 }

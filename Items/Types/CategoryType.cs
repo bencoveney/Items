@@ -8,7 +8,7 @@
     /// <summary>
     /// Defines an attribute type which is an Item in the model
     /// </summary>
-    public class CategoryType : IType
+    public partial class CategoryType : IType
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CategoryType" /> class.

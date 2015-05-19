@@ -8,7 +8,7 @@
     /// <summary>
     /// Defines an attribute's type
     /// </summary>
-    public interface IType
+    public partial interface IType
     {
         /// <summary>
         /// Gets a textual representation of the type

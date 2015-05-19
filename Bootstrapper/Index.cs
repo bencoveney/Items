@@ -83,115 +83,105 @@ namespace Bootstrapper
                     "itle>\r\n    <link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">\r\n    <!--[if lt " +
                     "IE 9]>\r\n      <script src=\"https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min." +
                     "js\"></script>\r\n      <script src=\"https://oss.maxcdn.com/respond/1.4.2/respond.m" +
-                    "in.js\"></script>\r\n    <![endif]-->\r\n\t\t<style>\r\n\t\tbody {\r\n\t\t\tcolor: #555;\r\n\t\t\tfon" +
+                    "in.js\"></script>\r\n    <![endif]-->\r\n\t\t<style>\r\n\t\tbody {\r\n\t\t\tcolor: #333;\r\n\t\t\tfon" +
                     "t-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\r\n\t\t}\r\n\t\th1, .h1,\r\n\t\th2" +
-                    ", .h2,\r\n\t\th3, .h3,\r\n\t\th4, .h4,\r\n\t\th5, .h5,\r\n\t\th6, .h6 {\r\n\t\t\tmargin-top: 0;\r\n\t\t\tf" +
-                    "ont-weight: normal;\r\n\t\t\tcolor: #333;\r\n\t\t}\r\n\t\t.header {\r\n\t\t\tpadding-top: 20px;\r\n\t" +
-                    "\t\tpadding-bottom: 20px;\r\n\t\t}\r\n\t\t.title {\r\n\t\t\tmargin-top: 30px;\r\n\t\t\tmargin-bottom" +
-                    ": 0;\r\n\t\t\tfont-size: 60px;\r\n\t\t\tfont-weight: normal;\r\n\t\t}\r\n\t\t.description {\r\n\t\t\tfo" +
-                    "nt-size: 20px;\r\n\t\t\tcolor: #999;\r\n\t\t\tfont-family: Georgia, \"Times New Roman\", Tim" +
-                    "es, serif;\r\n\t\t}\r\n\t\t.sidebar {\r\n\t\t\tpadding: 15px;\r\n\t\t\tmargin: 0 -15px 15px;\r\n\t\t\tb" +
-                    "ackground-color: #f5f5f5;\r\n\t\t\tborder-radius: 4px;\r\n\t\t}\r\n\t\t.sidebar p:last-child," +
-                    "\r\n\t\t.sidebar ul:last-child,\r\n\t\t.sidebar ol:last-child {\r\n\t\t\tmargin-bottom: 0;\r\n\t" +
-                    "\t}\r\n\t\t.attributedescription {\r\n\t\t\tfont-size: 0.9em;\r\n\t\t\tfont-weight: normal;\r\n\t\t" +
-                    "}\r\n\t</style>\r\n  </head>\r\n  <body>\r\n\t<div class=\"container\">\r\n\t\t<div class=\"heade" +
-                    "r\">\r\n\t\t\t<h1 class=\"title\">Model</h1>\r\n\t\t\t<p class=\"description\">Lorem ipsum dolo" +
-                    "r sit amet, consectetur adipiscing elit. Cras porttitor nunc in ligula aliquet v" +
-                    "enenatis. Vestibulum porta, ligula non vulputate egestas, dolor eros egestas odi" +
-                    "o, pharetra porta ante urna vitae lectus. Vivamus accumsan convallis erat, vel u" +
-                    "llamcorper quam egestas vel. Pellentesque rutrum pulvinar mi euismod ullamcorper" +
-                    ". Nulla vehicula elit purus. Fusce commodo tempus tempor. Pellentesque quis mi s" +
-                    "it amet odio venenatis elementum. Suspendisse sed arcu non enim volutpat lacinia" +
-                    ". Fusce sit amet gravida sapien. Nulla nec est a sapien maximus vestibulum. Pell" +
-                    "entesque porttitor eget dolor eu aliquam.</p>\r\n\t\t</div>\r\n\t\t<div class=\"row\">\r\n\t\t" +
-                    "\t<div class=\"col-sm-8\">\r\n\t\t\t\t\t");
-            this.Write("<h2>Items</h2>\r\n\r\n");
+                    ", .h2,\r\n\t\th3, .h3,\r\n\t\th4, .h4,\r\n\t\th5, .h5,\r\n\t\th6, .h6 {\r\n\t\t\tfont-weight: normal;" +
+                    "\r\n\t\t\tcolor: #333;\r\n\t\t}\r\n\t\t.mainbody h2, .mainbody h3 {\r\n\t\t\tmargin-top: 0;\r\n\t\t\tpa" +
+                    "dding: 20px;\r\n\t\t\tdisplay: block;\r\n\t\t\tbackground-color: #eee;\r\n\t\t}\r\n\t\t.mainbody h" +
+                    "2 {\r\n\t\t\tborder-bottom: 2px solid #f88;\r\n\t\t}\r\n\t\t.header {\r\n\t\t\tpadding-top: 20px;\r" +
+                    "\n\t\t\tpadding-bottom: 20px;\r\n\t\t}\r\n\t\t.title {\r\n\t\t\tmargin-top: 30px;\r\n\t\t\tmargin-bott" +
+                    "om: 0;\r\n\t\t\tfont-size: 60px;\r\n\t\t\tfont-weight: normal;\r\n\t\t}\r\n\t\t.description {\r\n\t\t\t" +
+                    "font-size: 20px;\r\n\t\t\tcolor: #555;\r\n\t\t\tfont-family: Georgia, \"Times New Roman\", T" +
+                    "imes, serif;\r\n\t\t}\r\n\t\t.sidebar {\r\n\t\t\tpadding: 15px;\r\n\t\t\tmargin: 0 -15px 15px;\r\n\t\t" +
+                    "\tbackground-color: #f5f5f5;\r\n\t\t\tborder-radius: 4px;\r\n\t\t}\r\n\t\t.sidebar p:last-chil" +
+                    "d,\r\n\t\t.sidebar ul:last-child,\r\n\t\t.sidebar ol:last-child {\r\n\t\t\tmargin-bottom: 0;\r" +
+                    "\n\t\t}\r\n\t\t.attributedescription {\r\n\t\t\tfont-size: 0.9em;\r\n\t\t\tfont-weight: normal;\r\n" +
+                    "\t\t}\r\n\t</style>\r\n  </head>\r\n  <body>\r\n\t<div class=\"container\">\r\n\t\t<div class=\"hea" +
+                    "der\">\r\n\t\t\t<h1 class=\"title\">Model</h1>\r\n\t\t\t<p class=\"description\">Lorem ipsum do" +
+                    "lor sit amet, consectetur adipiscing elit. Cras porttitor nunc in ligula aliquet" +
+                    " venenatis. Vestibulum porta, ligula non vulputate egestas, dolor eros egestas o" +
+                    "dio, pharetra porta ante urna vitae lectus. Vivamus accumsan convallis erat, vel" +
+                    " ullamcorper quam egestas vel. Pellentesque rutrum pulvinar mi euismod ullamcorp" +
+                    "er. Nulla vehicula elit purus. Fusce commodo tempus tempor. Pellentesque quis mi" +
+                    " sit amet odio venenatis elementum. Suspendisse sed arcu non enim volutpat lacin" +
+                    "ia. Fusce sit amet gravida sapien. Nulla nec est a sapien maximus vestibulum. Pe" +
+                    "llentesque porttitor eget dolor eu aliquam.</p>\r\n\t\t</div>\r\n\t\t<div class=\"row\">\r\n" +
+                    "\t\t\t<div class=\"col-sm-8 mainbody\">\r\n\t\t\t\t\t");
             
-            #line 3 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
+            #line 1 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
  foreach(Item item in model.Items.Values) { 
             
             #line default
             #line hidden
-            this.Write("\r\n\t<h3><a name=\"");
+            this.Write("\r\n\t<h2><a name=\"");
             
-            #line 5 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
+            #line 3 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
             this.Write("\"></a>");
             
-            #line 5 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
+            #line 3 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
-            this.Write("</h3>\r\n  \r\n  <p>");
+            this.Write("</h2>\r\n  \r\n\t<p>");
             
-            #line 7 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
+            #line 5 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetDescription(item)));
             
             #line default
             #line hidden
-            this.Write("</p>\r\n  \r\n\t<h4>Attributes</h4>\r\n\r\n");
+            this.Write("</p>\r\n\r\n\t");
             
-            #line 11 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
-	foreach(IAttribute attribute in item.Attributes.Values)
-	{
-		WriteAttribute(attribute);
-	}
-
+            #line 7 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
+ foreach(IAttribute attribute in item.Attributes.Values) { WriteAttribute(attribute, item.IntegerIdentifer == attribute); } 
             
             #line default
             #line hidden
             this.Write("\r\n\t<hr />\r\n\r\n");
             
-            #line 19 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
+            #line 11 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t");
-            this.Write("<h2>Categories</h2>\r\n\r\n");
             
-            #line 3 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
+            #line 1 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
  foreach(Category category in model.Categories.Values) { 
             
             #line default
             #line hidden
-            this.Write("\r\n\t<h3><a name=\"");
+            this.Write("\r\n\t<h2><a name=\"");
             
-            #line 5 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
+            #line 3 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
             this.Write(this.ToStringHelper.ToStringWithCulture(category.Name));
             
             #line default
             #line hidden
             this.Write("\"></a>");
             
-            #line 5 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
+            #line 3 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
             this.Write(this.ToStringHelper.ToStringWithCulture(category.Name));
             
             #line default
             #line hidden
-            this.Write(@"</h3>
+            this.Write(@"</h2>
 	<p>Nulla ut venenatis justo. Etiam sit amet lorem neque. Ut laoreet mattis nisl, et luctus risus porta a. Nunc quis lectus mauris. Quisque mollis tincidunt pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam varius tempus erat at auctor. Curabitur ultrices faucibus lectus porta rutrum. Nullam risus libero, ornare sed eros sed, rhoncus interdum mi. Nulla dapibus viverra molestie. Proin tellus ex, finibus nec dolor vel, blandit mollis est. Fusce elementum mi at ipsum consequat faucibus. Pellentesque lorem libero, dictum ut dignissim id, fringilla quis lectus. Duis at arcu tempus, consequat nulla non, tincidunt dolor.</p>
 
-	<h4>Attributes</h4>
-
-");
+  ");
             
-            #line 10 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
-	foreach(IAttribute attribute in category.Attributes.Values)
-	{
-		WriteAttribute(attribute);
-	}
-
+            #line 6 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
+ foreach(IAttribute attribute in category.Attributes.Values) { WriteAttribute(attribute, category.IntegerIdentifer == attribute); } 
             
             #line default
             #line hidden
             this.Write("\r\n\t<hr />\r\n\r\n");
             
-            #line 18 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
+            #line 10 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
  } 
             
             #line default
@@ -262,86 +252,349 @@ namespace Bootstrapper
         }
         
         #line 1 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
- public void WriteAttribute(IAttribute attribute) { 
+ public void WriteAttribute(IAttribute attribute, bool isIdentifier) { 
         
         #line default
         #line hidden
         
         #line 1 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write("\r\n    <h4>");
-
-        
-        #line default
-        #line hidden
-        
-        #line 3 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 3 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write("</h4>\r\n\r\n    <p>");
+this.Write("\r\n\t<h3>\r\n\r\n\t");
 
         
         #line default
         #line hidden
         
         #line 5 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Name));
-
+ if(isIdentifier) { 
         
         #line default
         #line hidden
         
         #line 5 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write(" is a ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 5 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write(this.ToStringHelper.ToStringWithCulture(attribute.GetType().Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 5 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write(". ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 5 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write(this.ToStringHelper.ToStringWithCulture(PrettifyType(attribute.Type)));
-
-        
-        #line default
-        #line hidden
-        
-        #line 5 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write("</p>\r\n\r\n    ");
+this.Write("\t\t<strong>\r\n\t");
 
         
         #line default
         #line hidden
         
         #line 7 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
- foreach(IConstraint constraint in attribute.Constraints)
-    {
-        WriteConstraint(constraint);
-    }
-
-}
+ } 
         
         #line default
         #line hidden
         
-        #line 14 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 7 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\r\n    ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 9 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 9 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("</h3>\r\n\r\n\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 11 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ if(isIdentifier) { 
+        
+        #line default
+        #line hidden
+        
+        #line 11 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\t\t</strong>\r\n\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 13 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ } 
+        
+        #line default
+        #line hidden
+        
+        #line 13 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\r\n    <p>");
+
+        
+        #line default
+        #line hidden
+        
+        #line 15 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 15 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(" is a ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 15 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(this.ToStringHelper.ToStringWithCulture(attribute.GetType().Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 15 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(".\r\n\r\n\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 17 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ if(isIdentifier) { 
+        
+        #line default
+        #line hidden
+        
+        #line 17 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\t\tThis attribute is the primary identifier for this item.\r\n\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 19 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ } 
+        
+        #line default
+        #line hidden
+        
+        #line 19 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\t\r\n\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 21 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(this.ToStringHelper.ToStringWithCulture(PrettifyType(attribute.Type)));
+
+        
+        #line default
+        #line hidden
+        
+        #line 21 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(" ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 21 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(this.ToStringHelper.ToStringWithCulture(PrettifyNullability(attribute.Nullability)));
+
+        
+        #line default
+        #line hidden
+        
+        #line 21 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("</p>\r\n\r\n\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 23 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ WriteConstraints(attribute); 
+        
+        #line default
+        #line hidden
+        
+        #line 23 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\r\n\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 25 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ WriteSqlDetails(attribute); 
+        
+        #line default
+        #line hidden
+        
+        #line 27 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ } 
+        
+        #line default
+        #line hidden
+        
+        #line 31 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ public void WriteConstraints(IAttribute attribute) { 
+        
+        #line default
+        #line hidden
+        
+        #line 31 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\r\n\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 33 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ if (attribute.Constraints.Count == 0) return; 
+        
+        #line default
+        #line hidden
+        
+        #line 33 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\r\n\t<strong>Constraints</strong>\r\n\r\n\t<ul>\r\n\r\n\t\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 39 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ foreach(IConstraint constraint in attribute.Constraints) { WriteConstraint(constraint); } 
+        
+        #line default
+        #line hidden
+        
+        #line 39 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\r\n\t</ul>\r\n\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 43 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ } 
+        
+        #line default
+        #line hidden
+        
+        #line 47 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ public void WriteSqlDetails(IAttribute attribute) { 
+        
+        #line default
+        #line hidden
+        
+        #line 47 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\r\n\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 49 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ if(String.IsNullOrEmpty(attribute.Type.SqlDataType) && String.IsNullOrEmpty(attribute.SqlColumn)) return; 
+        
+        #line default
+        #line hidden
+        
+        #line 49 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\r\n\t<strong>Sql Implementation Details:</strong>\r\n\r\n\t<ul>\r\n\r\n\t\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 55 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ if(!String.IsNullOrEmpty(attribute.SqlColumn)) { 
+        
+        #line default
+        #line hidden
+        
+        #line 55 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\t\t<li>The attribute\'s column name is ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 56 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(this.ToStringHelper.ToStringWithCulture(attribute.SqlColumn));
+
+        
+        #line default
+        #line hidden
+        
+        #line 56 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(".</li>\r\n\t\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 57 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ } 
+        
+        #line default
+        #line hidden
+        
+        #line 57 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\r\n\t\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 59 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ if(!String.IsNullOrEmpty(attribute.Type.SqlDataType)) { 
+        
+        #line default
+        #line hidden
+        
+        #line 59 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\t\t<li>The attribute\'s data type is ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 60 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Type.SqlDataType));
+
+        
+        #line default
+        #line hidden
+        
+        #line 60 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(".</li>\r\n\t\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 61 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ } 
+        
+        #line default
+        #line hidden
+        
+        #line 61 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\r\n\t</ul>\r\n\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 65 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+ } 
+        
+        #line default
+        #line hidden
+        
+        #line 69 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 	public void WriteConstraint(IConstraint constraint) {
 
 	string constraintTypeName = constraint.GetType().Name;
@@ -354,42 +607,42 @@ this.Write("</p>\r\n\r\n    ");
         #line default
         #line hidden
         
-        #line 21 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write("\t\t\r\n\t\t\t<p>The value must ");
+        #line 76 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\t\t\r\n\t\t\t<li>The value must ");
 
         
         #line default
         #line hidden
         
-        #line 23 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 78 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(this.ToStringHelper.ToStringWithCulture(PrettifyAttributeConstraint(attributeConstraint.Comparison)));
 
         
         #line default
         #line hidden
         
-        #line 23 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 78 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(" the attribute ");
 
         
         #line default
         #line hidden
         
-        #line 23 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 78 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(this.ToStringHelper.ToStringWithCulture(attributeConstraint.Attribute.Name));
 
         
         #line default
         #line hidden
         
-        #line 23 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write(".</p>\r\n\t\t\r\n\t\t\t");
+        #line 78 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(".</li>\r\n\t\t\r\n\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 25 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 80 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
  break;
 
 		case "AttributeValueConstraint" :
@@ -398,15 +651,15 @@ this.Write(".</p>\r\n\t\t\r\n\t\t\t");
         #line default
         #line hidden
         
-        #line 28 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write("\t\t\r\n\t\t\t<p>The value must abide by an attribute value constraint however they have" +
-        " not been implemented fully.</p>\r\n\t\t\r\n\t\t\t");
+        #line 83 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\t\t\r\n\t\t\t<li>The value must abide by an attribute value constraint however they hav" +
+        "e not been implemented fully.</li>\r\n\t\t\r\n\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 32 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 87 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
  break;
 
 		case "NumericValueConstraint" :
@@ -415,42 +668,42 @@ this.Write("\t\t\r\n\t\t\t<p>The value must abide by an attribute value constrai
         #line default
         #line hidden
         
-        #line 35 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write("\t\t\r\n\t\t\t<p>The value must ");
+        #line 90 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\t\t\r\n\t\t\t<li>The value must ");
 
         
         #line default
         #line hidden
         
-        #line 37 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 92 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(this.ToStringHelper.ToStringWithCulture(PrettifyNumericConstraint(numericValueConstraint.Comparison)));
 
         
         #line default
         #line hidden
         
-        #line 37 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 92 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 37 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 92 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(this.ToStringHelper.ToStringWithCulture(numericValueConstraint.Value));
 
         
         #line default
         #line hidden
         
-        #line 37 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write("</p>\r\n\t\t\r\n\t\t\t");
+        #line 92 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("</li>\r\n\t\t\r\n\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 39 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 94 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
  break;
 
 		case "StringLengthConstraint" :
@@ -459,42 +712,42 @@ this.Write("</p>\r\n\t\t\r\n\t\t\t");
         #line default
         #line hidden
         
-        #line 42 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write("\t\t\t\r\n\t\t\t<p>The length of the string must ");
+        #line 97 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\t\t\t\r\n\t\t\t<li>The length of the string must ");
 
         
         #line default
         #line hidden
         
-        #line 44 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 99 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(this.ToStringHelper.ToStringWithCulture(PrettifyLengthConstraint(stringLengthConstraint.Comparison)));
 
         
         #line default
         #line hidden
         
-        #line 44 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 99 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 44 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 99 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(this.ToStringHelper.ToStringWithCulture(stringLengthConstraint.Value));
 
         
         #line default
         #line hidden
         
-        #line 44 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write(" characters.</p>\r\n\t\t\t\r\n\t\t\t");
+        #line 99 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write(" characters.</li>\r\n\t\t\t\r\n\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 46 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 101 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
  break;
 
 		case "StringValueConstraint" :
@@ -503,56 +756,56 @@ this.Write(" characters.</p>\r\n\t\t\t\r\n\t\t\t");
         #line default
         #line hidden
         
-        #line 49 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write("\t\t\t\r\n\t\t\t<p>StringValueConstraint Value=\"");
+        #line 104 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\t\t\t\r\n\t\t\t<li>StringValueConstraint Value=\"");
 
         
         #line default
         #line hidden
         
-        #line 51 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 106 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(this.ToStringHelper.ToStringWithCulture(stringValueConstraint.Value));
 
         
         #line default
         #line hidden
         
-        #line 51 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 106 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write("\" Comparison=\"");
 
         
         #line default
         #line hidden
         
-        #line 51 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 106 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(this.ToStringHelper.ToStringWithCulture(stringValueConstraint.Comparison));
 
         
         #line default
         #line hidden
         
-        #line 51 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 106 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write("\" Comparer=\"");
 
         
         #line default
         #line hidden
         
-        #line 51 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 106 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
 this.Write(this.ToStringHelper.ToStringWithCulture(stringValueConstraint.Comparer));
 
         
         #line default
         #line hidden
         
-        #line 51 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write("\"</p>\r\n\t\t\t\r\n\t\t\t");
+        #line 106 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\"</li>\r\n\t\t\t\r\n\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 53 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 108 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
  break;
 		
 		default:
@@ -560,14 +813,14 @@ this.Write("\"</p>\r\n\t\t\t\r\n\t\t\t");
         #line default
         #line hidden
         
-        #line 55 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write("\t\t\r\n\t\t\t<p>UnknownConstraint</p>\r\n\t\t\t\r\n\t\t\t");
+        #line 110 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+this.Write("\t\t\r\n\t\t\t<li>UnknownConstraint</li>\r\n\t\t\t\r\n\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 59 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
+        #line 114 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
  break;
 	}
 

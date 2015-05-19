@@ -1,18 +1,10 @@
-﻿<h2>Items</h2>
+﻿<# foreach(Item item in model.Items.Values) { #>
 
-<# foreach(Item item in model.Items.Values) { #>
-
-	<h3><a name="<#= item.Name #>"></a><#= item.Name #></h3>
+	<h2><a name="<#= item.Name #>"></a><#= item.Name #></h2>
   
-  <p><#= GetDescription(item) #></p>
-  
-	<h4>Attributes</h4>
+	<p><#= GetDescription(item) #></p>
 
-<#	foreach(IAttribute attribute in item.Attributes.Values)
-	{
-		WriteAttribute(attribute);
-	}
-#>
+	<# foreach(IAttribute attribute in item.Attributes.Values) { WriteAttribute(attribute, item.IntegerIdentifer == attribute); } #>
 
 	<hr />
 

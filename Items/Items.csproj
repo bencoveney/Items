@@ -62,6 +62,7 @@
     <Compile Include="Constraints\NumericValueConstraint.cs" />
     <Compile Include="Constraints\StringValueConstraint.cs" />
     <Compile Include="Constraints\IConstraint.cs" />
+    <Compile Include="InvalidModelException.cs" />
     <Compile Include="ItemBase.cs" />
     <Compile Include="Types\CategoryType.cs" />
     <Compile Include="Types\ItemType.cs" />

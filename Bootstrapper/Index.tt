@@ -17,7 +17,7 @@
     <![endif]-->
 		<style>
 		body {
-			color: #555;
+			color: #333;
 			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		}
 		h1, .h1,
@@ -26,9 +26,17 @@
 		h4, .h4,
 		h5, .h5,
 		h6, .h6 {
-			margin-top: 0;
 			font-weight: normal;
 			color: #333;
+		}
+		.mainbody h2, .mainbody h3 {
+			margin-top: 0;
+			padding: 20px;
+			display: block;
+			background-color: #eee;
+		}
+		.mainbody h2 {
+			border-bottom: 2px solid #f88;
 		}
 		.header {
 			padding-top: 20px;
@@ -42,7 +50,7 @@
 		}
 		.description {
 			font-size: 20px;
-			color: #999;
+			color: #555;
 			font-family: Georgia, "Times New Roman", Times, serif;
 		}
 		.sidebar {
@@ -69,7 +77,7 @@
 			<p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porttitor nunc in ligula aliquet venenatis. Vestibulum porta, ligula non vulputate egestas, dolor eros egestas odio, pharetra porta ante urna vitae lectus. Vivamus accumsan convallis erat, vel ullamcorper quam egestas vel. Pellentesque rutrum pulvinar mi euismod ullamcorper. Nulla vehicula elit purus. Fusce commodo tempus tempor. Pellentesque quis mi sit amet odio venenatis elementum. Suspendisse sed arcu non enim volutpat lacinia. Fusce sit amet gravida sapien. Nulla nec est a sapien maximus vestibulum. Pellentesque porttitor eget dolor eu aliquam.</p>
 		</div>
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-8 mainbody">
 					<#@ include file="ttincludes\Items.ttinclude" #>
 					<#@ include file="ttincludes\Categories.ttinclude" #>
 			</div>

@@ -8,7 +8,7 @@
     /// <summary>
     /// A named collection of attributes.
     /// </summary>
-    public class Attributes : IDictionary<string, IAttribute>
+    public partial class Attributes : IDictionary<string, IAttribute>
     {
         /// <summary>
         /// The internal attributes

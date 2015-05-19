@@ -95,10 +95,10 @@ namespace ItemSerialiser
             this.Write("\">\r\n\t\t<Attributes>\r\n");
             
             #line 9 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-		foreach(IAttribute attribute in item.Attributes.Values)
-		{
-			WriteAttribute(attribute);
-		}
+			foreach(IAttribute attribute in item.Attributes.Values)
+			{
+				WriteAttribute(attribute);
+			}
 
             
             #line default
@@ -191,7 +191,7 @@ namespace ItemSerialiser
         #line hidden
         
         #line 55 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write("\t\t<");
+this.Write("\t\t\t<");
 
         
         #line default
@@ -219,7 +219,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Name));
         #line hidden
         
         #line 56 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write("\">\r\n\t\t\t<Type>\r\n\t\t\t\t");
+this.Write("\">\r\n\t\t\t\t<Type>\r\n\t\t\t\t\t");
 
         
         #line default
@@ -233,7 +233,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(TypeToXml(attribute.Type)));
         #line hidden
         
         #line 58 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write("\r\n\t\t\t</Type>\r\n");
+this.Write("\r\n\t\t\t\t</Type>\r\n");
 
         
         #line default
@@ -295,7 +295,7 @@ this.Write("\t\t\t\t<Constraints />\r\n");
         #line hidden
         
         #line 76 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write("\t\t\t<Nullability>\r\n\t\t\t\t<");
+this.Write("\t\t\t\t<Nullability>\r\n\t\t\t\t\t<");
 
         
         #line default
@@ -309,7 +309,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Nullability));
         #line hidden
         
         #line 78 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write(" />\r\n\t\t\t</Nullability>\r\n\t\t</");
+this.Write(" />\r\n\t\t\t\t</Nullability>\r\n\t\t\t</");
 
         
         #line default
@@ -351,7 +351,7 @@ this.Write(">\r\n");
         #line hidden
         
         #line 92 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write("\t\t\t\t<AttributeConstraint Attribute=\"");
+this.Write("\t\t\t\t\t<AttributeConstraint Attribute=\"");
 
         
         #line default
@@ -396,7 +396,7 @@ this.Write("\" />\r\n");
         #line hidden
         
         #line 98 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write("\t\t\t\t<AttributeValueConstraint Implemented=\"False\" />\r\n");
+this.Write("\t\t\t\t\t<AttributeValueConstraint Implemented=\"False\" />\r\n");
 
         
         #line default
@@ -406,14 +406,14 @@ this.Write("\t\t\t\t<AttributeValueConstraint Implemented=\"False\" />\r\n");
 
 				break;
 			case "NumericValueConstraint`1" :
-				NumericValueConstraint<Int64> numericValueConstraint = constraint as NumericValueConstraint<Int64>;
+				NumericValueConstraint<Int32> numericValueConstraint = (NumericValueConstraint<Int32>)constraint;
 
         
         #line default
         #line hidden
         
         #line 104 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write("\t\t\t\t<NumericValueConstraint Value=\"");
+this.Write("\t\t\t\t\t<NumericValueConstraint Value=\"");
 
         
         #line default
@@ -458,7 +458,7 @@ this.Write("\" />\r\n");
         #line hidden
         
         #line 110 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write("\t\t\t\t<StringLengthConstraint Value=\"");
+this.Write("\t\t\t\t\t<StringLengthConstraint Value=\"");
 
         
         #line default
@@ -503,7 +503,7 @@ this.Write("\" />\r\n");
         #line hidden
         
         #line 116 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write("\t\t\t\t<StringValueConstraint Value=\"");
+this.Write("\t\t\t\t\t<StringValueConstraint Value=\"");
 
         
         #line default
@@ -561,7 +561,7 @@ this.Write("\" />\r\n");
         #line hidden
         
         #line 121 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write("\t\t\t\t<UnknownConstraint TypeName=\"");
+this.Write("\t\t\t\t\t<UnknownConstraint TypeName=\"");
 
         
         #line default

@@ -25,8 +25,7 @@ namespace Manual
             Model.AddCategory(CreateContainerCategory());
 
             File.WriteAllText("Output.xml", new XmlCreator(Model).TransformText());
-
-            Console.WriteLine(Model.ToString());
+            System.Diagnostics.Process.Start("Output.xml");
         }
 
         public static Item CreateKitchen()

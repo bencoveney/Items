@@ -62,13 +62,32 @@
         }
 
         /// <summary>
-        /// Validates this instance.
+        /// Validates the model
         /// </summary>
         public void Validate()
         {
-            // Iterate through the model
-            // Check for types which don't map to items/categories
-            // Check for items which don't have identifiers
+            // For all items
+            foreach (Item item in Items.Values)
+            {
+                // Check for items with no identifiers 
+                if (item.IntegerIdentifer == null && item.StringIdentifer == null)
+                {
+                    throw new InvalidModelException(String.Format("Item {0} has no identifiers", item.Name));
+                }
+
+                // Check for attributes which refer to items which don't exist
+                foreach (IAttribute attribute in item.Attributes.Values.Where(attribute => attribute.Type.GetType() == typeof(ItemType)))
+                {
+                    // If the item type is neither a category nor an item
+                    // TODO handle categories seperately
+                    if (!Items.ContainsKey(((ItemType)attribute.Type).Name) && !Categories.ContainsKey(((ItemType)attribute.Type).Name))
+                    {
+                        // Disallow
+                        throw new InvalidModelException("Attribute has an item type which is not found in the model");
+                    }
+                }
+            }
+
             // Check for attributes which arent constrained sufficiently
             // Check for items where referrals are only one way
             // Check for constraints which dont fit the datatype of the attribute

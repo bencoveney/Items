@@ -44,8 +44,8 @@ WHERE
         private const String ITEM_COLLECTION_ATTRIBUTES_QUERY = @"
 SELECT
     /*fk.name AS Name,*/
-    t.name AS TableWithForeignKey
-    /*c.name AS ForeignKeyColumn*/
+    t.name AS TableWithForeignKey,
+    c.name AS ForeignKeyColumn
 FROM
     sys.foreign_key_columns AS fk
     INNER JOIN sys.tables AS t ON fk.parent_object_id = t.object_id
@@ -128,7 +128,8 @@ FROM
 	INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TC
 	INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS CC ON TC.CONSTRAINT_NAME = CC.CONSTRAINT_NAME
 WHERE
-	TC.CONSTRAINT_TYPE = 'PRIMARY KEY'";
+	TC.CONSTRAINT_TYPE = 'PRIMARY KEY'
+    AND TC.TABLE_NAME NOT LIKE '%Collection'";
 
         #endregion
 
@@ -171,7 +172,11 @@ WHERE
 
             PopulateUniqueConstraints(connection);
 
+            PopulatePrimaryKeys(connection);
+
             connection.Close();
+
+            Model.Validate();
         }
 
         /// <summary>
@@ -264,7 +269,7 @@ WHERE
 
                         // Remove the items name from the beginning of the attribute
                         // e.g. KitchenID becomes ID
-                        if (attributeName.StartsWith(item.Name))
+                        if (attributeName.StartsWith(item.Name) && !String.IsNullOrEmpty(attributeName.Substring(item.Name.Length)))
                             attributeName = attributeName.Substring(item.Name.Length);
 
                         // Calculate the datatype
@@ -301,6 +306,7 @@ WHERE
                         // TODO What about default value?
 
                         ValueAttribute attribute = new ValueAttribute(attributeName, type, nullability);
+                        attribute.SqlColumn = columnName;
 
                         if (!result.IsDBNull(3))
                             attribute.Constraints.Add(new StringLengthConstraint(LengthComparison.ShorterThan, result.GetInt32(3) + 1));
@@ -318,10 +324,19 @@ WHERE
                 {
                     while (result.Read())
                     {
-                        String collectionName = String.Format("{0}s", result.GetString(0).Replace("Collection", String.Empty));
+                        // Read results
+                        String tableName = result.GetString(0);
+                        String columnName = result.GetString(1);
+
+                        // Create the friendly name
+                        String collectionName = String.Format("{0}s", tableName.Replace("Collection", String.Empty));
+
                         String itemTypeName = result.GetString(0);
                         ItemType itemType = new ItemType(itemTypeName);
+
                         CollectionAttribute collection = new CollectionAttribute(collectionName, itemType, Nullability.Empty);
+                        collection.SqlColumn = String.Format("{0}.{1}", tableName, columnName);
+
 
                         item.Attributes.Add(collection);
                     }
@@ -348,8 +363,13 @@ WHERE
                     }
                 }
 
-                Model.Items[referencedTables[0]].Attributes.Add(new CollectionAttribute(referencedTables[1] + "s", new ItemType(referencedTables[1]), Nullability.Invalid));
-                Model.Items[referencedTables[1]].Attributes.Add(new CollectionAttribute(referencedTables[0] + "s", new ItemType(referencedTables[0]), Nullability.Invalid));
+                CollectionAttribute firstCollection = new CollectionAttribute(referencedTables[1] + "s", new ItemType(referencedTables[1]), Nullability.Invalid);
+                firstCollection.SqlColumn = String.Format("{0}.{1}ID", collectionName, referencedTables[1]);
+                Model.Items[referencedTables[0]].Attributes.Add(firstCollection);
+
+                CollectionAttribute secondCollection = new CollectionAttribute(referencedTables[0] + "s", new ItemType(referencedTables[0]), Nullability.Invalid);
+                secondCollection.SqlColumn = String.Format("{0}.{1}ID", collectionName, referencedTables[0]);
+                Model.Items[referencedTables[1]].Attributes.Add(secondCollection);
             }
         }
 
@@ -401,8 +421,34 @@ WHERE
                         // this is duplicated code and should be refactored
                         String attributeName = String.Equals(itemName + "ID", columnName, System.StringComparison.InvariantCultureIgnoreCase) ? "ID" : columnName;
 
+                        // Add a unique constraint to the attribute
                         IAttribute attribute = Model.Items[itemName].Attributes[attributeName];
                         attribute.Constraints.Add(new AttributeConstraint(attribute, CollectionComparison.IsUniqueWithin));
+                    }
+                }
+            }
+        }
+
+        public void PopulatePrimaryKeys(SqlConnection connection)
+        {
+            using (SqlCommand command = new SqlCommand(PRIMARY_IDENTIFIERS_QUERY, connection))
+            {
+                using (SqlDataReader result = command.ExecuteReader())
+                {
+                    while (result.Read())
+                    {
+                        String tableName = result.GetString(0);
+                        String columnName = result.GetString(1);
+
+                        // Remove the items name from the beginning of the attribute
+                        // e.g. KitchenID becomes ID
+                        if (columnName.StartsWith(tableName) && !String.IsNullOrEmpty(columnName.Substring(tableName.Length)))
+                            columnName = columnName.Substring(tableName.Length);
+
+                        // Assign the attribute as the primary key
+                        ItemBase thing = Model.Items.ContainsKey(tableName) ? (ItemBase)Model.Items[tableName] : (ItemBase)Model.Categories[tableName];
+                        IAttribute primaryKey = thing.Attributes[columnName];
+                        thing.IntegerIdentifer = (ValueAttribute)primaryKey;
                     }
                 }
             }

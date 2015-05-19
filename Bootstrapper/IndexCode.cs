@@ -34,7 +34,8 @@ namespace Bootstrapper
 
             if (typeType.IsGenericType && typeType.GetGenericTypeDefinition() == typeof(SystemType<>))
             {
-                return String.Format("The attribute stores {0} data.", typeType.GetGenericArguments()[0].Name);
+                String pureDefinition = String.Format("The attribute stores {0} data.", typeType.GetGenericArguments()[0].Name);
+                return pureDefinition;
             }
 
             if (typeType == typeof(ItemType))
@@ -61,6 +62,23 @@ namespace Bootstrapper
                 case CollectionComparison.IsUniqueWithin:
                     return "be unique within";
                 default:
+                    return "ERROR";
+            }
+        }
+
+        public String PrettifyNullability(Nullability nullability)
+        {
+            switch (nullability)
+            {
+                case Nullability.Empty :
+                    return "This attribute can be empty but cannot be non-applicable.";
+                case Nullability.EmptyOrNotApplicable :
+                    return "This attribute can be both empty and non-applicable.";
+                case Nullability.Invalid :
+                    return "This attribute cannot be empty or non-applicable.";
+                case Nullability.NotApplicable :
+                    return "This attribute can not be empty but can be non-applicable.";
+                default :
                     return "ERROR";
             }
         }

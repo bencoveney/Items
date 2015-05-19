@@ -8,7 +8,8 @@
     /// <summary>
     /// Defines an attribute type which is an Item in the model
     /// </summary>
-    public class ItemType : IType
+    public partial class ItemType
+        : IType
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemType"/> class.
