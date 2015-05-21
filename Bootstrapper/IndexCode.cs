@@ -12,7 +12,7 @@ namespace Bootstrapper
     {
         // TODO sort out prettify methods and fix their names. should they be tostring/todescription methods on the object?
 
-        private const String CONNECTION_STRING = @"Data Source=BENSDESKTOP\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True";
+		private const String CONNECTION_STRING = @"Data Source=BEN8\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True";
 
         private Model model;
 

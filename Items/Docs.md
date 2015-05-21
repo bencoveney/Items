@@ -3,11 +3,11 @@ Items
 
 General todo list:
 
-- [ ] Maybe the implementation specific details should be stored in a dictionary rather than in partial classes.
-  - [ ] Currently makes the object model messy and spreads implementation out incohesively.
-  - [ ] Currently has DB implementation details in the Items project.
-  - [ ] Examples: "description": "blah blah", "sql datatype": "blah blah", "sql column": "blah blah".
-  - [ ] Might still need to mess up object model in order to add functionality instead of data.
+- [x] Maybe the implementation specific details should be stored in a dictionary rather than in partial classes.
+  - [x] Currently makes the object model messy and spreads implementation out incohesively.
+  - [x] Currently has DB implementation details in the Items project.
+  - [x] Examples: "description": "blah blah", "sql datatype": "blah blah", "sql column": "blah blah".
+  - [x] Might still need to mess up object model in order to add functionality instead of data.
 - [ ] Develop a smarter way of loading from the database rather than one long messy file.
 - [ ] Generate code.
 - [ ] Plan for different "stages" of model building. May want to generate the model from multiple different sources at different times.

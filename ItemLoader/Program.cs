@@ -11,7 +11,7 @@ namespace ItemLoader
 {
     class Program
     {
-        private const String CONNECTION_STRING = @"Data Source=BENSDESKTOP\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True";
+		private const String CONNECTION_STRING = @"Data Source=BEN8\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True";
 
         /// <summary>
         /// Mains the specified arguments.

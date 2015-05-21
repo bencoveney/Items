@@ -1,7 +1,7 @@
 ﻿<# foreach(Item item in model.Items.Values) { #>
 
 	<h2><a name="<#= item.Name #>"></a><#= item.Name #></h2>
-  
+
 	<p><#= GetDescription(item) #></p>
 
 	<# foreach(IAttribute attribute in item.Attributes.Values) { WriteAttribute(attribute, item.IntegerIdentifer == attribute); } #>

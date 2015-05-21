@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action.cs" />
-    <Compile Include="DatabaseImplementationDetails.cs" />
     <Compile Include="Attributes\Attributes.cs" />
     <Compile Include="Attributes\CollectionAttribute.cs" />
     <Compile Include="Attributes\ValueAttribute.cs" />
@@ -62,6 +61,7 @@
     <Compile Include="Constraints\NumericValueConstraint.cs" />
     <Compile Include="Constraints\StringValueConstraint.cs" />
     <Compile Include="Constraints\IConstraint.cs" />
+    <Compile Include="ImplementationDetails.cs" />
     <Compile Include="InvalidModelException.cs" />
     <Compile Include="ItemBase.cs" />
     <Compile Include="Types\CategoryType.cs" />
