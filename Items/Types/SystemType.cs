@@ -17,7 +17,7 @@
 		/// </summary>
 		public SystemType()
 		{
-			Details = new ImplementationDetails();
+			this.Details = new ImplementationDetails();
 		}
 
 		/// <summary>

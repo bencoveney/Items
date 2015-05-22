@@ -98,11 +98,15 @@
 
 				// Ensure the value is marked as unique
 				if (!value.Constraints.OfType<AttributeConstraint>().Any(constraint => constraint.Attribute == value && constraint.Comparison == CollectionComparison.IsUniqueWithin))
+				{
 					value.Constraints.Add(new AttributeConstraint(value, CollectionComparison.IsUniqueWithin));
+				}
 
 				// Ensure the value cannot be nulled
 				if (value.Nullability != Nullability.Invalid)
+				{
 					throw new ArgumentException("This attribute cannot be an identifier as it can be null");
+				}
 
 				this.integerIdentifier = value;
 			}

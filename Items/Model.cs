@@ -67,12 +67,12 @@
         public void Validate()
         {
             // For all items
-            foreach (Item item in Items.Values)
+            foreach (Item item in this.Items.Values)
             {
                 // Check for items with no identifiers 
                 if (item.IntegerIdentifer == null && item.StringIdentifer == null)
                 {
-                    throw new InvalidModelException(String.Format("Item {0} has no identifiers", item.Name));
+                    throw new InvalidModelException(string.Format("Item {0} has no identifiers", item.Name));
                 }
 
                 // Check for attributes which refer to items which don't exist
@@ -80,7 +80,7 @@
                 {
                     // If the item type is neither a category nor an item
                     // TODO handle categories seperately
-                    if (!Items.ContainsKey(((ItemType)attribute.Type).Name) && !Categories.ContainsKey(((ItemType)attribute.Type).Name))
+                    if (!this.Items.ContainsKey(((ItemType)attribute.Type).Name) && !this.Categories.ContainsKey(((ItemType)attribute.Type).Name))
                     {
                         // Disallow
                         throw new InvalidModelException("Attribute has an item type which is not found in the model");

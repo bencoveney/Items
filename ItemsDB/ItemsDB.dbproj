@@ -147,5 +147,8 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\ContainerOwnerCollection.table.sql">
       <SubType>Code</SubType>
     </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Foodstuff.table.sql">
+      <SubType>Code</SubType>
+    </Build>
   </ItemGroup>
 </Project>
