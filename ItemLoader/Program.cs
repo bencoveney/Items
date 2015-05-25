@@ -1,8 +1,7 @@
 ﻿namespace ItemLoader
 {
-	using System;
+	using System.Collections.Generic;
 	using System.Data.SqlClient;
-	using ItemSerialiser;
 
 	/// <summary>
 	/// Launches the program
@@ -20,15 +19,22 @@
 		/// <param name="args">The arguments.</param>
 		public static void Main(string[] args)
 		{
-			Loader loader = new Loader();
-
 			using (SqlConnection connection = new SqlConnection(ConnectionString))
 			{
-				loader.Load(connection);
+				connection.Open();
+				IEnumerable<DatabaseConstraint> constraints = DatabaseConstraint.LoadConstraints(connection);
+				connection.Close();
 			}
 
-			XmlCreator creator = new XmlCreator(loader.Model);
-			string output = creator.TransformText();
+			////Loader loader = new Loader();
+
+			////using (SqlConnection connection = new SqlConnection(ConnectionString))
+			////{
+			////    loader.Load(connection);
+			////}
+
+			////XmlCreator creator = new XmlCreator(loader.Model);
+			////string output = creator.TransformText();
 		}
 	}
 }

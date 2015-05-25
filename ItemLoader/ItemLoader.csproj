@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseConstraint.cs" />
-    <Compile Include="DatabaseConstraintLoader.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
