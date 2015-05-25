@@ -9,7 +9,7 @@
     /// Defines a thing at the level of the database table/entity/action
     /// </summary>
     public class Item
-        : ItemBase
+        : Thing
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Item" /> class.

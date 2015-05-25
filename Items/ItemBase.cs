@@ -8,7 +8,7 @@
 	/// <summary>
 	/// A basic "thing". A container of data
 	/// </summary>
-	public abstract class ItemBase
+	public abstract class Thing
 	{
 		/// <summary>
 		/// The string identifier
@@ -21,11 +21,11 @@
 		private ValueAttribute integerIdentifier;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ItemBase" /> class.
+		/// Initializes a new instance of the <see cref="Thing" /> class.
 		/// Creates the item
 		/// </summary>
 		/// <param name="name">The name.</param>
-		public ItemBase(string name)
+		public Thing(string name)
 		{
 			this.Name = name;
 			this.Attributes = new Attributes();

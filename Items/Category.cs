@@ -13,7 +13,7 @@
     /// instances of them are not created
     /// </summary>
     public class Category
-        : ItemBase
+        : Thing
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Category"/> class.

@@ -79,37 +79,37 @@ WHERE
 		/// </summary>
 		private const string ItemNamesQuery = @"
 SELECT
-	Table_Name
+	SchemaTables.Table_Name
 FROM
-	Information_Schema.Tables
+	Information_Schema.Tables AS SchemaTables
 WHERE
-	Table_Name != 'sysdiagrams'
-	AND Table_Name != '__RefactorLog'
-	AND Table_Name NOT LIKE '%Category'
-	AND Table_Name NOT LIKE '%Category'
-	AND Table_Name NOT LIKE '%Collection'";
+	SchemaTables.Table_Name != 'sysdiagrams'
+	AND SchemaTables.Table_Name != '__RefactorLog'
+	AND SchemaTables.Table_Name NOT LIKE '%Category'
+	AND SchemaTables.Table_Name NOT LIKE '%Category'
+	AND SchemaTables.Table_Name NOT LIKE '%Collection'";
 
 		/// <summary>
 		/// Query to find names of collections
 		/// </summary>
 		private const string CollectionNamesQuery = @"
 SELECT
-	Table_Name
+	SchemaTables.Table_Name
 FROM
-	Information_Schema.Tables
+	Information_Schema.Tables AS SchemaTables
 WHERE
-	Table_Name LIKE '%Collection'";
+	SchemaTables.Table_Name LIKE '%Collection'";
 
 		/// <summary>
 		/// Query to find names of categories
 		/// </summary>
 		private const string CategoryNamesQuery = @"
 SELECT
-	Table_Name
+	SchemaTables.Table_Name
 FROM
-	Information_Schema.Tables
+	Information_Schema.Tables AS SchemaTables
 WHERE
-	Table_Name LIKE '%Category'";
+	SchemaTables.Table_Name LIKE '%Category'";
 
 		/// <summary>
 		/// Query to find which columns on which tables have unique constraints
@@ -117,21 +117,23 @@ WHERE
 		/// </summary>
 		private const string UniqueConstraintsQuery = @"
 SELECT
-	/*TC.CONSTRAINT_NAME,*/
-	/*TC.CONSTRAINT_TYPE,*/
-	TC.TABLE_NAME,
-	CC.COLUMN_NAME
+	SchemaConstraint.CONSTRAINT_NAME,
+	SchemaConstraint.CONSTRAINT_TYPE,
+	SchemaConstraint.TABLE_NAME,
+	ConstrainedColumn.COLUMN_NAME,
+	SchemaConstraint.IS_DEFERRABLE,
+	SchemaConstraint.INITIALLY_DEFERRED,
 FROM
-	INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TC
-	INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS CC ON TC.CONSTRAINT_NAME = CC.CONSTRAINT_NAME
+	INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS SchemaConstraint
+	INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS ConstrainedColumn ON SchemaConstraint.CONSTRAINT_NAME = ConstrainedColumn.CONSTRAINT_NAME
 WHERE
-	TC.CONSTRAINT_TYPE IN ('UNIQUE', 'PRIMARY KEY')
+	SchemaConstraint.CONSTRAINT_TYPE IN ('UNIQUE', 'PRIMARY KEY')
 	/* Dont populate unique constraints for categories/collections because they arent built yet */
-	AND TC.TABLE_NAME NOT LIKE '%Category%'
-	AND TC.TABLE_NAME NOT LIKE '%Collection%'
-	AND TC.TABLE_NAME != '__RefactorLog'
+	AND SchemaConstraint.TABLE_NAME NOT LIKE '%Category%'
+	AND SchemaConstraint.TABLE_NAME NOT LIKE '%Collection%'
+	AND SchemaConstraint.TABLE_NAME != '__RefactorLog'
 	/* Only add constraints which reference a single value (for now...) */
-	AND TC.CONSTRAINT_NAME IN (
+	AND SchemaConstraint.CONSTRAINT_NAME IN (
 		SELECT
 			CONSTRAINT_NAME
 		FROM
@@ -288,7 +290,7 @@ WHERE
 		/// <param name="connection">The connection.</param>
 		/// <param name="item">The item.</param>
 		/// <exception cref="System.NotImplementedException">Foreign key pointing to column which isn't the primary key (and named item.itemID)</exception>
-		public void PopulateAttributesForItemBase(SqlConnection connection, ItemBase item)
+		public void PopulateAttributesForItemBase(SqlConnection connection, Thing item)
 		{
 			// Value Attributes
 			using (SqlCommand command = new SqlCommand(ItemValueAttributesQuery, connection))
@@ -463,8 +465,8 @@ WHERE
 				{
 					while (result.Read())
 					{
-						string itemName = result.GetString(0);
-						string columnName = result.GetString(1);
+						string itemName = result.GetString(2);
+						string columnName = result.GetString(3);
 
 						// Check whether the column matches the nameID pattern, if it is then strip the ID
 						// this is duplicated code and should be refactored
@@ -501,7 +503,7 @@ WHERE
 						}
 
 						// Assign the attribute as the primary key
-						ItemBase thing = Model.Items.ContainsKey(tableName) ? (ItemBase)Model.Items[tableName] : (ItemBase)Model.Categories[tableName];
+						Thing thing = Model.Items.ContainsKey(tableName) ? (Thing)Model.Items[tableName] : (Thing)Model.Categories[tableName];
 						IAttribute primaryKey = thing.Attributes[columnName];
 						thing.IntegerIdentifer = (ValueAttribute)primaryKey;
 					}

@@ -64,6 +64,7 @@
     <Compile Include="ImplementationDetails.cs" />
     <Compile Include="InvalidModelException.cs" />
     <Compile Include="ItemBase.cs" />
+    <Compile Include="Relationship.cs" />
     <Compile Include="Types\CategoryType.cs" />
     <Compile Include="Types\ItemType.cs" />
     <Compile Include="Model.cs" />

@@ -123,7 +123,7 @@ namespace Bootstrapper
             }
         }
 
-        public String GetDescription(ItemBase item)
+        public String GetDescription(Thing item)
         {
             if (String.IsNullOrEmpty(item.Description))
             {
