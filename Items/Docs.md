@@ -9,6 +9,12 @@ General todo list:
   - [x] Examples: "description": "blah blah", "sql datatype": "blah blah", "sql column": "blah blah".
   - [x] Might still need to mess up object model in order to add functionality instead of data.
 - [ ] Develop a smarter way of loading from the database rather than one long messy file.
+    - [x] Create schema object model
+    - [ ] Loader Column and constraint should be properties of the table rather than including table data
+    - [ ] Loader FK support todo properly
+    - [ ] Use schema object model to build items model.
+    - [ ] Should database reads be using enums/some other method of column ordinal identification?
+    - [ ] Automate exlusion of system tables such as refactorlog, sysdiagrams
 - [ ] Generate code.
 - [ ] Plan for different "stages" of model building. May want to generate the model from multiple different sources at different times.
   - [ ] Adding to the model can be expressed in xml/code/however and then "unioned".
@@ -22,13 +28,14 @@ General todo list:
 - [ ] All items are stringly identified rather than done by reference.
   - [ ] Makes building the model much simpler but causes the need to validation (this may be required anyway).
 - [ ] Serialisation and deserialisation via text templates probably isn't a good idea.
-- [ ] Loader should use enums for columns. all db code could be improved.
 - [ ] Classes like Attributes and Behaviors (in order to string index things) could be improved
 - [ ] Behavior lol.
 - [ ] Don't re-implement C#.
 - [ ] Don't re-implement SQL.
 - [ ] Collections should have support for extra data.
 - [ ] Collections should probably be relationships.
+- [ ] Unit tests.
+- [ ] Add relationships to this document.
 
 Model
 -----

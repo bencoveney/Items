@@ -83,11 +83,9 @@ SELECT
 FROM
 	Information_Schema.Tables AS SchemaTables
 WHERE
-	SchemaTables.Table_Name != 'sysdiagrams'
-	AND SchemaTables.Table_Name != '__RefactorLog'
-	AND SchemaTables.Table_Name NOT LIKE '%Category'
-	AND SchemaTables.Table_Name NOT LIKE '%Category'
-	AND SchemaTables.Table_Name NOT LIKE '%Collection'";
+	SchemaTables.Table_Type = 'BASE TABLE'
+	AND SchemaTables.Table_Name != 'sysdiagrams'
+	AND SchemaTables.Table_Name != '__RefactorLog'";
 
 		/// <summary>
 		/// Query to find names of collections

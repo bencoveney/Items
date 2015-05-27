@@ -65,7 +65,7 @@
 		{
 			get
 			{
-				return ((IEnumerable<Thing>)Items.Values).Concat(Categories.Values).Concat(Relationships.Values);
+				return ((IEnumerable<Thing>)this.Items.Values).Concat(this.Categories.Values).Concat(this.Relationships.Values);
 			}
 		}
 
@@ -87,6 +87,10 @@
 			this.Categories.Add(category.Name, category);
 		}
 
+		/// <summary>
+		/// Adds the relationship.
+		/// </summary>
+		/// <param name="relationship">The relationship.</param>
 		public void AddRelationship(Relationship relationship)
 		{
 			this.Relationships.Add(relationship.Name, relationship);

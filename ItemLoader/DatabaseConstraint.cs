@@ -32,7 +32,7 @@
 	}
 
 	/// <summary>
-	/// Represents a constraint applied to the database
+	/// Represents a constraint applied to a table in the database
 	/// </summary>
 	public class DatabaseConstraint
 	{
@@ -42,30 +42,38 @@
 		/// </summary>
 		private const string ConstraintsQuery = @"
 SELECT
-	SchemaConstraint.CONSTRAINT_NAME,
-	SchemaConstraint.CONSTRAINT_TYPE,
-	SchemaConstraint.TABLE_NAME,
+	DatabaseConstraints.CONSTRAINT_CATALOG,
+	DatabaseConstraints.CONSTRAINT_SCHEMA,
+	DatabaseConstraints.CONSTRAINT_NAME,
+	DatabaseConstraints.CONSTRAINT_TYPE,
+	DatabaseConstraints.TABLE_NAME,
 	ConstrainedColumn.COLUMN_NAME,
-	SchemaConstraint.IS_DEFERRABLE,
-	SchemaConstraint.INITIALLY_DEFERRED
+	DatabaseConstraints.IS_DEFERRABLE,
+	DatabaseConstraints.INITIALLY_DEFERRED
 FROM
-	INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS SchemaConstraint
-	INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS ConstrainedColumn ON SchemaConstraint.CONSTRAINT_NAME = ConstrainedColumn.CONSTRAINT_NAME
+	INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS DatabaseConstraints
+	INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS ConstrainedColumn ON DatabaseConstraints.CONSTRAINT_NAME = ConstrainedColumn.CONSTRAINT_NAME
 WHERE
-	SchemaConstraint.TABLE_NAME != '__RefactorLog'";
+	DatabaseConstraints.TABLE_NAME != '__RefactorLog'";
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DatabaseConstraint"/> class.
+		/// Initializes a new instance of the <see cref="DatabaseConstraint" /> class.
 		/// </summary>
+		/// <param name="catalog">The catalog.</param>
+		/// <param name="schema">The schema.</param>
 		/// <param name="name">The name.</param>
 		/// <param name="type">The type.</param>
 		/// <param name="tableName">Name of the table.</param>
 		/// <param name="isDeferrable">if set to <c>true</c> [is deferrable].</param>
 		/// <param name="initiallyDeferred">if set to <c>true</c> [initially deferred].</param>
-		public DatabaseConstraint(string name, ConstraintType type, string tableName, bool isDeferrable, bool initiallyDeferred)
+		public DatabaseConstraint(string catalog, string schema, string name, ConstraintType type, string tableName, bool isDeferrable, bool initiallyDeferred)
 		{
-			this.ConstraintName = name;
-			this.ConstraintType = type;
+			// Populate member variables
+			// A lot of the varibales here are duplicated from the tables class. maybe these constraints should just be properties of the tables?
+			this.Catalog = catalog;
+			this.Schema = schema;
+			this.Name = name;
+			this.Type = type;
 			this.TableName = tableName;
 			this.ColumnNames = new List<string>();
 			this.IsDeferrable = isDeferrable;
@@ -73,58 +81,74 @@ WHERE
 		}
 
 		/// <summary>
-		/// Gets or sets the name of the constraint.
+		/// Gets the catalog.
+		/// </summary>
+		/// <value>
+		/// The catalog.
+		/// </value>
+		public string Catalog { get; private set; }
+
+		/// <summary>
+		/// Gets the schema.
+		/// </summary>
+		/// <value>
+		/// The schema.
+		/// </value>
+		public string Schema { get; private set; }
+
+		/// <summary>
+		/// Gets the name of the constraint.
 		/// </summary>
 		/// <value>
 		/// The name of the constraint.
 		/// </value>
-		public string ConstraintName { get; set; }
+		public string Name { get; private set; }
 
 		/// <summary>
-		/// Gets or sets the type of the constraint.
+		/// Gets the type of the constraint.
 		/// </summary>
 		/// <value>
 		/// The type of the constraint.
 		/// </value>
-		public ConstraintType ConstraintType { get; set; }
+		public ConstraintType Type { get; private set; }
 
 		/// <summary>
-		/// Gets or sets the name of the table this constraint applies to.
+		/// Gets the name of the table this constraint applies to.
 		/// </summary>
 		/// <value>
 		/// The name of the table.
 		/// </value>
-		public string TableName { get; set; }
+		public string TableName { get; private set; }
 
 		/// <summary>
-		/// Gets or sets the column names covered by this constraint.
+		/// Gets the column names covered by this constraint.
 		/// </summary>
 		/// <value>
 		/// The column names.
 		/// </value>
-		public List<string> ColumnNames { get; set; }
+		public List<string> ColumnNames { get; private set; }
 
 		/// <summary>
-		/// Gets or sets a value indicating whether enforcement of this constraint can be deferred.
+		/// Gets a value indicating whether enforcement of this constraint can be deferred.
 		/// </summary>
 		/// <value>
 		/// <c>true</c> if this instance is deferrable; otherwise, <c>false</c>.
 		/// </value>
-		public bool IsDeferrable { get; set; }
+		public bool IsDeferrable { get; private set; }
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the constraint is deferred until just before the transaction commits.
+		/// Gets a value indicating whether the constraint is deferred until just before the transaction commits.
 		/// </summary>
 		/// <value>
 		///   <c>true</c> if [initially deferred]; otherwise, <c>false</c>.
 		/// </value>
-		public bool InitiallyDeferred { get; set; }
+		public bool InitiallyDeferred { get; private set; }
 
 		/// <summary>
 		/// Loads constraints from the database.
 		/// </summary>
 		/// <param name="connection">The connection.</param>
-		/// <returns>The constraints</returns>
+		/// <returns>The constraints present in the database.</returns>
 		public static IEnumerable<DatabaseConstraint> LoadConstraints(SqlConnection connection)
 		{
 			List<DatabaseConstraint> constraints = new List<DatabaseConstraint>();
@@ -137,27 +161,29 @@ WHERE
 					while (result.Read())
 					{
 						// Read the result data
-						string constraintName = result.GetString(0);
-						string constraintTypeText = result.GetString(1);
-						string tableName = result.GetString(2);
-						string columnName = result.GetString(3);
-						bool isDeferrable = result.GetString(4).Equals("NO") ? false : true;
-						bool initiallyDeferred = result.GetString(5).Equals("NO") ? false : true;
+						string catalog = result.GetString(0);
+						string schema = result.GetString(1);
+						string name = result.GetString(2);
+						string typeAsText = result.GetString(3);
+						string tableName = result.GetString(4);
+						string columnName = result.GetString(5);
+						bool isDeferrable = result.GetString(6).Equals("NO") ? false : true;
+						bool initiallyDeferred = result.GetString(7).Equals("NO") ? false : true;
 
 						// Convert the constraint type
-						ConstraintType constraintType = (ConstraintType)Enum.Parse(typeof(ConstraintType), constraintTypeText.Replace(" ", string.Empty), true);
+						ConstraintType type = (ConstraintType)Enum.Parse(typeof(ConstraintType), typeAsText.Replace(" ", string.Empty), true);
 
 						// If the constraint has already been read, then this is just an additional column
 						// Otherwise it is a new constraint
-						if (constraints.Any(constraint => constraint.ConstraintName == constraintName))
+						if (constraints.Any(constraint => constraint.Name == name))
 						{
 							// Add the column to the constraint
-							constraints.Single(constraint => constraint.ConstraintName == constraintName).ColumnNames.Add(columnName);
+							constraints.Single(constraint => constraint.Name == name).ColumnNames.Add(columnName);
 						}
 						else
 						{
 							// Build the new constraint
-							DatabaseConstraint newConstraint = new DatabaseConstraint(constraintName, constraintType, tableName, isDeferrable, initiallyDeferred);
+							DatabaseConstraint newConstraint = new DatabaseConstraint(catalog, schema, name, type, tableName, isDeferrable, initiallyDeferred);
 							newConstraint.ColumnNames.Add(columnName);
 							constraints.Add(newConstraint);
 						}
@@ -166,6 +192,17 @@ WHERE
 			}
 
 			return constraints;
+		}
+
+		/// <summary>
+		/// Returns a <see cref="System.String" /> that represents this instance.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String" /> that represents this instance.
+		/// </returns>
+		public override string ToString()
+		{
+			return string.Format("{0}.{1}.{2} ({3})", this.Catalog, this.Schema, this.Name, string.Join(", ", this.ColumnNames));
 		}
 	}
 }

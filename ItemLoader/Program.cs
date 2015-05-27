@@ -22,6 +22,8 @@
 			using (SqlConnection connection = new SqlConnection(ConnectionString))
 			{
 				connection.Open();
+				IEnumerable<DatabaseTable> tables = DatabaseTable.LoadTables(connection);
+				IEnumerable<DatabaseColumn> columns = DatabaseColumn.LoadColumns(connection);
 				IEnumerable<DatabaseConstraint> constraints = DatabaseConstraint.LoadConstraints(connection);
 				connection.Close();
 			}
