@@ -17,6 +17,7 @@
 		{
 			this.Items = new Dictionary<string, Item>();
 			this.Categories = new Dictionary<string, Category>();
+			this.Relationships = new Dictionary<string, Relationship>();
 		}
 
 		/// <summary>
@@ -94,6 +95,31 @@
 		public void AddRelationship(Relationship relationship)
 		{
 			this.Relationships.Add(relationship.Name, relationship);
+		}
+
+		/// <summary>
+		/// Adds the thing to the correct collection.
+		/// </summary>
+		/// <param name="thing">The thing.</param>
+		/// <exception cref="System.ArgumentException">Unknown thing type;thing</exception>
+		public void AddThing(Thing thing)
+		{
+			if (thing is Item)
+			{
+				AddItem((Item)thing);
+			}
+			else if (thing is Relationship)
+			{
+				AddRelationship((Relationship)thing);
+			}
+			else if (thing is Category)
+			{
+				AddCategory((Category)thing);
+			}
+			else
+			{
+				throw new ArgumentException("Unknown thing type", "thing");
+			}
 		}
 
 		/// <summary>

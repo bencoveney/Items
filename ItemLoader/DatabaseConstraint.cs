@@ -33,68 +33,28 @@
 
 	/// <summary>
 	/// Represents a constraint applied to a table in the database
+	/// TODO Defaults?
 	/// </summary>
 	public class DatabaseConstraint
 	{
 		/// <summary>
-		/// Query to find which columns on which tables have unique constraints
-		/// This query does not handle unique constraints which apply to multiple columns
+		/// Initializes a new instance of the <see cref="DatabaseConstraint"/> class
 		/// </summary>
-		private const string ConstraintsQuery = @"
-SELECT
-	DatabaseConstraints.CONSTRAINT_CATALOG,
-	DatabaseConstraints.CONSTRAINT_SCHEMA,
-	DatabaseConstraints.CONSTRAINT_NAME,
-	DatabaseConstraints.CONSTRAINT_TYPE,
-	DatabaseConstraints.TABLE_NAME,
-	ConstrainedColumn.COLUMN_NAME,
-	DatabaseConstraints.IS_DEFERRABLE,
-	DatabaseConstraints.INITIALLY_DEFERRED
-FROM
-	INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS DatabaseConstraints
-	INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS ConstrainedColumn ON DatabaseConstraints.CONSTRAINT_NAME = ConstrainedColumn.CONSTRAINT_NAME
-WHERE
-	DatabaseConstraints.TABLE_NAME != '__RefactorLog'";
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="DatabaseConstraint" /> class.
-		/// </summary>
-		/// <param name="catalog">The catalog.</param>
-		/// <param name="schema">The schema.</param>
 		/// <param name="name">The name.</param>
+		/// <param name="table">The table.</param>
 		/// <param name="type">The type.</param>
-		/// <param name="tableName">Name of the table.</param>
 		/// <param name="isDeferrable">if set to <c>true</c> [is deferrable].</param>
 		/// <param name="initiallyDeferred">if set to <c>true</c> [initially deferred].</param>
-		public DatabaseConstraint(string catalog, string schema, string name, ConstraintType type, string tableName, bool isDeferrable, bool initiallyDeferred)
+		public DatabaseConstraint(string name, DatabaseTable table, ConstraintType type, bool isDeferrable, bool initiallyDeferred)
 		{
 			// Populate member variables
-			// A lot of the varibales here are duplicated from the tables class. maybe these constraints should just be properties of the tables?
-			this.Catalog = catalog;
-			this.Schema = schema;
 			this.Name = name;
+			this.Table = table;
 			this.Type = type;
-			this.TableName = tableName;
 			this.ColumnNames = new List<string>();
 			this.IsDeferrable = isDeferrable;
 			this.InitiallyDeferred = initiallyDeferred;
 		}
-
-		/// <summary>
-		/// Gets the catalog.
-		/// </summary>
-		/// <value>
-		/// The catalog.
-		/// </value>
-		public string Catalog { get; private set; }
-
-		/// <summary>
-		/// Gets the schema.
-		/// </summary>
-		/// <value>
-		/// The schema.
-		/// </value>
-		public string Schema { get; private set; }
 
 		/// <summary>
 		/// Gets the name of the constraint.
@@ -105,6 +65,15 @@ WHERE
 		public string Name { get; private set; }
 
 		/// <summary>
+		/// Gets the table this constraint applies to.
+		/// Should could this be inferred by finding tables which have this as a constraint?
+		/// </summary>
+		/// <value>
+		/// The table.
+		/// </value>
+		public DatabaseTable Table { get; private set; }
+
+		/// <summary>
 		/// Gets the type of the constraint.
 		/// </summary>
 		/// <value>
@@ -113,20 +82,21 @@ WHERE
 		public ConstraintType Type { get; private set; }
 
 		/// <summary>
-		/// Gets the name of the table this constraint applies to.
-		/// </summary>
-		/// <value>
-		/// The name of the table.
-		/// </value>
-		public string TableName { get; private set; }
-
-		/// <summary>
 		/// Gets the column names covered by this constraint.
+		/// TODO point at actual columns. at that point would we need to keep the reference to the table?
 		/// </summary>
 		/// <value>
 		/// The column names.
 		/// </value>
 		public List<string> ColumnNames { get; private set; }
+
+		/// <summary>
+		/// Gets the column this constraint refers to if it is a foreign key. This data is not always applicable, should possibly be in an inherited class?
+		/// </summary>
+		/// <value>
+		/// The referred column.
+		/// </value>
+		public DatabaseColumn ReferredColumn { get; private set; }
 
 		/// <summary>
 		/// Gets a value indicating whether enforcement of this constraint can be deferred.
@@ -145,53 +115,170 @@ WHERE
 		public bool InitiallyDeferred { get; private set; }
 
 		/// <summary>
-		/// Loads constraints from the database.
+		/// Loads unique and primary key constraints from the database.
 		/// </summary>
+		/// <param name="table">The table.</param>
 		/// <param name="connection">The connection.</param>
-		/// <returns>The constraints present in the database.</returns>
-		public static IEnumerable<DatabaseConstraint> LoadConstraints(SqlConnection connection)
+		public static void PopulateUniqueConstraints(DatabaseTable table, SqlConnection connection)
 		{
-			List<DatabaseConstraint> constraints = new List<DatabaseConstraint>();
+			const string UniqueConstraintsQuery = @"
+SELECT
+	DatabaseConstraints.CONSTRAINT_NAME AS ConstraintName,
+	DatabaseConstraints.CONSTRAINT_TYPE AS Type,
+	ConstrainedColumn.COLUMN_NAME AS ColumnName,
+	DatabaseConstraints.IS_DEFERRABLE AS IsDeferrable,
+	DatabaseConstraints.INITIALLY_DEFERRED AS InitiallyDeferred
+FROM
+	INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS DatabaseConstraints
+	INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS ConstrainedColumn ON DatabaseConstraints.CONSTRAINT_NAME = ConstrainedColumn.CONSTRAINT_NAME
+WHERE
+	DatabaseConstraints.CONSTRAINT_CATALOG = @TableCatalog
+	AND DatabaseConstraints.CONSTRAINT_SCHEMA = @TableSchema
+	AND DatabaseConstraints.TABLE_NAME = @TableName
+	AND CONSTRAINT_TYPE IN ('PRIMARY KEY', 'UNIQUE')";
 
 			// Query the database for the constraint data
-			using (SqlCommand command = new SqlCommand(ConstraintsQuery, connection))
+			using (SqlCommand command = new SqlCommand(UniqueConstraintsQuery, connection))
 			{
+				command.Parameters.AddWithValue("TableCatalog", table.Catalog);
+				command.Parameters.AddWithValue("TableSchema", table.Schema);
+				command.Parameters.AddWithValue("TableName", table.Name);
+
 				using (SqlDataReader result = command.ExecuteReader())
 				{
 					while (result.Read())
 					{
 						// Read the result data
-						string catalog = result.GetString(0);
-						string schema = result.GetString(1);
-						string name = result.GetString(2);
-						string typeAsText = result.GetString(3);
-						string tableName = result.GetString(4);
-						string columnName = result.GetString(5);
-						bool isDeferrable = result.GetString(6).Equals("NO") ? false : true;
-						bool initiallyDeferred = result.GetString(7).Equals("NO") ? false : true;
+						string name = (string)result["ConstraintName"];
+						string typeAsText = (string)result["Type"];
+						string columnName = (string)result["ColumnName"];
+						bool isDeferrable = ((string)result["IsDeferrable"]).Equals("NO") ? false : true;
+						bool initiallyDeferred = ((string)result["InitiallyDeferred"]).Equals("NO") ? false : true;
 
 						// Convert the constraint type
 						ConstraintType type = (ConstraintType)Enum.Parse(typeof(ConstraintType), typeAsText.Replace(" ", string.Empty), true);
 
 						// If the constraint has already been read, then this is just an additional column
 						// Otherwise it is a new constraint
-						if (constraints.Any(constraint => constraint.Name == name))
+						if (table.Constraints.Any(constraint => constraint.Name == name))
 						{
 							// Add the column to the constraint
-							constraints.Single(constraint => constraint.Name == name).ColumnNames.Add(columnName);
+							table.Constraints.Single(constraint => constraint.Name == name).ColumnNames.Add(columnName);
 						}
 						else
 						{
 							// Build the new constraint
-							DatabaseConstraint newConstraint = new DatabaseConstraint(catalog, schema, name, type, tableName, isDeferrable, initiallyDeferred);
+							DatabaseConstraint newConstraint = new DatabaseConstraint(name, table, type, isDeferrable, initiallyDeferred);
 							newConstraint.ColumnNames.Add(columnName);
-							constraints.Add(newConstraint);
+
+							table.Constraints.Add(newConstraint);
 						}
 					}
 				}
 			}
+		}
 
-			return constraints;
+		/// <summary>
+		/// Loads check constraints from the database.
+		/// </summary>
+		/// <param name="table">The table.</param>
+		/// <param name="connection">The connection.</param>
+		public static void PopulateCheckConstraints(DatabaseTable table, SqlConnection connection)
+		{
+			throw new NotImplementedException("Check constraints not yet implemented");
+		}
+
+		/// <summary>
+		/// Loads foreign key constraints from the database.
+		/// </summary>
+		/// <param name="tables">The tables.</param>
+		/// <param name="connection">The connection.</param>
+		/// <exception cref="System.InvalidOperationException">
+		/// The foreign key refers to a table which doesn't exist in the collection
+		/// or
+		/// The foreign key refers to a column which hasn't been populated for the given table
+		/// </exception>
+		public static void PopulateReferentialConstraints(IEnumerable<DatabaseTable> tables, SqlConnection connection)
+		{
+			const string ReferentialConstraintsQuery = @"
+SELECT
+	DatabaseConstraints.CONSTRAINT_NAME AS ConstraintName,
+	ConstrainedColumn.COLUMN_NAME AS ColumnName,
+	DatabaseConstraints.IS_DEFERRABLE AS IsDeferrable,
+	DatabaseConstraints.INITIALLY_DEFERRED AS InitiallyDeferred,
+	ReferencedConstraint.TABLE_CATALOG AS ReferencedCatalog,
+	ReferencedConstraint.TABLE_SCHEMA AS ReferencedSchema,
+	ReferencedConstraint.TABLE_NAME AS ReferencedTable,
+	ReferencedColumn.COLUMN_NAME AS ReferencedColumn
+FROM
+	INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS DatabaseConstraints
+	INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS ConstrainedColumn ON DatabaseConstraints.CONSTRAINT_NAME = ConstrainedColumn.CONSTRAINT_NAME
+	INNER JOIN INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS AS ConstraintReference ON DatabaseConstraints.CONSTRAINT_NAME = ConstraintReference.CONSTRAINT_NAME
+	INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS ReferencedConstraint ON ConstraintReference.UNIQUE_CONSTRAINT_NAME = ReferencedConstraint.CONSTRAINT_NAME
+	INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS ReferencedColumn ON ReferencedConstraint.CONSTRAINT_NAME = ReferencedColumn.CONSTRAINT_NAME
+
+WHERE
+	DatabaseConstraints.CONSTRAINT_CATALOG = @TableCatalog
+	AND DatabaseConstraints.CONSTRAINT_SCHEMA = @TableSchema
+	AND DatabaseConstraints.TABLE_NAME = @TableName
+	AND DatabaseConstraints.CONSTRAINT_TYPE = 'FOREIGN KEY'";
+
+			foreach (DatabaseTable table in tables)
+			{
+				// Query the database for the constraint data
+				using (SqlCommand command = new SqlCommand(ReferentialConstraintsQuery, connection))
+				{
+					command.Parameters.AddWithValue("TableCatalog", table.Catalog);
+					command.Parameters.AddWithValue("TableSchema", table.Schema);
+					command.Parameters.AddWithValue("TableName", table.Name);
+
+					using (SqlDataReader result = command.ExecuteReader())
+					{
+						while (result.Read())
+						{
+							// Read the result data
+							string name = (string)result["ConstraintName"];
+							string columnName = (string)result["ColumnName"];
+							bool isDeferrable = ((string)result["IsDeferrable"]).Equals("NO") ? false : true;
+							bool initiallyDeferred = ((string)result["InitiallyDeferred"]).Equals("NO") ? false : true;
+							string referencedCatalog = (string)result["ReferencedCatalog"];
+							string referencedSchema = (string)result["ReferencedSchema"];
+							string referencedTableName = (string)result["ReferencedTable"];
+							string referencedColumnName = (string)result["ReferencedColumn"];
+
+							// Create the constraint
+							DatabaseConstraint constraint = new DatabaseConstraint(name, table, ConstraintType.ForeignKey, isDeferrable, initiallyDeferred);
+							constraint.ColumnNames.Add(columnName);
+
+							// Find the table the foreign key refers to
+							DatabaseTable referencedTable = tables.SingleOrDefault(t =>
+								t.Catalog == referencedCatalog
+								&& t.Schema == referencedSchema
+								&& t.Name == referencedTableName);
+
+							// Check it exists
+							if (referencedTable == null)
+							{
+								throw new InvalidOperationException(string.Format("The foreign key refers to a table which doesn't exist in the collection ({0}.{1}.{2})", referencedCatalog, referencedSchema, referencedTableName));
+							}
+
+							// Find the column on the table
+							DatabaseColumn referencedColumn = referencedTable.Columns.SingleOrDefault(c => c.Name == referencedColumnName);
+
+							// Check it exists
+							if (referencedColumn == null)
+							{
+								throw new InvalidOperationException(string.Format("The foreign key refers to a column which hasn't been populated for the given table ({0}.{1})", referencedTable, referencedColumnName));
+							}
+
+							// Assign the referenced column to the constraint
+							constraint.ReferredColumn = referencedColumn;
+
+							table.Constraints.Add(constraint);
+						}
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -202,7 +289,7 @@ WHERE
 		/// </returns>
 		public override string ToString()
 		{
-			return string.Format("{0}.{1}.{2} ({3})", this.Catalog, this.Schema, this.Name, string.Join(", ", this.ColumnNames));
+			return string.Format("{0} ({1})", this.Name, string.Join(", ", this.ColumnNames));
 		}
 	}
 }

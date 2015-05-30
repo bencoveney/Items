@@ -59,6 +59,7 @@ WHERE
 			this.Name = name;
 
 			this.Columns = new List<DatabaseColumn>();
+			this.Constraints = new List<DatabaseConstraint>();
 		}
 
 		/// <summary>
@@ -94,30 +95,58 @@ WHERE
 		public List<DatabaseColumn> Columns { get; private set; }
 
 		/// <summary>
-		/// Loads the tables from the database.
+		/// Gets the constraints.
 		/// </summary>
-		/// <param name="connection">The connection.</param>
-		/// <returns>The tables present in the database.</returns>
-		public static IEnumerable<DatabaseTable> LoadTables(SqlConnection connection)
+		/// <value>
+		/// The constraints.
+		/// </value>
+		public List<DatabaseConstraint> Constraints { get; private set; }
+
+		/// <summary>
+		/// Loads the tables from the database including all .
+		/// </summary>
+		/// <param name="connectionString">The connection string.</param>
+		/// <returns>
+		/// The tables present in the database.
+		/// </returns>
+		public static IEnumerable<DatabaseTable> LoadTables(string connectionString)
 		{
 			List<DatabaseTable> tables = new List<DatabaseTable>();
 
-			// Query the database for the table data
-			using (SqlCommand command = new SqlCommand(TablesQuery, connection))
+			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				using (SqlDataReader result = command.ExecuteReader())
-				{
-					while (result.Read())
-					{
-						// Read the result data
-						string tableCatalog = result.GetString(0);
-						string tableSchema = result.GetString(1);
-						string tableName = result.GetString(2);
+				connection.Open();
 
-						// Build the new table
-						tables.Add(new DatabaseTable(tableCatalog, tableSchema, tableName));
+				// Query the database for the table data
+				using (SqlCommand command = new SqlCommand(TablesQuery, connection))
+				{
+					using (SqlDataReader result = command.ExecuteReader())
+					{
+						while (result.Read())
+						{
+							// Read the result data
+							string tableCatalog = result.GetString(0);
+							string tableSchema = result.GetString(1);
+							string tableName = result.GetString(2);
+
+							// Build the new table
+							DatabaseTable table = new DatabaseTable(tableCatalog, tableSchema, tableName);
+
+							tables.Add(table);
+						}
 					}
 				}
+
+				// Populate additional schema objects
+				foreach (DatabaseTable table in tables)
+				{
+					DatabaseColumn.PopulateColumns(table, connection);
+					DatabaseConstraint.PopulateUniqueConstraints(table, connection);
+				}
+
+				DatabaseConstraint.PopulateReferentialConstraints(tables, connection);
+
+				connection.Close();
 			}
 			
 			return tables;
