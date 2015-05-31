@@ -106,15 +106,15 @@
 		{
 			if (thing is Item)
 			{
-				AddItem((Item)thing);
+				this.AddItem((Item)thing);
 			}
 			else if (thing is Relationship)
 			{
-				AddRelationship((Relationship)thing);
+				this.AddRelationship((Relationship)thing);
 			}
 			else if (thing is Category)
 			{
-				AddCategory((Category)thing);
+				this.AddCategory((Category)thing);
 			}
 			else
 			{

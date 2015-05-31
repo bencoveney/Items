@@ -80,7 +80,6 @@
     <Compile Include="Types\SystemType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Docs.md" />
     <None Include="Model.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

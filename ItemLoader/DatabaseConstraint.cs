@@ -38,10 +38,9 @@
 	public class DatabaseConstraint
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DatabaseConstraint"/> class
+		/// Initializes a new instance of the <see cref="DatabaseConstraint" /> class
 		/// </summary>
 		/// <param name="name">The name.</param>
-		/// <param name="table">The table.</param>
 		/// <param name="type">The type.</param>
 		/// <param name="isDeferrable">if set to <c>true</c> [is deferrable].</param>
 		/// <param name="initiallyDeferred">if set to <c>true</c> [initially deferred].</param>
@@ -49,11 +48,12 @@
 		{
 			// Populate member variables
 			this.Name = name;
-			this.Table = table;
 			this.Type = type;
-			this.ColumnNames = new List<string>();
+			this.Columns = new List<DatabaseColumn>();
 			this.IsDeferrable = isDeferrable;
 			this.InitiallyDeferred = initiallyDeferred;
+
+			table.Constraints.Add(this);
 		}
 
 		/// <summary>
@@ -66,12 +66,17 @@
 
 		/// <summary>
 		/// Gets the table this constraint applies to.
-		/// Should could this be inferred by finding tables which have this as a constraint?
 		/// </summary>
 		/// <value>
 		/// The table.
 		/// </value>
-		public DatabaseTable Table { get; private set; }
+		public DatabaseTable Table
+		{
+			get
+			{
+				return DatabaseModel.Tables.Single(table => table.Constraints.Contains(this));
+			}
+		}
 
 		/// <summary>
 		/// Gets the type of the constraint.
@@ -88,7 +93,7 @@
 		/// <value>
 		/// The column names.
 		/// </value>
-		public List<string> ColumnNames { get; private set; }
+		public List<DatabaseColumn> Columns { get; private set; }
 
 		/// <summary>
 		/// Gets the column this constraint refers to if it is a foreign key. This data is not always applicable, should possibly be in an inherited class?
@@ -96,7 +101,7 @@
 		/// <value>
 		/// The referred column.
 		/// </value>
-		public DatabaseColumn ReferredColumn { get; private set; }
+		public DatabaseColumn ReferencedColumn { get; private set; }
 
 		/// <summary>
 		/// Gets a value indicating whether enforcement of this constraint can be deferred.
@@ -163,15 +168,13 @@ WHERE
 						if (table.Constraints.Any(constraint => constraint.Name == name))
 						{
 							// Add the column to the constraint
-							table.Constraints.Single(constraint => constraint.Name == name).ColumnNames.Add(columnName);
+							table.Constraints.Single(constraint => constraint.Name == name).AddColumn(columnName);
 						}
 						else
 						{
 							// Build the new constraint
 							DatabaseConstraint newConstraint = new DatabaseConstraint(name, table, type, isDeferrable, initiallyDeferred);
-							newConstraint.ColumnNames.Add(columnName);
-
-							table.Constraints.Add(newConstraint);
+							newConstraint.AddColumn(columnName);
 						}
 					}
 				}
@@ -248,7 +251,7 @@ WHERE
 
 							// Create the constraint
 							DatabaseConstraint constraint = new DatabaseConstraint(name, table, ConstraintType.ForeignKey, isDeferrable, initiallyDeferred);
-							constraint.ColumnNames.Add(columnName);
+							constraint.AddColumn(columnName);
 
 							// Find the table the foreign key refers to
 							DatabaseTable referencedTable = tables.SingleOrDefault(t =>
@@ -272,13 +275,29 @@ WHERE
 							}
 
 							// Assign the referenced column to the constraint
-							constraint.ReferredColumn = referencedColumn;
-
-							table.Constraints.Add(constraint);
+							constraint.ReferencedColumn = referencedColumn;
 						}
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Adds the column to this constraint's list of subject columns.
+		/// </summary>
+		/// <param name="columnName">Name of the column.</param>
+		public void AddColumn(string columnName)
+		{
+			this.AddColumn(Table.Columns.Single(column => column.Name == columnName));
+		}
+
+		/// <summary>
+		/// Adds the column to this constraint's list of subject columns.
+		/// </summary>
+		/// <param name="column">The column.</param>
+		public void AddColumn(DatabaseColumn column)
+		{
+			this.Columns.Add(column);
 		}
 
 		/// <summary>
@@ -289,7 +308,7 @@ WHERE
 		/// </returns>
 		public override string ToString()
 		{
-			return string.Format("{0} ({1})", this.Name, string.Join(", ", this.ColumnNames));
+			return string.Format("{0} ({1})", this.Name, string.Join(", ", this.Columns.Select<DatabaseColumn, string>(column => column.Name)));
 		}
 	}
 }

@@ -316,7 +316,8 @@ WHERE
 						if (result.IsDBNull(4))
 						{
 							// TODO Data type size
-							type = this.SqlTypeToSystemType(result.GetString(2));
+							// TODO I broke this
+							type = (IType)null; // this.SqlTypeToSystemType(result.GetString(2));
 						}
 						else
 						{
@@ -507,134 +508,6 @@ WHERE
 					}
 				}
 			}
-		}
-
-		/// <summary>
-		/// Converts an SQL data type to a system type
-		/// </summary>
-		/// <param name="sqlType">The data type in SQL server</param>
-		/// <returns>The data type within the model</returns>
-		public IType SqlTypeToSystemType(string sqlType)
-		{
-			IType type;
-
-			// TODO full list available here: https://msdn.microsoft.com/en-us/library/cc716729%28v=vs.110%29.aspx
-			// TODO Xml not implemented
-			switch (sqlType.ToLower())
-			{
-				case "bit":
-					SystemType<bool> booleanType = new SystemType<bool>();
-					booleanType.Details["SqlDataType"] = sqlType;
-					type = booleanType;
-					break;
-
-				case "bigint":
-					SystemType<long> int64Type = new SystemType<long>();
-					int64Type.Details["SqlDataType"] = sqlType;
-					type = int64Type;
-					break;
-
-				case "int":
-					SystemType<int> int32Type = new SystemType<int>();
-					int32Type.Details["SqlDataType"] = sqlType;
-					type = int32Type;
-					break;
-
-				case "smallint":
-					SystemType<short> int16Type = new SystemType<short>();
-					int16Type.Details["SqlDataType"] = sqlType;
-					type = int16Type;
-					break;
-
-				case "tinyint":
-					SystemType<byte> byteType = new SystemType<byte>();
-					byteType.Details["SqlDataType"] = sqlType;
-					type = byteType;
-					break;
-
-				case "char":
-				case "nchar":
-				case "varchar":
-				case "nvarchar":
-				case "text":
-				case "ntext":
-					SystemType<string> stringType = new SystemType<string>();
-					stringType.Details["SqlDataType"] = sqlType;
-					type = stringType;
-					break;
-
-				case "datetime":
-				case "datetime2":
-				case "smalldatetime":
-					SystemType<DateTime> dateTimeType = new SystemType<DateTime>();
-					dateTimeType.Details["SqlDataType"] = sqlType;
-					type = dateTimeType;
-					break;
-
-				case "datetimeoffset":
-					SystemType<DateTimeOffset> dateTimeOffsetType = new SystemType<DateTimeOffset>();
-					dateTimeOffsetType.Details["SqlDataType"] = sqlType;
-					type = dateTimeOffsetType;
-					break;
-
-				case "decimal":
-				case "money":
-				case "numeric":
-				case "smallmoney":
-					SystemType<decimal> decimalType = new SystemType<decimal>();
-					decimalType.Details["SqlDataType"] = sqlType;
-					type = decimalType;
-					break;
-
-				case "float":
-					SystemType<double> doubleType = new SystemType<double>();
-					doubleType.Details["SqlDataType"] = sqlType;
-					type = doubleType;
-					break;
-
-				case "real":
-					SystemType<float> singleType = new SystemType<float>();
-					singleType.Details["SqlDataType"] = sqlType;
-					type = singleType;
-					break;
-
-				// TODO filestream ?
-				case "binary":
-				case "image":
-				case "rowversion":
-				case "timestamp":
-				case "varbinary":
-					SystemType<byte[]> byteArrayType = new SystemType<byte[]>();
-					byteArrayType.Details["SqlDataType"] = sqlType;
-					type = byteArrayType;
-					break;
-
-				case "sql_variant":
-					SystemType<object> objectType = new SystemType<object>();
-					objectType.Details["SqlDataType"] = sqlType;
-					type = objectType;
-					break;
-
-				case "time":
-					SystemType<TimeSpan> timeSpanType = new SystemType<TimeSpan>();
-					timeSpanType.Details["SqlDataType"] = sqlType;
-					type = timeSpanType;
-					break;
-
-				case "uniqueidentifier":
-					SystemType<Guid> guidType = new SystemType<Guid>();
-					guidType.Details["SqlDataType"] = sqlType;
-					type = guidType;
-					break;
-
-				default:
-					SystemType<object> defaultType = new SystemType<object>();
-					defaultType.Details["SqlDataType"] = sqlType;
-					type = defaultType;
-					break;
-			}
-
-			return type;
 		}
 	}
 }

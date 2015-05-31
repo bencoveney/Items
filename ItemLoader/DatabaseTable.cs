@@ -3,9 +3,11 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
+using Items;
 
 	/// <summary>
 	/// A table in the database
+	/// TODO enforce constraints and columns not being assigned multiple times
 	/// </summary>
 	public class DatabaseTable
 	{
@@ -109,10 +111,8 @@ WHERE
 		/// <returns>
 		/// The tables present in the database.
 		/// </returns>
-		public static IEnumerable<DatabaseTable> LoadTables(string connectionString)
+		public static void LoadTables(string connectionString)
 		{
-			List<DatabaseTable> tables = new List<DatabaseTable>();
-
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				connection.Open();
@@ -132,24 +132,34 @@ WHERE
 							// Build the new table
 							DatabaseTable table = new DatabaseTable(tableCatalog, tableSchema, tableName);
 
-							tables.Add(table);
+							DatabaseModel.Tables.Add(table);
 						}
 					}
 				}
 
 				// Populate additional schema objects
-				foreach (DatabaseTable table in tables)
+				foreach (DatabaseTable table in DatabaseModel.Tables)
 				{
 					DatabaseColumn.PopulateColumns(table, connection);
 					DatabaseConstraint.PopulateUniqueConstraints(table, connection);
 				}
 
-				DatabaseConstraint.PopulateReferentialConstraints(tables, connection);
+				DatabaseConstraint.PopulateReferentialConstraints(DatabaseModel.Tables, connection);
 
 				connection.Close();
 			}
-			
-			return tables;
+		}
+
+		/// <summary>
+		/// Determines whether this table is the basis behind the specified thing.
+		/// </summary>
+		/// <param name="thing">The thing.</param>
+		/// <returns>A value indicating whether the thing is based on this table</returns>
+		public bool IsThingMatch(Thing thing)
+		{
+			return (string)thing.Details["SqlCatalog"] == this.Catalog
+				&& (string)thing.Details["SqlSchema"] == this.Schema
+				&& (string)thing.Details["SqlTable"] == this.Name;
 		}
 
 		/// <summary>

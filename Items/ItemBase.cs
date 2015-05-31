@@ -29,6 +29,7 @@
 		{
 			this.Name = name;
 			this.Attributes = new Attributes();
+			this.Details = new ImplementationDetails();
 		}
 
 		/// <summary>
@@ -117,6 +118,18 @@
 		/// Should be dictionary, with the identifier being a key on the dictionary
 		/// </summary>
 		public Attributes Attributes
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Gets the implementation specific details attached to the type
+		/// </summary>
+		/// <value>
+		/// The details.
+		/// </value>
+		public ImplementationDetails Details
 		{
 			get;
 			private set;
