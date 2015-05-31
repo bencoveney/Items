@@ -40,9 +40,37 @@
 		}
 
 		/// <summary>
+		/// Gets the left link.
+		/// </summary>
+		/// <value>
+		/// The left link.
+		/// </value>
+		public RelationshipLink LeftLink
+		{
+			get
+			{
+				return Links[0];
+			}
+		}
+
+		/// <summary>
+		/// Gets the right link.
+		/// </summary>
+		/// <value>
+		/// The right link.
+		/// </value>
+		public RelationshipLink RightLink
+		{
+			get
+			{
+				return Links[1];
+			}
+		}
+
+		/// <summary>
 		/// Used by a relationship to indicate what thing (and the quantity of those things) is being related 
 		/// </summary>
-		public struct RelationshipLink
+		public class RelationshipLink
 		{
 			/// <summary>
 			/// The lowest amount of things which can be encompassed by this link (can't be negative)

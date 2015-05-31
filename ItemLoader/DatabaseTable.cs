@@ -90,6 +90,7 @@ WHERE
 
 		/// <summary>
 		/// Gets the columns the table contains.
+		/// TODO maybe an array would be better as this would enforce the column order more strictly than a collection
 		/// </summary>
 		/// <value>
 		/// The columns.
@@ -103,6 +104,39 @@ WHERE
 		/// The constraints.
 		/// </value>
 		public List<DatabaseConstraint> Constraints { get; private set; }
+
+		/// <summary>
+		/// Predicate used to determine whether the table is an item.
+		/// </summary>
+		public bool RepresentsItem
+		{
+			get
+			{
+				return !this.RepresentsRelationship && !this.RepresentsCategory;
+			}
+		}
+
+		/// <summary>
+		/// Predicate used to determine whether the table is a relationship.
+		/// </summary>
+		public bool RepresentsRelationship
+		{
+			get
+			{
+				return this.Name.Contains("Collection");
+			}
+		}
+
+		/// <summary>
+		/// Predicate used to determine whether the table is a category.
+		/// </summary>
+		public bool RepresentsCategory
+		{
+			get
+			{
+				return this.Name.Contains("Category");
+			}
+		}
 
 		/// <summary>
 		/// Loads the tables from the database including all .
@@ -159,7 +193,8 @@ WHERE
 		{
 			return (string)thing.Details["SqlCatalog"] == this.Catalog
 				&& (string)thing.Details["SqlSchema"] == this.Schema
-				&& (string)thing.Details["SqlTable"] == this.Name;
+				&& (string)thing.Details["SqlTable"] == this.Name
+				&& !thing.Details.ContainsKey("SqlColumns");
 		}
 
 		/// <summary>

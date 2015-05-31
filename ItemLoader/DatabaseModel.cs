@@ -76,7 +76,7 @@
 			Model result = new Model();
 
 			// Populate base items
-			foreach (DatabaseTable table in Tables.Where(ItemTablePredicate))
+			foreach (DatabaseTable table in Tables.Where(table => table.RepresentsItem))
 			{
 				Item item = new Item(table.Name);
 
@@ -95,10 +95,11 @@
 			}
 
 			// Populate categories
-			foreach (DatabaseTable table in Tables.Where(CategoryTablePredicate))
+			foreach (DatabaseTable table in Tables.Where(table => table.RepresentsCategory))
 			{
 				Category category = new Category(table.Name);
 
+				// Add additional details
 				category.Details.Add("SqlCatalog", table.Catalog);
 				category.Details.Add("SqlSchema", table.Schema);
 				category.Details.Add("SqlTable", table.Name);
@@ -112,10 +113,11 @@
 				result.AddCategory(category);
 			}
 
-			foreach (DatabaseTable table in Tables.Where(t => t.Name.Contains("Collection")))
+			// Populate relationships from link tables
+			foreach (DatabaseTable table in Tables.Where(t => t.RepresentsRelationship))
 			{
 				// Find the first columns which are foreign keys and assume those are the right and left sides of the relationship
-				IEnumerable<DatabaseColumn> columnsWithForeignKeys = table.Columns.Where(column => table.Constraints.Any(constraint => constraint.Type == ConstraintType.ForeignKey && constraint.Columns.Contains(column)));
+				IEnumerable<DatabaseColumn> columnsWithForeignKeys = table.Columns.Where(column => column.IsReferencer);
 
 				DatabaseColumn leftColumn = columnsWithForeignKeys.OrderBy(column => column.OrdinalPosition).ToList()[0];
 				Thing leftThing = result.Things.Single(thing => leftColumn.ReferencedColumn.Table.IsThingMatch(thing));
@@ -125,40 +127,56 @@
 
 				Relationship relationship = new Relationship(table.Name, leftThing, rightThing);
 
+				// Add additional details
+				relationship.Details.Add("SqlCatalog", table.Catalog);
+				relationship.Details.Add("SqlSchema", table.Schema);
+				relationship.Details.Add("SqlTable", table.Name);
+
 				result.AddRelationship(relationship);
 			}
 
+			// Populate relationships from foreign keys for tables we haven't processed yet
+			foreach (DatabaseTable table in Tables)
+			{
+				// Find the columns with foreign keys
+				IEnumerable<DatabaseColumn> columnsWithForeignKeys = table.Columns.Where(column => column.IsReferencer);
+
+				// If this is a relationship table then the first two columns are already a relationship
+				if (table.RepresentsRelationship)
+				{
+					columnsWithForeignKeys = columnsWithForeignKeys.Skip(2);
+				}
+
+				foreach (DatabaseColumn column in columnsWithForeignKeys)
+				{
+					// Get the thing for this table
+					Thing leftThing = result.Things.Single(table.IsThingMatch);
+
+					// Find the table being referenced by the foreign key
+					Thing rightThing = result.Things.Single(column.ReferencedColumn.Table.IsThingMatch);
+
+					// Find the constraint which is doing the referencing
+					// TODO move to DatabaseColumn property
+					DatabaseConstraint constraint = Constraints.Single(dbConstraint => dbConstraint.Type == ConstraintType.ForeignKey && dbConstraint.Columns.Contains(column));
+
+					// Create the relationship
+					// The left hand side (referencer) can only point to a single item on the right hand side (referenced)
+					// TODO it might be possible to infer more detail here using unique and NOT NULL constraints
+					Relationship relationship = new Relationship(constraint.Name, leftThing, rightThing);
+					relationship.RightLink.AmountLower = 1;
+					relationship.RightLink.AmountUpper = 1;
+
+					// Add additional details
+					relationship.Details.Add("SqlCatalog", table.Catalog);
+					relationship.Details.Add("SqlSchema", table.Schema);
+					relationship.Details.Add("SqlTable", table.Name);
+					relationship.Details.Add("SqlColumns", string.Join(", ", constraint.Columns));
+
+					result.AddRelationship(relationship);
+				}
+			}
+
 			return result;
-		}
-
-		/// <summary>
-		/// Predicate used to determine whether the table is an item.
-		/// </summary>
-		/// <param name="table">The table.</param>
-		/// <returns>A value indicating whether the table represents an item.</returns>
-		private static bool ItemTablePredicate(DatabaseTable table)
-		{
-			return !RelationshipTablePredicate(table) && !CategoryTablePredicate(table);
-		}
-
-		/// <summary>
-		/// Predicate used to determine whether the table is a relationship.
-		/// </summary>
-		/// <param name="table">The table.</param>
-		/// <returns>A value indicating whether the table represents a relationship.</returns>
-		private static bool RelationshipTablePredicate(DatabaseTable table)
-		{
-			return table.Name.Contains("Collection");
-		}
-
-		/// <summary>
-		/// Predicate used to determine whether the table is a category.
-		/// </summary>
-		/// <param name="table">The table.</param>
-		/// <returns>A value indicating whether the table represents a category.</returns>
-		private static bool CategoryTablePredicate(DatabaseTable table)
-		{
-			return table.Name.Contains("Category");
 		}
 	}
 }
