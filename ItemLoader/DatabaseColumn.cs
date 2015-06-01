@@ -41,6 +41,7 @@ ORDER BY
 		/// Initializes a new instance of the <see cref="DatabaseColumn" /> class.
 		/// </summary>
 		/// <param name="name">Name of the column.</param>
+		/// <param name="table">The table.</param>
 		/// <param name="ordinalPosition">The ordinal position.</param>
 		/// <param name="columnDefault">The column default.</param>
 		/// <param name="isNullable">if set to <c>true</c> the column can be set to null.</param>
@@ -208,7 +209,7 @@ ORDER BY
 		{
 			get
 			{
-				return DatabaseModel.Constraints.Any(dbConstraint => dbConstraint.Type == ConstraintType.ForeignKey && dbConstraint.ReferencedColumn == this);
+				return DatabaseModel.AllConstraints.Any(dbConstraint => dbConstraint.Type == ConstraintType.ForeignKey && dbConstraint.ReferencedColumn == this);
 			}
 		}
 

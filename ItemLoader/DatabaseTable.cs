@@ -3,7 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
-using Items;
+	using Items;
 
 	/// <summary>
 	/// A table in the database
@@ -106,7 +106,7 @@ WHERE
 		public List<DatabaseConstraint> Constraints { get; private set; }
 
 		/// <summary>
-		/// Predicate used to determine whether the table is an item.
+		/// Gets a value indicating whether the table is an item.
 		/// </summary>
 		public bool RepresentsItem
 		{
@@ -117,7 +117,7 @@ WHERE
 		}
 
 		/// <summary>
-		/// Predicate used to determine whether the table is a relationship.
+		/// Gets a value indicating whether the table is a relationship.
 		/// </summary>
 		public bool RepresentsRelationship
 		{
@@ -128,7 +128,7 @@ WHERE
 		}
 
 		/// <summary>
-		/// Predicate used to determine whether the table is a category.
+		/// Gets a value indicating whether the table is a category.
 		/// </summary>
 		public bool RepresentsCategory
 		{
@@ -139,12 +139,9 @@ WHERE
 		}
 
 		/// <summary>
-		/// Loads the tables from the database including all .
+		/// Loads the tables from the database.
 		/// </summary>
 		/// <param name="connectionString">The connection string.</param>
-		/// <returns>
-		/// The tables present in the database.
-		/// </returns>
 		public static void LoadTables(string connectionString)
 		{
 			using (SqlConnection connection = new SqlConnection(connectionString))

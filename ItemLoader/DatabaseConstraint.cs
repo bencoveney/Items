@@ -41,6 +41,7 @@
 		/// Initializes a new instance of the <see cref="DatabaseConstraint" /> class
 		/// </summary>
 		/// <param name="name">The name.</param>
+		/// <param name="table">The table.</param>
 		/// <param name="type">The type.</param>
 		/// <param name="isDeferrable">if set to <c>true</c> [is deferrable].</param>
 		/// <param name="initiallyDeferred">if set to <c>true</c> [initially deferred].</param>
@@ -288,7 +289,7 @@ WHERE
 		/// <param name="columnName">Name of the column.</param>
 		public void AddColumn(string columnName)
 		{
-			this.AddColumn(Table.Columns.Single(column => column.Name == columnName));
+			this.AddColumn(this.Table.Columns.Single(column => column.Name == columnName));
 		}
 
 		/// <summary>

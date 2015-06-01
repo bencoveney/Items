@@ -49,7 +49,7 @@
 		{
 			get
 			{
-				return Links[0];
+				return this.Links[0];
 			}
 		}
 
@@ -63,7 +63,7 @@
 		{
 			get
 			{
-				return Links[1];
+				return this.Links[1];
 			}
 		}
 
@@ -73,19 +73,28 @@
 		public class RelationshipLink
 		{
 			/// <summary>
-			/// The lowest amount of things which can be encompassed by this link (can't be negative)
+			/// Gets or sets the lowest amount of things which can be encompassed by this link (can't be negative)
 			/// </summary>
-			public int AmountLower;
+			/// <value>
+			/// The amount lower.
+			/// </value>
+			public int AmountLower { get; set; }
 
 			/// <summary>
-			/// The highest amount of things which can be encompassed by this link (null if no limit)
+			/// Gets or sets the highest amount of things which can be encompassed by this link (null if no limit)
 			/// </summary>
-			public int? AmountUpper;
+			/// <value>
+			/// The amount upper.
+			/// </value>
+			public int? AmountUpper { get; set; }
 
 			/// <summary>
-			/// The thing being related by this link
+			/// Gets or sets the thing being related by this link
 			/// </summary>
-			public Thing Thing;
+			/// <value>
+			/// The thing.
+			/// </value>
+			public Thing Thing { get; set; }
 		}
 	}
 }

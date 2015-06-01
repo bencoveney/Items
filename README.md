@@ -28,6 +28,8 @@ TODO List
   - [ ] Use schema object model to build items model.
   - [x] Should database reads be using enums/some other method of column ordinal identification? (Now using extension methods)
   - [x] Automate exlusion of system tables such as refactorlog, sysdiagrams (Now handled only by table loading)
+  - [ ] Move all type details (column) to DatabaseType class
+  - [ ] Add ToString() to DatabaseType (and maybe everything else?)
 - [ ] Generate code.
 - [ ] Plan for different "stages" of model building. May want to generate the model from multiple different sources at different times.
   - [ ] Adding to the model can be expressed in xml/code/however and then "unioned".

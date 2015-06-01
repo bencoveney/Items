@@ -46,7 +46,10 @@
     <Compile Include="DatabaseColumn.cs" />
     <Compile Include="DatabaseConstraint.cs" />
     <Compile Include="DatabaseModel.cs" />
+    <Compile Include="DatabaseRoutine.cs" />
+    <Compile Include="DatabaseRoutineParameter.cs" />
     <Compile Include="DatabaseTable.cs" />
+    <Compile Include="DatabaseType.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

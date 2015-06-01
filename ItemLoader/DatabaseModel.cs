@@ -15,6 +15,7 @@
 		static DatabaseModel()
 		{
 			DatabaseModel.Tables = new List<DatabaseTable>();
+			DatabaseModel.Routines = new List<DatabaseRoutine>();
 		}
 
 		/// <summary>
@@ -30,12 +31,24 @@
 		}
 
 		/// <summary>
+		/// Gets the routines represented in the database.
+		/// </summary>
+		/// <value>
+		/// The routines.
+		/// </value>
+		public static List<DatabaseRoutine> Routines
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
 		/// Gets all columns for all tables in the database.
 		/// </summary>
 		/// <value>
 		/// The columns.
 		/// </value>
-		public static IEnumerable<DatabaseColumn> Columns
+		public static IEnumerable<DatabaseColumn> AllColumns
 		{
 			get
 			{
@@ -49,7 +62,7 @@
 		/// <value>
 		/// The constraints.
 		/// </value>
-		public static IEnumerable<DatabaseConstraint> Constraints
+		public static IEnumerable<DatabaseConstraint> AllConstraints
 		{
 			get
 			{
@@ -63,8 +76,9 @@
 		/// <param name="connectionString">The connection string.</param>
 		public static void LoadFromDatabase(string connectionString)
 		{
-			// Load the tables
+			// Load the database objects
 			DatabaseTable.LoadTables(connectionString);
+			DatabaseRoutine.LoadRoutines(connectionString);
 		}
 
 		/// <summary>
@@ -157,7 +171,7 @@
 
 					// Find the constraint which is doing the referencing
 					// TODO move to DatabaseColumn property
-					DatabaseConstraint constraint = Constraints.Single(dbConstraint => dbConstraint.Type == ConstraintType.ForeignKey && dbConstraint.Columns.Contains(column));
+					DatabaseConstraint constraint = AllConstraints.Single(dbConstraint => dbConstraint.Type == ConstraintType.ForeignKey && dbConstraint.Columns.Contains(column));
 
 					// Create the relationship
 					// The left hand side (referencer) can only point to a single item on the right hand side (referenced)

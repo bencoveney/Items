@@ -51,7 +51,18 @@
 		/// <returns>The value in the specified column.</returns>
 		public static T? GetNullable<T>(this SqlDataReader reader, int columnOrdinal) where T : struct
 		{
-			return reader.IsDBNull(columnOrdinal) ? (T?)null : (T?)reader.GetValue(columnOrdinal);
+			return reader.IsDBNull(columnOrdinal) ? (T?)null : (T?)Convert.ChangeType(reader.GetValue(columnOrdinal), typeof(T));
+		}
+
+		/// <summary>
+		/// Gets a value that indicates whether the column contains non-existent or missing values.
+		/// </summary>
+		/// <param name="reader">The reader.</param>
+		/// <param name="columnName">Name of the column.</param>
+		/// <returns>A value indicating whether the column is null</returns>
+		public static bool IsDBNull(this SqlDataReader reader, string columnName)
+		{
+			return reader.IsDBNull(reader.GetOrdinal(columnName));
 		}
 	}
 }

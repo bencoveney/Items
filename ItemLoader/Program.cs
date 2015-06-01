@@ -36,16 +36,6 @@
 
 			XmlCreator creator = new XmlCreator(model);
 			string output = creator.TransformText();
-
-			////Loader loader = new Loader();
-
-			////using (SqlConnection connection = new SqlConnection(ConnectionString))
-			////{
-			////    loader.Load(connection);
-			////}
-
-			////XmlCreator creator = new XmlCreator(loader.Model);
-			////string output = creator.TransformText();
 		}
 	}
 }
