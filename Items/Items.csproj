@@ -49,8 +49,7 @@
     <Compile Include="Actions\BehaviorAction.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Attributes\Attributes.cs" />
-    <Compile Include="Attributes\CollectionAttribute.cs" />
-    <Compile Include="Attributes\ValueAttribute.cs" />
+    <Compile Include="Attributes\DataAttribute.cs" />
     <Compile Include="Behavior.cs" />
     <Compile Include="Behaviors.cs" />
     <Compile Include="Category.cs" />
@@ -61,28 +60,22 @@
     <Compile Include="Constraints\NumericValueConstraint.cs" />
     <Compile Include="Constraints\StringValueConstraint.cs" />
     <Compile Include="Constraints\IConstraint.cs" />
+    <Compile Include="DataDefinition.cs" />
     <Compile Include="ImplementationDetails.cs" />
     <Compile Include="InvalidModelException.cs" />
     <Compile Include="ItemBase.cs" />
+    <Compile Include="Parameters\Parameter.cs" />
     <Compile Include="Relationship.cs" />
     <Compile Include="Actions\ScriptAction.cs" />
     <Compile Include="Actions\StoredProcedureAction.cs" />
     <Compile Include="Types\CategoryType.cs" />
     <Compile Include="Types\ItemType.cs" />
     <Compile Include="Model.cs" />
-    <Compile Include="Parameters\DefaultedParameter.cs" />
-    <Compile Include="Attributes\IAttribute.cs" />
-    <Compile Include="Parameters\IParameter.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Nullability.cs" />
-    <Compile Include="Parameters\OptionalParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Parameters\RequiredParameter.cs" />
     <Compile Include="Types\IType.cs" />
     <Compile Include="Types\SystemType.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Model.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

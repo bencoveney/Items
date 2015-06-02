@@ -42,17 +42,10 @@ ORDER BY
 		/// </summary>
 		/// <param name="name">Name of the column.</param>
 		/// <param name="table">The table.</param>
+		/// <param name="type">The type.</param>
 		/// <param name="ordinalPosition">The ordinal position.</param>
 		/// <param name="columnDefault">The column default.</param>
 		/// <param name="isNullable">if set to <c>true</c> the column can be set to null.</param>
-		/// <param name="dataType">Type of the data.</param>
-		/// <param name="characterMaximumLength">Maximum length of the character.</param>
-		/// <param name="numericPrecision">The numeric precision.</param>
-		/// <param name="numericPrecisionRadix">The numeric precision radix.</param>
-		/// <param name="numericScale">The numeric scale.</param>
-		/// <param name="dateTimePrecision">The date time precision.</param>
-		/// <param name="characterSetName">Name of the character set.</param>
-		/// <param name="collationName">Name of the collation.</param>
 		public DatabaseColumn(string name, DatabaseTable table, DatabaseType type, int ordinalPosition, string columnDefault, bool isNullable)
 		{
 			// Populate member variables

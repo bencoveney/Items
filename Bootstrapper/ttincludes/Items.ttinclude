@@ -4,7 +4,7 @@
 
 	<p><#= GetDescription(item) #></p>
 
-	<# foreach(IAttribute attribute in item.Attributes.Values) { WriteAttribute(attribute, item.IntegerIdentifer == attribute); } #>
+	<# foreach(DataAttribute attribute in item.Attributes.Values) { WriteAttribute(attribute, item.IntegerIdentifer == attribute); } #>
 
 	<hr />
 

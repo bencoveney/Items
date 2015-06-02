@@ -1,4 +1,4 @@
-﻿<#+ public void WriteAttribute(IAttribute attribute, bool isIdentifier) { #>
+﻿<#+ public void WriteAttribute(DataAttribute attribute, bool isIdentifier) { #>
 
 	<h3>
 
@@ -26,7 +26,7 @@
 
 <#+ }
 
-public void WriteConstraints(IAttribute attribute) { #>
+public void WriteConstraints(DataAttribute attribute) { #>
 
 	<#+ if (attribute.Constraints.Count == 0) return; #>
 
@@ -40,7 +40,7 @@ public void WriteConstraints(IAttribute attribute) { #>
 
 <#+ }
 
-public void WriteSqlDetails(IAttribute attribute) { #>
+public void WriteSqlDetails(DataAttribute attribute) { #>
 
 	<#+ if(attribute.Type.Details.ContainsKey("SqlDataType") && attribute.Details.ContainsKey("SqlColumn")) return; #>
 

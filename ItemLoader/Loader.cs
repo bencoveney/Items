@@ -16,7 +16,7 @@
 		/// <summary>
 		/// Query to load basic item information
 		/// </summary>
-		private const string ItemDataAttributesQuery = @"
+		private const string ItemValueAttributesQuery = @"
 WITH ForeignKeys AS (
 	/* Find which columns of tables are foreign key constraints */
 	SELECT
@@ -47,7 +47,7 @@ WHERE
 		/// <summary>
 		/// Query to load basic collection information for an item
 		/// </summary>
-		private const string ItemDataAttributesQuery = @"
+		private const string ItemCollectionAttributesQuery = @"
 SELECT
 	/*fk.name AS Name,*/
 	t.name AS TableWithForeignKey,
@@ -199,7 +199,7 @@ WHERE
 
 			foreach (string collectionName in this.GetCollectionNames(connection))
 			{
-				this.PopulateDataAttributes(connection, collectionName);
+				this.PopulateCollectionAttributes(connection, collectionName);
 			}
 
 			this.PopulateAdditionalData();
@@ -291,7 +291,7 @@ WHERE
 		public void PopulateAttributesForItemBase(SqlConnection connection, Thing item)
 		{
 			// Value Attributes
-			using (SqlCommand command = new SqlCommand(ItemAttributesQuery, connection))
+			using (SqlCommand command = new SqlCommand(ItemValueAttributesQuery, connection))
 			{
 				command.Parameters.Add("@itemName", SqlDbType.NVarChar).Value = item.Name;
 				using (SqlDataReader result = command.ExecuteReader())
@@ -388,7 +388,7 @@ WHERE
 		/// </summary>
 		/// <param name="connection">The connection.</param>
 		/// <param name="collectionName">Name of the collection.</param>
-		public void PopulateDataAttributes(SqlConnection connection, string collectionName)
+		public void PopulateCollectionAttributes(SqlConnection connection, string collectionName)
 		{
 			// Value Attributes
 			using (SqlCommand command = new SqlCommand(CollectionReferencesQuery, connection))

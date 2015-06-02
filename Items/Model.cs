@@ -137,7 +137,7 @@
 				}
 
 				// Check for attributes which refer to items which don't exist
-				foreach (IAttribute attribute in item.Attributes.Values.Where(attribute => attribute.Type.GetType() == typeof(ItemType)))
+				foreach (DataAttribute attribute in item.Attributes.Values.Where(attribute => attribute.Type.GetType() == typeof(ItemType)))
 				{
 					// If the item type is neither a category nor an item
 					// TODO handle categories seperately

@@ -19,7 +19,7 @@
 		{
 			this.Name = name;
 			this.Conditions = new List<Condition>();
-			this.Parameters = new List<IParameter>();
+			this.Parameters = new List<Parameter>();
 			this.Actions = new List<Action>();
 		}
 
@@ -44,7 +44,7 @@
 		/// <summary>
 		/// Gets what the behavior takes as input
 		/// </summary>
-		public List<IParameter> Parameters
+		public List<Parameter> Parameters
 		{
 			get;
 			private set;

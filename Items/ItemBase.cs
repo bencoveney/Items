@@ -13,12 +13,12 @@
 		/// <summary>
 		/// The string identifier
 		/// </summary>
-		private ValueAttribute stringIdentifier;
+		private DataAttribute stringIdentifier;
 
 		/// <summary>
 		/// The integer identifier
 		/// </summary>
-		private ValueAttribute integerIdentifier;
+		private DataAttribute integerIdentifier;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Thing" /> class.
@@ -44,10 +44,10 @@
 
 		/// <summary>
 		/// Gets or sets a special case of unique attribute which can be used to identify the item
-		/// Should be in the list of attributes
+		/// Should be in the list of attribute
 		/// should we require an identifier in order to perform lookups?
 		/// </summary>
-		public ValueAttribute StringIdentifer
+		public DataAttribute StringIdentifer
 		{
 			get
 			{
@@ -79,10 +79,10 @@
 
 		/// <summary>
 		/// Gets or sets a special case of unique attribute which can be used to identify the item
-		/// Should be in the list of attributes
+		/// Should be in the list of attribute
 		/// should we require an identifier in order to perform lookups?
 		/// </summary>
-		public ValueAttribute IntegerIdentifer
+		public DataAttribute IntegerIdentifer
 		{
 			get
 			{

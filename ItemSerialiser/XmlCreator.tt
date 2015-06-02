@@ -6,7 +6,7 @@
 #>
 	<Item Name="<#= item.Name #>">
 		<Attributes>
-<#			foreach(IAttribute attribute in item.Attributes.Values)
+<#			foreach(DataAttribute attribute in item.Attributes.Values)
 			{
 				WriteAttribute(attribute);
 			}
@@ -32,7 +32,7 @@
 #>
 				</Conditions>
 				<Parameters>
-<#				foreach(IParameter parameter in behavior.Parameters)
+<#				foreach(Parameter parameter in behavior.Parameters)
                 {
 #>
 					<!-- TODO Infer type of IParameter? -->
@@ -50,7 +50,7 @@
 #>
 </Model>
 
-<#+ public void WriteAttribute(IAttribute attribute)
+<#+ public void WriteAttribute(DataAttribute attribute)
 	{
 #>
 			<<#= attribute.GetType().Name #> Name="<#= attribute.Name #>">

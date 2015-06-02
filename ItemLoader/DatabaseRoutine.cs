@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
 	using System.Linq;
+	using Items;
 
 	/// <summary>
 	/// Defines the type of a routine
@@ -242,6 +243,18 @@ FROM
 					DatabaseRoutineParameter.PopulateParameters(routine, connection);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Determines whether this routine is an operation on the specified thing.
+		/// </summary>
+		/// <param name="thing">The thing.</param>
+		/// <returns>A value indicating whether the thing is based on this table</returns>
+		public bool IsThingMatch(Thing thing)
+		{
+			return this.Name.IndexOf(thing.Name) == 0
+				&& (string)thing.Details["SqlCatalog"] == this.Catalog
+				&& (string)thing.Details["SqlSchema"] == this.Schema;
 		}
 
 		/// <summary>

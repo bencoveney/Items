@@ -132,8 +132,6 @@
 			private set;
 		}
 
-
-
 		/// <summary>
 		/// Gets a model system type from the column's data type.
 		/// </summary>
@@ -305,10 +303,10 @@
 				case "nvarchar":
 				case "text":
 				case "ntext":
-					return string.Format("{0} ({1})", DataType, CharacterMaximumLength);
+					return string.Format("{0} ({1})", this.DataType, this.CharacterMaximumLength);
 
 				default:
-					return DataType;
+					return this.DataType;
 			}
 		}
 	}

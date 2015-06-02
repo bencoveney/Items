@@ -40,7 +40,7 @@
 		/// </summary>
 		/// <param name="attribute">The attribute.</param>
 		/// <param name="comparison">The comparison.</param>
-		public AttributeConstraint(IAttribute attribute, CollectionComparison comparison)
+		public AttributeConstraint(DataAttribute attribute, CollectionComparison comparison)
 		{
 			this.Attribute = attribute;
 			this.Comparison = comparison;
@@ -52,7 +52,7 @@
 		/// <value>
 		/// The attribute.
 		/// </value>
-		public IAttribute Attribute
+		public DataAttribute Attribute
 		{
 			get;
 			private set;

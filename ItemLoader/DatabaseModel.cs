@@ -71,6 +71,20 @@
 		}
 
 		/// <summary>
+		/// Gets all parameters for all routines in the database.
+		/// </summary>
+		/// <value>
+		/// All parameters.
+		/// </value>
+		public static IEnumerable<DatabaseRoutineParameter> AllParameters
+		{
+			get
+			{
+				return Routines.SelectMany(routine => routine.Parameters);
+			}
+		}
+
+		/// <summary>
 		/// Loads the objects from the database.
 		/// </summary>
 		/// <param name="connectionString">The connection string.</param>
@@ -102,7 +116,12 @@
 				// Add columns (which aren't relationships)
 				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer && !dbColumn.IsReferenced))
 				{
-					item.Attributes.Add(new ValueAttribute(column.Name, column.Type.GetSystemType(), column.GetNullability()));
+					DataAttribute dataAttribute = new DataAttribute(column.Name, column.Type.GetSystemType(), column.GetNullability());
+
+					dataAttribute.Details.Add("OrdinalPosition", column.OrdinalPosition);
+					dataAttribute.Details.Add("DefaultValue", column.ColumnDefault);
+
+					item.Attributes.Add(dataAttribute);
 				}
 
 				result.AddItem(item);
@@ -121,7 +140,7 @@
 				// Add columns (which aren't relationships)
 				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer && !dbColumn.IsReferenced))
 				{
-					category.Attributes.Add(new ValueAttribute(column.Name, column.Type.GetSystemType(), column.GetNullability()));
+					category.Attributes.Add(new DataAttribute(column.Name, column.Type.GetSystemType(), column.GetNullability()));
 				}
 
 				result.AddCategory(category);
@@ -188,6 +207,21 @@
 
 					result.AddRelationship(relationship);
 				}
+			}
+
+			foreach (DatabaseRoutine routine in DatabaseModel.Routines)
+			{
+				Behavior behavior = new Behavior(routine.Name);
+
+				foreach (DatabaseRoutineParameter routineParameter in routine.Parameters)
+				{
+					Parameter parameter = new Parameter(routineParameter.Name, routineParameter.Type.GetSystemType(), Nullability.NotApplicable);
+
+					behavior.Parameters.Add(parameter);
+				}
+
+				Item item = result.Items.Values.Single(routine.IsThingMatch);
+				item.Behaviors.Add(behavior);
 			}
 
 			return result;
