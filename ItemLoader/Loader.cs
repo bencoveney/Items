@@ -16,7 +16,7 @@
 		/// <summary>
 		/// Query to load basic item information
 		/// </summary>
-		private const string ItemValueAttributesQuery = @"
+		private const string ItemDataAttributesQuery = @"
 WITH ForeignKeys AS (
 	/* Find which columns of tables are foreign key constraints */
 	SELECT
@@ -47,7 +47,7 @@ WHERE
 		/// <summary>
 		/// Query to load basic collection information for an item
 		/// </summary>
-		private const string ItemCollectionAttributesQuery = @"
+		private const string ItemDataAttributesQuery = @"
 SELECT
 	/*fk.name AS Name,*/
 	t.name AS TableWithForeignKey,
@@ -199,7 +199,7 @@ WHERE
 
 			foreach (string collectionName in this.GetCollectionNames(connection))
 			{
-				this.PopulateCollectionAttributes(connection, collectionName);
+				this.PopulateDataAttributes(connection, collectionName);
 			}
 
 			this.PopulateAdditionalData();
@@ -291,7 +291,7 @@ WHERE
 		public void PopulateAttributesForItemBase(SqlConnection connection, Thing item)
 		{
 			// Value Attributes
-			using (SqlCommand command = new SqlCommand(ItemValueAttributesQuery, connection))
+			using (SqlCommand command = new SqlCommand(ItemAttributesQuery, connection))
 			{
 				command.Parameters.Add("@itemName", SqlDbType.NVarChar).Value = item.Name;
 				using (SqlDataReader result = command.ExecuteReader())
@@ -343,7 +343,7 @@ WHERE
 						Nullability nullability = result.GetString(1) == "YES" ? Nullability.Empty : Nullability.Invalid;
 
 						// TODO What about default value?
-						ValueAttribute attribute = new ValueAttribute(attributeName, type, nullability);
+						DataAttribute attribute = new DataAttribute(attributeName, type, nullability);
 						attribute.Details["SqlColumn"] = columnName;
 
 						if (!result.IsDBNull(3))
@@ -374,7 +374,7 @@ WHERE
 						string itemTypeName = result.GetString(0);
 						ItemType itemType = new ItemType(itemTypeName);
 
-						CollectionAttribute collection = new CollectionAttribute(collectionName, itemType, Nullability.Empty);
+						DataAttribute collection = new DataAttribute(collectionName, itemType, Nullability.Empty);
 						collection.Details["SqlColumn"] = string.Format("{0}.{1}", tableName, columnName);
 
 						item.Attributes.Add(collection);
@@ -388,7 +388,7 @@ WHERE
 		/// </summary>
 		/// <param name="connection">The connection.</param>
 		/// <param name="collectionName">Name of the collection.</param>
-		public void PopulateCollectionAttributes(SqlConnection connection, string collectionName)
+		public void PopulateDataAttributes(SqlConnection connection, string collectionName)
 		{
 			// Value Attributes
 			using (SqlCommand command = new SqlCommand(CollectionReferencesQuery, connection))
@@ -407,11 +407,11 @@ WHERE
 					}
 				}
 
-				CollectionAttribute firstCollection = new CollectionAttribute(referencedTables[1] + "s", new ItemType(referencedTables[1]), Nullability.Invalid);
+				DataAttribute firstCollection = new DataAttribute(referencedTables[1] + "s", new ItemType(referencedTables[1]), Nullability.Invalid);
 				firstCollection.Details["SqlColumn"] = string.Format("{0}.{1}ID", collectionName, referencedTables[1]);
 				Model.Items[referencedTables[0]].Attributes.Add(firstCollection);
 
-				CollectionAttribute secondCollection = new CollectionAttribute(referencedTables[0] + "s", new ItemType(referencedTables[0]), Nullability.Invalid);
+				DataAttribute secondCollection = new DataAttribute(referencedTables[0] + "s", new ItemType(referencedTables[0]), Nullability.Invalid);
 				secondCollection.Details["SqlColumn"] = string.Format("{0}.{1}ID", collectionName, referencedTables[0]);
 				Model.Items[referencedTables[1]].Attributes.Add(secondCollection);
 			}
@@ -472,7 +472,7 @@ WHERE
 						string attributeName = string.Equals(itemName + "ID", columnName, System.StringComparison.InvariantCultureIgnoreCase) ? "ID" : columnName;
 
 						// Add a unique constraint to the attribute
-						IAttribute attribute = Model.Items[itemName].Attributes[attributeName];
+						DataAttribute attribute = Model.Items[itemName].Attributes[attributeName];
 						attribute.Constraints.Add(new AttributeConstraint(attribute, CollectionComparison.IsUniqueWithin));
 					}
 				}
@@ -503,8 +503,8 @@ WHERE
 
 						// Assign the attribute as the primary key
 						Thing thing = Model.Items.ContainsKey(tableName) ? (Thing)Model.Items[tableName] : (Thing)Model.Categories[tableName];
-						IAttribute primaryKey = thing.Attributes[columnName];
-						thing.IntegerIdentifer = (ValueAttribute)primaryKey;
+						DataAttribute primaryKey = thing.Attributes[columnName];
+						thing.IntegerIdentifer = (DataAttribute)primaryKey;
 					}
 				}
 			}
