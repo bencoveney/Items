@@ -135,7 +135,7 @@ FROM
 		}
 
 		/// <summary>
-		/// Gets the SQL type of the value returned by this routine
+		/// Gets the SQL type of the value returned by this routine.
 		/// </summary>
 		/// <value>
 		/// The type of the return.

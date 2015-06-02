@@ -53,22 +53,15 @@ ORDER BY
 		/// <param name="dateTimePrecision">The date time precision.</param>
 		/// <param name="characterSetName">Name of the character set.</param>
 		/// <param name="collationName">Name of the collation.</param>
-		public DatabaseColumn(string name, DatabaseTable table, int ordinalPosition, string columnDefault, bool isNullable, string dataType, int? characterMaximumLength, int? numericPrecision, int? numericPrecisionRadix, int? numericScale, int? dateTimePrecision, string characterSetName, string collationName)
+		public DatabaseColumn(string name, DatabaseTable table, DatabaseType type, int ordinalPosition, string columnDefault, bool isNullable)
 		{
 			// Populate member variables
 			// A lot of the varibales here are duplicated from the tables class. maybe these columns should just be properties of the tables?
 			this.Name = name;
+			this.Type = type;
 			this.OrdinalPosition = ordinalPosition;
 			this.ColumnDefault = columnDefault;
 			this.IsNullable = isNullable;
-			this.DataType = dataType;
-			this.CharacterMaximumLength = characterMaximumLength;
-			this.NumericPrecision = numericPrecision;
-			this.NumericPrecisionRadix = numericPrecisionRadix;
-			this.NumericScale = numericScale;
-			this.DateTimePrecision = dateTimePrecision;
-			this.CharacterSetName = characterSetName;
-			this.CollationName = collationName;
 
 			table.Columns.Add(this);
 		}
@@ -79,7 +72,23 @@ ORDER BY
 		/// <value>
 		/// The name.
 		/// </value>
-		public string Name { get; private set; }
+		public string Name
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Gets the SQL type of the data stored in this column.
+		/// </summary>
+		/// <value>
+		/// The type.
+		/// </value>
+		public DatabaseType Type
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// Gets the table this column is on.
@@ -118,72 +127,6 @@ ORDER BY
 		/// <c>true</c> if this instance can be set to null; otherwise, <c>false</c>.
 		/// </value>
 		public bool IsNullable { get; private set; }
-
-		/// <summary>
-		/// Gets the type of the data.
-		/// </summary>
-		/// <value>
-		/// The type of the data.
-		/// </value>
-		public string DataType { get; private set; }
-
-		/// <summary>
-		/// Gets the maximum number of characters that can be stored (regardless of char width)
-		/// </summary>
-		/// <value>
-		/// The maximum length of the character.
-		/// </value>
-		public int? CharacterMaximumLength { get; private set; }
-
-		/// <summary>
-		/// Gets the numeric precision.
-		/// </summary>
-		/// <value>
-		/// The numeric precision.
-		/// </value>
-		public int? NumericPrecision { get; private set; }
-
-		/// <summary>
-		/// Gets the numeric precision radix (either 5 or 10).
-		/// 5 precision with 10 radix means the number can represent 5 decimal digits
-		/// 10 precision with 2 radix means the number can represent 10 bits
-		/// </summary>
-		/// <value>
-		/// The numeric precision radix.
-		/// </value>
-		public int? NumericPrecisionRadix { get; private set; }
-
-		/// <summary>
-		/// Gets the numeric scale.
-		/// </summary>
-		/// <value>
-		/// The numeric scale.
-		/// </value>
-		public int? NumericScale { get; private set; }
-
-		/// <summary>
-		/// Gets the date time precision.
-		/// </summary>
-		/// <value>
-		/// The date time precision.
-		/// </value>
-		public int? DateTimePrecision { get; private set; }
-
-		/// <summary>
-		/// Gets the name of the character set.
-		/// </summary>
-		/// <value>
-		/// The name of the character set.
-		/// </value>
-		public string CharacterSetName { get; private set; }
-
-		/// <summary>
-		/// Gets the name of the collation.
-		/// </summary>
-		/// <value>
-		/// The name of the collation.
-		/// </value>
-		public string CollationName { get; private set; }
 
 		/// <summary>
 		/// Gets a value indicating whether this column is a foreign key referencing another table (in the model).
@@ -251,178 +194,25 @@ ORDER BY
 						int ordinalPosition = (int)result["ORDINAL_POSITION"];
 						string columnDefault = result.GetNullableString("COLUMN_DEFAULT");
 						bool isNullable = ((string)result["IS_NULLABLE"]).Equals("NO") ? false : true;
+
+						// Read the result data for the routine's return type
 						string dataType = (string)result["DATA_TYPE"];
 						int? characterMaximumLength = result.GetNullable<int>("CHARACTER_MAXIMUM_LENGTH");
-						int? numberPrecision = result.GetNullable<int>("NUMERIC_PRECISION");
-						int? numberPrecisionRadix = result.GetNullable<int>("NUMERIC_PRECISION_RADIX");
+						int? numericPrecision = result.GetNullable<int>("NUMERIC_PRECISION");
+						int? numericPrecisionRadix = result.GetNullable<int>("NUMERIC_PRECISION_RADIX");
 						int? numericScale = result.GetNullable<int>("NUMERIC_SCALE");
 						int? dateTimePrecision = result.GetNullable<int>("DATETIME_PRECISION");
 						string characterSetName = result.GetNullableString("CHARACTER_SET_NAME");
 						string collationName = result.GetNullableString("COLLATION_NAME");
 
+						// Build the proper data structure for return type
+						DatabaseType type = new DatabaseType(dataType, characterMaximumLength, characterSetName, collationName, numericPrecision, numericPrecisionRadix, numericScale, dateTimePrecision);
+
 						// Build the new column
-						new DatabaseColumn(name, table, ordinalPosition, columnDefault, isNullable, dataType, characterMaximumLength, numberPrecision, numberPrecisionRadix, numericScale, dateTimePrecision, characterSetName, collationName);
+						new DatabaseColumn(name, table, type, ordinalPosition, columnDefault, isNullable);
 					}
 				}
 			}
-		}
-
-		/// <summary>
-		/// Gets a model system type from the column's data type.
-		/// </summary>
-		/// <returns>A model system type.</returns>
-		public IType GetSystemType()
-		{
-			IType type;
-
-			// TODO full list available here: https://msdn.microsoft.com/en-us/library/cc716729%28v=vs.110%29.aspx
-			// TODO Xml not implemented
-			// TODO Confirm which additional details applicable to the specific datatypes. this has been guessed for now
-			switch (this.DataType.ToLower())
-			{
-				case "bit":
-					SystemType<bool> booleanType = new SystemType<bool>();
-					booleanType.Details["SqlDataType"] = this.DataType;
-					type = booleanType;
-					break;
-
-				case "bigint":
-					SystemType<long> int64Type = new SystemType<long>();
-					int64Type.Details["SqlDataType"] = this.DataType;
-					int64Type.Details["SqlNumericPrecision"] = this.NumericPrecision;
-					int64Type.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix;
-					int64Type.Details["SqlNumericScale"] = this.NumericScale;
-					type = int64Type;
-					break;
-
-				case "int":
-					SystemType<int> int32Type = new SystemType<int>();
-					int32Type.Details["SqlDataType"] = this.DataType;
-					int32Type.Details["SqlNumericPrecision"] = this.NumericPrecision;
-					int32Type.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix;
-					int32Type.Details["SqlNumericScale"] = this.NumericScale;
-					type = int32Type;
-					break;
-
-				case "smallint":
-					SystemType<short> int16Type = new SystemType<short>();
-					int16Type.Details["SqlDataType"] = this.DataType;
-					int16Type.Details["SqlNumericPrecision"] = this.NumericPrecision;
-					int16Type.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix;
-					int16Type.Details["SqlNumericScale"] = this.NumericScale;
-					type = int16Type;
-					break;
-
-				case "tinyint":
-					SystemType<byte> byteType = new SystemType<byte>();
-					byteType.Details["SqlDataType"] = this.DataType;
-					byteType.Details["SqlNumericPrecision"] = this.NumericPrecision;
-					byteType.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix;
-					byteType.Details["SqlNumericScale"] = this.NumericScale;
-					type = byteType;
-					break;
-
-				case "char":
-				case "nchar":
-				case "varchar":
-				case "nvarchar":
-				case "text":
-				case "ntext":
-					SystemType<string> stringType = new SystemType<string>();
-					stringType.Details["SqlDataType"] = this.DataType;
-					stringType.Details["SqlMaxCharacters"] = this.CharacterMaximumLength;
-					stringType.Details["SqlCharacterSet"] = this.CharacterSetName;
-					stringType.Details["SqlCollationName"] = this.CollationName;
-					type = stringType;
-					break;
-
-				case "datetime":
-				case "datetime2":
-				case "smalldatetime":
-					SystemType<DateTime> dateTimeType = new SystemType<DateTime>();
-					dateTimeType.Details["SqlDataType"] = this.DataType;
-					dateTimeType.Details["SqlDateTimePrecision"] = this.DateTimePrecision;
-					type = dateTimeType;
-					break;
-
-				case "datetimeoffset":
-					SystemType<DateTimeOffset> dateTimeOffsetType = new SystemType<DateTimeOffset>();
-					dateTimeOffsetType.Details["SqlDataType"] = this.DataType;
-					dateTimeOffsetType.Details["SqlDateTimePrecision"] = this.DateTimePrecision;
-					type = dateTimeOffsetType;
-					break;
-
-				case "decimal":
-				case "money":
-				case "numeric":
-				case "smallmoney":
-					SystemType<decimal> decimalType = new SystemType<decimal>();
-					decimalType.Details["SqlDataType"] = this.DataType;
-					decimalType.Details["SqlNumericPrecision"] = this.NumericPrecision;
-					decimalType.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix;
-					decimalType.Details["SqlNumericScale"] = this.NumericScale;
-					type = decimalType;
-					break;
-
-				case "float":
-					SystemType<double> doubleType = new SystemType<double>();
-					doubleType.Details["SqlDataType"] = this.DataType;
-					doubleType.Details["SqlNumericPrecision"] = this.NumericPrecision;
-					doubleType.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix;
-					doubleType.Details["SqlNumericScale"] = this.NumericScale;
-					type = doubleType;
-					break;
-
-				case "real":
-					SystemType<float> singleType = new SystemType<float>();
-					singleType.Details["SqlDataType"] = this.DataType;
-					singleType.Details["SqlNumericPrecision"] = this.NumericPrecision;
-					singleType.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix;
-					singleType.Details["SqlNumericScale"] = this.NumericScale;
-					type = singleType;
-					break;
-
-				// TODO filestream ?
-				case "binary":
-				case "image":
-				case "rowversion":
-				case "timestamp":
-				case "varbinary":
-					SystemType<byte[]> byteArrayType = new SystemType<byte[]>();
-					byteArrayType.Details["SqlDataType"] = this.DataType;
-					type = byteArrayType;
-					break;
-
-				case "sql_variant":
-					SystemType<object> objectType = new SystemType<object>();
-					objectType.Details["SqlDataType"] = this.DataType;
-					type = objectType;
-					break;
-
-				case "time":
-					SystemType<TimeSpan> timeSpanType = new SystemType<TimeSpan>();
-					timeSpanType.Details["SqlDataType"] = this.DataType;
-					type = timeSpanType;
-					break;
-
-				case "uniqueidentifier":
-					SystemType<Guid> guidType = new SystemType<Guid>();
-					guidType.Details["SqlDataType"] = this.DataType;
-					type = guidType;
-					break;
-
-				default:
-					SystemType<object> defaultType = new SystemType<object>();
-					defaultType.Details["SqlDataType"] = this.DataType;
-					type = defaultType;
-					break;
-			}
-
-			// Assign universal details
-			type.Details["SqlOrdinalPosition"] = this.OrdinalPosition;
-			type.Details["SqlColumnDefault"] = this.ColumnDefault;
-
-			return type;
 		}
 
 		/// <summary>
@@ -442,7 +232,7 @@ ORDER BY
 		/// </returns>
 		public override string ToString()
 		{
-			return string.Format("{0} ({1})", this.Name, this.DataType);
+			return string.Format("{0} ({1})", this.Name, this.Type);
 		}
 	}
 }

@@ -102,7 +102,7 @@
 				// Add columns (which aren't relationships)
 				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer && !dbColumn.IsReferenced))
 				{
-					item.Attributes.Add(new ValueAttribute(column.Name, column.GetSystemType(), column.GetNullability()));
+					item.Attributes.Add(new ValueAttribute(column.Name, column.Type.GetSystemType(), column.GetNullability()));
 				}
 
 				result.AddItem(item);
@@ -121,7 +121,7 @@
 				// Add columns (which aren't relationships)
 				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer && !dbColumn.IsReferenced))
 				{
-					category.Attributes.Add(new ValueAttribute(column.Name, column.GetSystemType(), column.GetNullability()));
+					category.Attributes.Add(new ValueAttribute(column.Name, column.Type.GetSystemType(), column.GetNullability()));
 				}
 
 				result.AddCategory(category);

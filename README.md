@@ -26,10 +26,13 @@ TODO List
   - [x] Loader Column and constraint should be properties of the table rather than including table data
   - [x] Loader FK support todo properly
   - [ ] Use schema object model to build items model.
+	- [ ] Routines
+	- [ ] Constraints
+	- [ ] Alter bootstrapper to use imeplementation details
   - [x] Should database reads be using enums/some other method of column ordinal identification? (Now using extension methods)
   - [x] Automate exlusion of system tables such as refactorlog, sysdiagrams (Now handled only by table loading)
-  - [ ] Move all type details (column) to DatabaseType class
-  - [ ] Add ToString() to DatabaseType (and maybe everything else?)
+  - [x] Move all type details to DatabaseType class
+  - [x] Add ToString() to DatabaseType (and maybe everything else?)
 - [ ] Generate code.
 - [ ] Plan for different "stages" of model building. May want to generate the model from multiple different sources at different times.
   - [ ] Adding to the model can be expressed in xml/code/however and then "unioned".
@@ -40,17 +43,13 @@ TODO List
     - [ ] Would allow you to check them in.
     - [ ] Would allow you to get visibility of how your database implementation deviates from the pure model.
 - [ ] Split code/xml/text generation out better into files.
-- [ ] All items are stringly identified rather than done by reference.
-  - [ ] Makes building the model much simpler but causes the need to validation (this may be required anyway).
 - [ ] Serialisation and deserialisation via text templates probably isn't a good idea.
 - [ ] Classes like Attributes and Behaviors (in order to string index things) could be improved
-- [ ] Behavior lol.
-- [ ] Don't re-implement C#.
-- [ ] Don't re-implement SQL.
-- [ ] Collections should have support for extra data.
-- [ ] Collections should probably be relationships.
+- [x] Collections should have support for extra data.
+- [x] Collections should probably be relationships.
 - [ ] Unit tests.
 - [ ] Add relationships to this document.
+- [ ] Add behaviors to this document.
 
 Model
 -----
@@ -227,6 +226,7 @@ Constraints dictate rules about what data (not what type of data) can be put in 
 - [ ] "Commited".
   - [ ] Some constraints should always be enforced however some are only relevant once the item instance becomes "commited" to the model.
   - [ ] An example of this is ID, which should probably only populated and validated when the object is added to the database.
+  - [ ] Database has deferred constraints, maybe look into leveraging this?
 - [ ] Nullability and Constraints have overlapping responsibility.
 - [ ] Constraints can overlap in responsibility.
 - [ ] string value # of instances of in addition to contains.
