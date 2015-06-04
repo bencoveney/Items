@@ -118,8 +118,12 @@
 				{
 					DataAttribute dataAttribute = new DataAttribute(column.Name, column.Type.GetSystemType(), column.GetNullability());
 
+					// Populate implementation details
 					dataAttribute.Details.Add("OrdinalPosition", column.OrdinalPosition);
 					dataAttribute.Details.Add("DefaultValue", column.ColumnDefault);
+
+					// Populate constraints which can be inferred from the type
+					dataAttribute.Constraints.AddRange(column.Type.GetConstraints());
 
 					item.Attributes.Add(dataAttribute);
 				}
@@ -140,7 +144,16 @@
 				// Add columns (which aren't relationships)
 				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer && !dbColumn.IsReferenced))
 				{
-					category.Attributes.Add(new DataAttribute(column.Name, column.Type.GetSystemType(), column.GetNullability()));
+					DataAttribute dataAttribute = new DataAttribute(column.Name, column.Type.GetSystemType(), column.GetNullability());
+
+					// Populate implementation details
+					dataAttribute.Details.Add("OrdinalPosition", column.OrdinalPosition);
+					dataAttribute.Details.Add("DefaultValue", column.ColumnDefault);
+
+					// Populate constraints which can be inferred from the type
+					dataAttribute.Constraints.AddRange(column.Type.GetConstraints());
+
+					category.Attributes.Add(dataAttribute);
 				}
 
 				result.AddCategory(category);

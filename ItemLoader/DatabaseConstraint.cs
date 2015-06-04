@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using System.Data.SqlClient;
 	using System.Linq;
+	using Items;
 
 	/// <summary>
 	/// The type of database constraint
@@ -299,6 +300,53 @@ WHERE
 		public void AddColumn(DatabaseColumn column)
 		{
 			this.Columns.Add(column);
+		}
+
+		/// <summary>
+		/// Gets the model constraints which can be inferred from this constraint.
+		/// </summary>
+		public IEnumerable<IConstraint> GetConstraints(Model model)
+		{
+			List<IConstraint> constraints = new List<IConstraint>();
+
+			switch (this.Type)
+			{
+				case ConstraintType.ForeignKey:
+					// TODO should foreign keys count as a constraint? The database enforces the ID but we aren't doing that here so maybe the constraint should be on the relationship?
+					break;
+
+				case ConstraintType.PrimaryKey:
+
+					// TODO also NOT NULL when that is represented as a constraint
+
+					// Fall through to unique constraint, because thats all a primary key is
+
+				case ConstraintType.Unique:
+
+					// Find the attribute in the model that this constraint is referring to
+					DataAttribute targetAttribute;
+					if(this.Columns.Count != 1)
+					{
+						targetAttribute = this.Columns.First().FindInModel(model);
+					}
+					else
+					{
+						throw new InvalidModelException("Primary key has an invalid number of columns");
+					}
+
+					constraints.Add(new AttributeConstraint(targetAttribute, CollectionComparison.IsUniqueWithin));
+
+					break;
+
+				case ConstraintType.Check:
+					// TODO what to even do here?
+					break;
+
+				default:
+					throw new InvalidModelException("Invalid ConstraintType");
+			}
+
+			return constraints;
 		}
 
 		/// <summary>

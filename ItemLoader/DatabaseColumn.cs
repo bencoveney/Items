@@ -1,6 +1,6 @@
 ﻿namespace ItemLoader
 {
-	using System;
+	using System.Collections.Generic;
 	using System.Data.SqlClient;
 	using System.Linq;
 	using Items;
@@ -165,6 +165,20 @@ ORDER BY
 		}
 
 		/// <summary>
+		/// Gets the constraints which reference this column.
+		/// </summary>
+		/// <value>
+		/// The referencing constraints.
+		/// </value>
+		public IEnumerable<DatabaseConstraint> ReferencingConstraints
+		{
+			get
+			{
+				return DatabaseModel.AllConstraints.Where(constraint => constraint.Columns.Contains(this));
+			}
+		}
+
+		/// <summary>
 		/// Loads the columns from the database for a specific table.
 		/// </summary>
 		/// <param name="table">The table.</param>
@@ -206,6 +220,16 @@ ORDER BY
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Finds a reference to this column in this model.
+		/// </summary>
+		/// <param name="model">The model.</param>
+		/// <returns></returns>
+		public DataAttribute FindInModel(Model model)
+		{
+			return model.Things.Single(thing => this.Table.IsThingMatch(thing)).Attributes.Values.Single(attribute => attribute.Name == this.Name);
 		}
 
 		/// <summary>

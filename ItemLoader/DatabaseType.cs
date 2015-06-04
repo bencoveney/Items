@@ -287,6 +287,33 @@
 		}
 
 		/// <summary>
+		/// Gets the model constraints that can be inferred from this type.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<IConstraint> GetConstraints()
+		{
+			List<IConstraint> constraints = new List<IConstraint>();
+
+			switch (this.DataType)
+			{
+				case "char":
+				case "nchar":
+				case "varchar":
+				case "nvarchar":
+				case "text":
+				case "ntext":
+					constraints.Add(new StringLengthConstraint(LengthComparison.ShorterThan, this.CharacterMaximumLength.Value));
+					break;
+
+				default:
+					// No constraints available
+					break;
+			}
+
+			return constraints;
+		}
+
+		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
 		/// <returns>
