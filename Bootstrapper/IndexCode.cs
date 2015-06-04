@@ -50,7 +50,7 @@ namespace Bootstrapper
 		{
 			switch (constraint)
 			{
-				case CollectionComparison.DoesntExistIn:
+				case CollectionComparison.DoesNotExistIn:
 					return "not exist within";
 				case CollectionComparison.ExistsIn:
 					return "exist within";
@@ -61,17 +61,17 @@ namespace Bootstrapper
 			}
 		}
 
-		public String PrettifyNullability(Nullability nullability)
+		public String PrettifyNullability(NullConstraints nullability)
 		{
 			switch (nullability)
 			{
-				case Nullability.Empty :
+				case NullConstraints.Empty :
 					return "This attribute can be empty but cannot be non-applicable.";
-				case Nullability.EmptyOrNotApplicable :
+				case NullConstraints.EmptyOrNotApplicable :
 					return "This attribute can be both empty and non-applicable.";
-				case Nullability.Invalid :
+				case NullConstraints.None :
 					return "This attribute cannot be empty or non-applicable.";
-				case Nullability.NotApplicable :
+				case NullConstraints.NotApplicable :
 					return "This attribute can not be empty but can be non-applicable.";
 				default :
 					return "ERROR";

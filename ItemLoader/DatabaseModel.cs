@@ -116,14 +116,17 @@
 				// Add columns (which aren't relationships)
 				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer && !dbColumn.IsReferenced))
 				{
-					DataAttribute dataAttribute = new DataAttribute(column.Name, column.Type.GetSystemType(), column.GetNullability());
+					DataMember dataAttribute = new DataMember(column.Name, column.Type.GetSystemType(), column.GetNullability());
 
 					// Populate implementation details
 					dataAttribute.Details.Add("OrdinalPosition", column.OrdinalPosition);
 					dataAttribute.Details.Add("DefaultValue", column.ColumnDefault);
 
 					// Populate constraints which can be inferred from the type
-					dataAttribute.Constraints.AddRange(column.Type.GetConstraints());
+					foreach (IConstraint constraint in column.Type.GetConstraints())
+					{
+						dataAttribute.Constraints.Add(constraint);
+					}
 
 					item.Attributes.Add(dataAttribute);
 				}
@@ -144,14 +147,17 @@
 				// Add columns (which aren't relationships)
 				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer && !dbColumn.IsReferenced))
 				{
-					DataAttribute dataAttribute = new DataAttribute(column.Name, column.Type.GetSystemType(), column.GetNullability());
+					DataMember dataAttribute = new DataMember(column.Name, column.Type.GetSystemType(), column.GetNullability());
 
 					// Populate implementation details
 					dataAttribute.Details.Add("OrdinalPosition", column.OrdinalPosition);
 					dataAttribute.Details.Add("DefaultValue", column.ColumnDefault);
 
 					// Populate constraints which can be inferred from the type
-					dataAttribute.Constraints.AddRange(column.Type.GetConstraints());
+					foreach (IConstraint constraint in column.Type.GetConstraints())
+					{
+						dataAttribute.Constraints.Add(constraint);
+					}
 
 					category.Attributes.Add(dataAttribute);
 				}
@@ -228,7 +234,7 @@
 
 				foreach (DatabaseRoutineParameter routineParameter in routine.Parameters)
 				{
-					Parameter parameter = new Parameter(routineParameter.Name, routineParameter.Type.GetSystemType(), Nullability.NotApplicable);
+					Parameter parameter = new Parameter(routineParameter.Name, routineParameter.Type.GetSystemType(), NullConstraints.NotApplicable);
 
 					behavior.Parameters.Add(parameter);
 				}

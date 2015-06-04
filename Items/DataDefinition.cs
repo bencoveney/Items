@@ -1,9 +1,6 @@
 ﻿namespace Items
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+	using System.Collections.ObjectModel;
 
 	/// <summary>
 	/// Base object for any object which needs to define the data it contains
@@ -15,14 +12,14 @@
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="type">The type.</param>
-		/// <param name="nullability">The emptiness.</param>
-		public DataDefinition(string name, IType type, Nullability nullability)
+		/// <param name="nullConstraint">The emptiness.</param>
+		protected DataDefinition(string name, IType type, NullConstraints nullConstraint)
 		{
 			this.Name = name;
-			this.Type = type;
-			this.Nullability = nullability;
-			this.Constraints = new List<IConstraint>();
-			this.Details = new ImplementationDetails();
+			this.DataType = type;
+			this.NullConstraint = nullConstraint;
+			this.Constraints = new Collection<IConstraint>();
+			this.Details = new ImplementationDetailsDictionary();
 		}
 
 		/// <summary>
@@ -38,7 +35,7 @@
 		/// Gets the type of data in this attribute
 		/// Should determine the ways in which the items can be searched for by attribute
 		/// </summary>
-		public IType Type
+		public IType DataType
 		{
 			get;
 			private set;
@@ -47,7 +44,7 @@
 		/// <summary>
 		/// Gets the conditions which the value of an attribute must satisfy
 		/// </summary>
-		public List<IConstraint> Constraints
+		public Collection<IConstraint> Constraints
 		{
 			get;
 			private set;
@@ -56,7 +53,7 @@
 		/// <summary>
 		/// Gets the way an attribute treats null values
 		/// </summary>
-		public Nullability Nullability
+		public NullConstraints NullConstraint
 		{
 			get;
 			private set;
@@ -68,7 +65,7 @@
 		/// <value>
 		/// The details.
 		/// </value>
-		public ImplementationDetails Details
+		public ImplementationDetailsDictionary Details
 		{
 			get;
 			private set;

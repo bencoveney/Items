@@ -340,10 +340,10 @@ WHERE
 						}
 
 						// TODO guessing at empty, could be the other type/both
-						Nullability nullability = result.GetString(1) == "YES" ? Nullability.Empty : Nullability.Invalid;
+						NullConstraints nullability = result.GetString(1) == "YES" ? NullConstraints.Empty : NullConstraints.None;
 
 						// TODO What about default value?
-						DataAttribute attribute = new DataAttribute(attributeName, type, nullability);
+						DataMember attribute = new DataMember(attributeName, type, nullability);
 						attribute.Details["SqlColumn"] = columnName;
 
 						if (!result.IsDBNull(3))
@@ -374,7 +374,7 @@ WHERE
 						string itemTypeName = result.GetString(0);
 						ItemType itemType = new ItemType(itemTypeName);
 
-						DataAttribute collection = new DataAttribute(collectionName, itemType, Nullability.Empty);
+						DataMember collection = new DataMember(collectionName, itemType, NullConstraints.Empty);
 						collection.Details["SqlColumn"] = string.Format("{0}.{1}", tableName, columnName);
 
 						item.Attributes.Add(collection);
@@ -407,11 +407,11 @@ WHERE
 					}
 				}
 
-				DataAttribute firstCollection = new DataAttribute(referencedTables[1] + "s", new ItemType(referencedTables[1]), Nullability.Invalid);
+				DataMember firstCollection = new DataMember(referencedTables[1] + "s", new ItemType(referencedTables[1]), NullConstraints.None);
 				firstCollection.Details["SqlColumn"] = string.Format("{0}.{1}ID", collectionName, referencedTables[1]);
 				Model.Items[referencedTables[0]].Attributes.Add(firstCollection);
 
-				DataAttribute secondCollection = new DataAttribute(referencedTables[0] + "s", new ItemType(referencedTables[0]), Nullability.Invalid);
+				DataMember secondCollection = new DataMember(referencedTables[0] + "s", new ItemType(referencedTables[0]), NullConstraints.None);
 				secondCollection.Details["SqlColumn"] = string.Format("{0}.{1}ID", collectionName, referencedTables[0]);
 				Model.Items[referencedTables[1]].Attributes.Add(secondCollection);
 			}
@@ -472,7 +472,7 @@ WHERE
 						string attributeName = string.Equals(itemName + "ID", columnName, System.StringComparison.InvariantCultureIgnoreCase) ? "ID" : columnName;
 
 						// Add a unique constraint to the attribute
-						DataAttribute attribute = Model.Items[itemName].Attributes[attributeName];
+						DataMember attribute = Model.Items[itemName].Attributes[attributeName];
 						attribute.Constraints.Add(new AttributeConstraint(attribute, CollectionComparison.IsUniqueWithin));
 					}
 				}
@@ -503,8 +503,8 @@ WHERE
 
 						// Assign the attribute as the primary key
 						Thing thing = Model.Items.ContainsKey(tableName) ? (Thing)Model.Items[tableName] : (Thing)Model.Categories[tableName];
-						DataAttribute primaryKey = thing.Attributes[columnName];
-						thing.IntegerIdentifer = (DataAttribute)primaryKey;
+						DataMember primaryKey = thing.Attributes[columnName];
+						thing.IntegerIdentifier = (DataMember)primaryKey;
 					}
 				}
 			}

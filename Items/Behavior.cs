@@ -1,9 +1,7 @@
 ﻿namespace Items
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+	using System.Collections.ObjectModel;
 
 	/// <summary>
 	/// This defines some functionality which is either performed on/by an instance of an item, or cohesively grouped with the item
@@ -18,9 +16,9 @@
 		public Behavior(string name)
 		{
 			this.Name = name;
-			this.Conditions = new List<Condition>();
-			this.Parameters = new List<Parameter>();
-			this.Actions = new List<Action>();
+			this.Conditions = new Collection<Condition>();
+			this.Parameters = new Collection<Parameter>();
+			this.Actions = new Collection<Action>();
 		}
 
 		/// <summary>
@@ -35,7 +33,7 @@
 		/// <summary>
 		/// Gets the list of conditions which determine whether behavior can be performed
 		/// </summary>
-		public List<Condition> Conditions
+		public Collection<Condition> Conditions
 		{
 			get;
 			private set;
@@ -44,7 +42,7 @@
 		/// <summary>
 		/// Gets what the behavior takes as input
 		/// </summary>
-		public List<Parameter> Parameters
+		public Collection<Parameter> Parameters
 		{
 			get;
 			private set;
@@ -53,7 +51,7 @@
 		/// <summary>
 		/// Gets the changes the behavior makes to the model, for example creation of an item, or a change to an existing single item, or multiple items, or itself
 		/// </summary>
-		public List<Action> Actions
+		public Collection<Action> Actions
 		{
 			get;
 			private set;

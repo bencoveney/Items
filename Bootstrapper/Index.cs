@@ -138,7 +138,7 @@ namespace Bootstrapper
             this.Write("</p>\r\n\r\n\t");
             
             #line 7 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
- foreach(DataAttribute attribute in item.Attributes.Values) { WriteAttribute(attribute, item.IntegerIdentifer == attribute); } 
+ foreach(DataMember attribute in item.Attributes.Values) { WriteAttribute(attribute, item.IntegerIdentifier == attribute); } 
             
             #line default
             #line hidden
@@ -177,7 +177,7 @@ namespace Bootstrapper
 	");
             
             #line 7 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
- foreach(DataAttribute attribute in category.Attributes.Values) { WriteAttribute(attribute, category.IntegerIdentifer == attribute); } 
+ foreach(DataMember attribute in category.Attributes.Values) { WriteAttribute(attribute, category.IntegerIdentifier == attribute); } 
             
             #line default
             #line hidden
@@ -254,7 +254,7 @@ namespace Bootstrapper
         }
         
         #line 1 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
- public void WriteAttribute(DataAttribute attribute, bool isIdentifier) { 
+ public void WriteAttribute(DataMember attribute, bool isIdentifier) { 
         
         #line default
         #line hidden
@@ -387,7 +387,7 @@ this.Write("\t\r\n\t");
         #line hidden
         
         #line 21 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write(this.ToStringHelper.ToStringWithCulture(PrettifyType(attribute.Type)));
+this.Write(this.ToStringHelper.ToStringWithCulture(PrettifyType(attribute.DataType)));
 
         
         #line default
@@ -401,7 +401,7 @@ this.Write(" ");
         #line hidden
         
         #line 21 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write(this.ToStringHelper.ToStringWithCulture(PrettifyNullability(attribute.Nullability)));
+this.Write(this.ToStringHelper.ToStringWithCulture(PrettifyNullability(attribute.NullConstraint)));
 
         
         #line default
@@ -436,7 +436,7 @@ this.Write("\r\n\t");
         #line 27 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
  }
 
-public void WriteConstraints(DataAttribute attribute) { 
+public void WriteConstraints(DataMember attribute) { 
         
         #line default
         #line hidden
@@ -477,7 +477,7 @@ this.Write("\r\n\t</ul>\r\n\r\n");
         #line 41 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
  }
 
-public void WriteSqlDetails(DataAttribute attribute) { 
+public void WriteSqlDetails(DataMember attribute) { 
         
         #line default
         #line hidden
@@ -490,7 +490,7 @@ this.Write("\r\n\t");
         #line hidden
         
         #line 45 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
- if(attribute.Type.Details.ContainsKey("SqlDataType") && attribute.Details.ContainsKey("SqlColumn")) return; 
+ if(attribute.DataType.Details.ContainsKey("SqlDataType") && attribute.Details.ContainsKey("SqlColumn")) return; 
         
         #line default
         #line hidden
@@ -543,7 +543,7 @@ this.Write("\r\n\t\t");
         #line hidden
         
         #line 55 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
- if(attribute.Type.Details.ContainsKey("SqlDataType")) { 
+ if(attribute.DataType.Details.ContainsKey("SqlDataType")) { 
         
         #line default
         #line hidden
@@ -556,7 +556,7 @@ this.Write("\t\t<li>The attribute\'s data type is ");
         #line hidden
         
         #line 56 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\AttributeMethods.ttinclude"
-this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Type.Details["SqlDataType"]));
+this.Write(this.ToStringHelper.ToStringWithCulture(attribute.DataType.Details["SqlDataType"]));
 
         
         #line default

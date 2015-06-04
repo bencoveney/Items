@@ -26,6 +26,6 @@
 		/// <value>
 		/// The details.
 		/// </value>
-		ImplementationDetails Details { get; }
+		ImplementationDetailsDictionary Details { get; }
 	}
 }

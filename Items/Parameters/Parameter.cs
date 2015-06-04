@@ -16,9 +16,9 @@
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="type">The type.</param>
-		/// <param name="nullability">The emptiness.</param>
-		public Parameter(string name, IType type, Nullability nullability)
-			: base(name, type, nullability)
+		/// <param name="nullConstraint">The emptiness.</param>
+		public Parameter(string name, IType type, NullConstraints nullConstraint)
+			: base(name, type, nullConstraint)
 		{
 		}
 	}

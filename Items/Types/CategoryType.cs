@@ -18,7 +18,7 @@
 		public CategoryType(string name)
 		{
 			this.Name = name;
-			this.Details = new ImplementationDetails();
+			this.Details = new ImplementationDetailsDictionary();
 		}
 
 		/// <summary>
@@ -36,7 +36,7 @@
 		/// <value>
 		/// The details.
 		/// </value>
-		public ImplementationDetails Details
+		public ImplementationDetailsDictionary Details
 		{
 			get;
 			private set;

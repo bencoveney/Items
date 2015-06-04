@@ -227,7 +227,7 @@ ORDER BY
 		/// </summary>
 		/// <param name="model">The model.</param>
 		/// <returns></returns>
-		public DataAttribute FindInModel(Model model)
+		public DataMember FindInModel(Model model)
 		{
 			return model.Things.Single(thing => this.Table.IsThingMatch(thing)).Attributes.Values.Single(attribute => attribute.Name == this.Name);
 		}
@@ -236,9 +236,9 @@ ORDER BY
 		/// Gets the way the column treats null values
 		/// </summary>
 		/// <returns>The way the column treats null values</returns>
-		public Nullability GetNullability()
+		public NullConstraints GetNullability()
 		{
-			return this.IsNullable ? Nullability.NotApplicable : Nullability.Invalid;
+			return this.IsNullable ? NullConstraints.NotApplicable : NullConstraints.None;
 		}
 
 		/// <summary>

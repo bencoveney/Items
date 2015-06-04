@@ -8,7 +8,8 @@
 	/// <summary>
 	/// A named collection of behaviors.
 	/// </summary>
-	public class Behaviors : IDictionary<string, Behavior>
+	public class BehaviorsDictionary
+		: IDictionary<string, Behavior>
 	{
 		/// <summary>
 		/// The internal behaviors
@@ -74,6 +75,11 @@
 		/// <param name="value">The value.</param>
 		public void Add(Behavior value)
 		{
+			if (value == null)
+			{
+				throw new ArgumentNullException("value", "value must be provided");
+			}
+
 			this.Add(value.Name, value);
 		}
 
@@ -89,14 +95,19 @@
 		/// </exception>
 		public void Add(string key, Behavior value)
 		{
+			if (value == null)
+			{
+				throw new ArgumentNullException("value", "value must be provided");
+			}
+
 			if (value.Name != key)
 			{
-				throw new Exception("Behavior key is it's name");
+				throw new ArgumentException("Behavior key is it's name", "key");
 			}
 
 			if (this.internalBehaviors.Any(behavior => behavior.Name == key))
 			{
-				throw new Exception("Behavior with that name already exists");
+				throw new ArgumentException("Behavior with that name already exists", "key");
 			}
 
 			this.internalBehaviors.Add(value);
@@ -187,9 +198,14 @@
 		/// <exception cref="System.IndexOutOfRangeException">Index out of range</exception>
 		public void CopyTo(KeyValuePair<string, Behavior>[] array, int arrayIndex)
 		{
+			if (array == null)
+			{
+				throw new ArgumentNullException("array", "array must be provided");
+			}
+
 			if (this.internalBehaviors.Count + arrayIndex > array.Length)
 			{
-				throw new IndexOutOfRangeException("Index out of range");
+				throw new ArgumentOutOfRangeException("arrayIndex", "Index out of range");
 			}
 
 			for (int i = 0; i < array.Length - arrayIndex; i++)

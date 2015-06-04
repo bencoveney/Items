@@ -2,8 +2,8 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Globalization;
 	using System.Linq;
-	using System.Text;
 
 	/// <summary>
 	/// A collection of items and categories
@@ -76,6 +76,11 @@
 		/// <param name="item">The item.</param>
 		public void AddItem(Item item)
 		{
+			if (item == null)
+			{
+				throw new ArgumentNullException("item", "item cannot be null");
+			}
+
 			this.Items.Add(item.Name, item);
 		}
 
@@ -85,6 +90,11 @@
 		/// <param name="category">The category.</param>
 		public void AddCategory(Category category)
 		{
+			if (category == null)
+			{
+				throw new ArgumentNullException("category", "category cannot be null");
+			}
+
 			this.Categories.Add(category.Name, category);
 		}
 
@@ -94,6 +104,11 @@
 		/// <param name="relationship">The relationship.</param>
 		public void AddRelationship(Relationship relationship)
 		{
+			if (relationship == null)
+			{
+				throw new ArgumentNullException("relationship", "relationship cannot be null");
+			}
+
 			this.Relationships.Add(relationship.Name, relationship);
 		}
 
@@ -104,17 +119,24 @@
 		/// <exception cref="System.ArgumentException">Unknown thing type;thing</exception>
 		public void AddThing(Thing thing)
 		{
-			if (thing is Item)
+			// Only cast once
+			// TODO there should probably only be one backing collection to avoid having to do this
+			Item itemThing = thing as Item;
+			Relationship relationshipThing = thing as Relationship;
+			Category categoryThing = thing as Category;
+
+			// Add to the relevant collection
+			if (itemThing != null)
 			{
-				this.AddItem((Item)thing);
+				this.AddItem(itemThing);
 			}
-			else if (thing is Relationship)
+			else if (relationshipThing != null)
 			{
-				this.AddRelationship((Relationship)thing);
+				this.AddRelationship(relationshipThing);
 			}
-			else if (thing is Category)
+			else if (categoryThing != null)
 			{
-				this.AddCategory((Category)thing);
+				this.AddCategory(categoryThing);
 			}
 			else
 			{
@@ -131,17 +153,17 @@
 			foreach (Item item in this.Items.Values)
 			{
 				// Check for items with no identifiers 
-				if (item.IntegerIdentifer == null && item.StringIdentifer == null)
+				if (item.IntegerIdentifier == null && item.StringIdentifier == null)
 				{
-					throw new InvalidModelException(string.Format("Item {0} has no identifiers", item.Name));
+					throw new InvalidModelException(string.Format(CultureInfo.InvariantCulture, "Item {0} has no identifiers", item.Name));
 				}
 
 				// Check for attributes which refer to items which don't exist
-				foreach (DataAttribute attribute in item.Attributes.Values.Where(attribute => attribute.Type.GetType() == typeof(ItemType)))
+				foreach (DataMember attribute in item.Attributes.Values.Where(attribute => attribute.DataType.GetType() == typeof(ItemType)))
 				{
 					// If the item type is neither a category nor an item
 					// TODO handle categories seperately
-					if (!this.Items.ContainsKey(((ItemType)attribute.Type).Name) && !this.Categories.ContainsKey(((ItemType)attribute.Type).Name))
+					if (!this.Items.ContainsKey(((ItemType)attribute.DataType).Name) && !this.Categories.ContainsKey(((ItemType)attribute.DataType).Name))
 					{
 						// Disallow
 						throw new InvalidModelException("Attribute has an item type which is not found in the model");

@@ -17,13 +17,13 @@
 		/// </summary>
 		public SystemType()
 		{
-			this.Details = new ImplementationDetails();
+			this.Details = new ImplementationDetailsDictionary();
 		}
 
 		/// <summary>
 		/// Gets system type
 		/// </summary>
-		public Type Type
+		public Type DataType
 		{
 			get
 			{
@@ -38,7 +38,7 @@
 		{
 			get
 			{
-				return Type.FullName;
+				return this.DataType.FullName;
 			}
 		}
 
@@ -48,7 +48,7 @@
 		/// <value>
 		/// The details.
 		/// </value>
-		public ImplementationDetails Details
+		public ImplementationDetailsDictionary Details
 		{
 			get;
 			private set;

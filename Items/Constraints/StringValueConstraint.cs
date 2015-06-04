@@ -11,6 +11,11 @@
 	public enum StringComparison
 	{
 		/// <summary>
+		/// Invalid value
+		/// </summary>
+		None = 0,
+
+		/// <summary>
 		/// The match
 		/// </summary>
 		Match = 1,
@@ -18,7 +23,7 @@
 		/// <summary>
 		/// The doesn't match
 		/// </summary>
-		DoesntMatch = 2,
+		DoesNotMatch = 2,
 
 		/// <summary>
 		/// The begins with
@@ -28,7 +33,7 @@
 		/// <summary>
 		/// The doesn't begin with
 		/// </summary>
-		DoesntBeginWith = 4,
+		DoesNotBeginWith = 4,
 
 		/// <summary>
 		/// The end with
@@ -38,7 +43,7 @@
 		/// <summary>
 		/// The doesn't end with
 		/// </summary>
-		DoesntEndWith = 6,
+		DoesNotEndWith = 6,
 
 		/// <summary>
 		/// The contains
@@ -48,7 +53,7 @@
 		/// <summary>
 		/// The doesn't contain
 		/// </summary>
-		DoesntContain = 8,
+		DoesNotContain = 8,
 
 		/// <summary>
 		/// The is contained by
@@ -68,7 +73,7 @@
 		/// <summary>
 		/// The doesn't match regex
 		/// </summary>
-		DoesntMatchRegex = 12
+		DoesNotMatchRegex = 12
 	}
 
 	/// <summary>

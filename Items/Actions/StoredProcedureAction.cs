@@ -12,6 +12,18 @@
 		: IAction
 	{
 		/// <summary>
+		/// Initializes a new instance of the <see cref="StoredProcedureAction"/> class.
+		/// </summary>
+		/// <param name="name">The name.</param>
+		/// <param name="storedProcedureName">Name of the stored procedure.</param>
+		public StoredProcedureAction(string name, string storedProcedureName)
+		{
+			this.Name = name;
+			this.StoredProcedureName = storedProcedureName;
+			this.Details = new ImplementationDetailsDictionary();
+		}
+
+		/// <summary>
 		/// Gets the name of the action.
 		/// </summary>
 		/// <value>
@@ -29,7 +41,7 @@
 		/// <value>
 		/// The details.
 		/// </value>
-		public ImplementationDetails Details
+		public ImplementationDetailsDictionary Details
 		{
 			get;
 			private set;

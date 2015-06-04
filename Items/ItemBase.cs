@@ -13,23 +13,23 @@
 		/// <summary>
 		/// The string identifier
 		/// </summary>
-		private DataAttribute stringIdentifier;
+		private DataMember stringIdentifier;
 
 		/// <summary>
 		/// The integer identifier
 		/// </summary>
-		private DataAttribute integerIdentifier;
+		private DataMember integerIdentifier;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Thing" /> class.
 		/// Creates the item
 		/// </summary>
 		/// <param name="name">The name.</param>
-		public Thing(string name)
+		protected Thing(string name)
 		{
 			this.Name = name;
-			this.Attributes = new Attributes();
-			this.Details = new ImplementationDetails();
+			this.Attributes = new AttributeDictionary();
+			this.Details = new ImplementationDetailsDictionary();
 		}
 
 		/// <summary>
@@ -47,7 +47,7 @@
 		/// Should be in the list of attribute
 		/// should we require an identifier in order to perform lookups?
 		/// </summary>
-		public DataAttribute StringIdentifer
+		public DataMember StringIdentifier
 		{
 			get
 			{
@@ -56,7 +56,12 @@
 
 			set
 			{
-				if (!(value.Type is SystemType<string>))
+				if (value == null)
+				{
+					throw new ArgumentNullException("value", "value cannot be null");
+				}
+
+				if (!(value.DataType is SystemType<string>))
 				{
 					throw new ArgumentException("stringIdentifier must be of type SystemType<string>");
 				}
@@ -82,7 +87,7 @@
 		/// Should be in the list of attribute
 		/// should we require an identifier in order to perform lookups?
 		/// </summary>
-		public DataAttribute IntegerIdentifer
+		public DataMember IntegerIdentifier
 		{
 			get
 			{
@@ -91,8 +96,13 @@
 
 			set
 			{
+				if (value == null)
+				{
+					throw new ArgumentNullException("value", "Value cannot be null");
+				}
+
 				// TODO accept other size ints?
-				if (!(value.Type is SystemType<int>))
+				if (!(value.DataType is SystemType<int>))
 				{
 					throw new ArgumentException("IntegerIdentifer must be of type SystemType<Int32>");
 				}
@@ -104,7 +114,7 @@
 				}
 
 				// Ensure the value cannot be nulled
-				if (value.Nullability != Nullability.Invalid)
+				if (value.NullConstraint != NullConstraints.None)
 				{
 					throw new ArgumentException("This attribute cannot be an identifier as it can be null");
 				}
@@ -117,7 +127,7 @@
 		/// Gets the data for the instance of the item
 		/// Should be dictionary, with the identifier being a key on the dictionary
 		/// </summary>
-		public Attributes Attributes
+		public AttributeDictionary Attributes
 		{
 			get;
 			private set;
@@ -129,7 +139,7 @@
 		/// <value>
 		/// The details.
 		/// </value>
-		public ImplementationDetails Details
+		public ImplementationDetailsDictionary Details
 		{
 			get;
 			private set;

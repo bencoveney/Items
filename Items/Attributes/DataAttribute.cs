@@ -6,19 +6,19 @@
 	using System.Text;
 
 	/// <summary>
-	/// An DataAttribute
+	/// An attribute
 	/// </summary>
-	public class DataAttribute
+	public class DataMember
 		: DataDefinition
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DataAttribute"/> class.
+		/// Initializes a new instance of the <see cref="DataMember"/> class.
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="type">The type.</param>
-		/// <param name="nullability">The emptiness.</param>
-		public DataAttribute(string name, IType type, Nullability nullability)
-			: base(name, type, nullability)
+		/// <param name="nullConstraint">The emptiness.</param>
+		public DataMember(string name, IType type, NullConstraints nullConstraint)
+			: base(name, type, nullConstraint)
 		{
 		}
 	}

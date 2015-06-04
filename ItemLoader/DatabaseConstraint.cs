@@ -324,7 +324,7 @@ WHERE
 				case ConstraintType.Unique:
 
 					// Find the attribute in the model that this constraint is referring to
-					DataAttribute targetAttribute;
+					DataMember targetAttribute;
 					if(this.Columns.Count != 1)
 					{
 						targetAttribute = this.Columns.First().FindInModel(model);

@@ -24,7 +24,7 @@
 		/// <value>
 		/// The details.
 		/// </value>
-		ImplementationDetails Details
+		ImplementationDetailsDictionary Details
 		{
 			get;
 		}

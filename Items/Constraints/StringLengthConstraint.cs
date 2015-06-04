@@ -11,6 +11,11 @@
 	public enum LengthComparison
 	{
 		/// <summary>
+		/// Invalid value
+		/// </summary>
+		None = 0,
+
+		/// <summary>
 		/// The longer than
 		/// </summary>
 		LongerThan = 1,

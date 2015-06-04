@@ -8,18 +8,18 @@
 	/// <summary>
 	/// A named collection of attributes.
 	/// </summary>
-	public partial class Attributes
-		: IDictionary<string, DataAttribute>
+	public partial class AttributeDictionary
+		: IDictionary<string, DataMember>
 	{
 		/// <summary>
 		/// The internal attributes
 		/// </summary>
-		private List<DataAttribute> internalAttributes = new List<DataAttribute>();
+		private List<DataMember> internalAttributes = new List<DataMember>();
 
 		/// <summary>
 		/// Gets an <see cref="T:System.Collections.Generic.ICollection`1" /> containing the values in the <see cref="T:System.Collections.Generic.IDictionary`2" />.
 		/// </summary>
-		public ICollection<DataAttribute> Values
+		public ICollection<DataMember> Values
 		{
 			get { return this.internalAttributes; }
 		}
@@ -31,7 +31,7 @@
 		{
 			get
 			{
-				return this.internalAttributes.Select<DataAttribute, string>(attribute => attribute.Name).ToList();
+				return this.internalAttributes.Select<DataMember, string>(attribute => attribute.Name).ToList();
 			}
 		}
 
@@ -56,7 +56,7 @@
 		/// </summary>
 		/// <param name="key">The key.</param>
 		/// <returns>The attribute</returns>
-		public DataAttribute this[string key]
+		public DataMember this[string key]
 		{
 			get
 			{
@@ -73,8 +73,13 @@
 		/// Adds the specified value.
 		/// </summary>
 		/// <param name="value">The value.</param>
-		public void Add(DataAttribute value)
+		public void Add(DataMember value)
 		{
+			if (value == null)
+			{
+				throw new ArgumentNullException("value", "Value must be provided");
+			}
+
 			this.Add(value.Name, value);
 		}
 
@@ -88,16 +93,21 @@
 		/// or
 		/// Attribute with that name already exists
 		/// </exception>
-		public void Add(string key, DataAttribute value)
+		public void Add(string key, DataMember value)
 		{
+			if (value == null)
+			{
+				throw new ArgumentNullException("value", "Value must be provided");
+			}
+
 			if (value.Name != key)
 			{
-				throw new Exception("Attribute key is it's name");
+				throw new ArgumentException("Attribute key is it's name", "value");
 			}
 
 			if (this.internalAttributes.Any(attribute => attribute.Name == key))
 			{
-				throw new Exception("Attribute with that name already exists");
+				throw new ArgumentException("Attribute with that name already exists", "value");
 			}
 
 			this.internalAttributes.Add(value);
@@ -135,7 +145,7 @@
 		/// <returns>
 		/// true if the object that implements <see cref="T:System.Collections.Generic.IDictionary`2" /> contains an element with the specified key; otherwise, false.
 		/// </returns>
-		public bool TryGetValue(string key, out DataAttribute value)
+		public bool TryGetValue(string key, out DataMember value)
 		{
 			if (this.ContainsKey(key))
 			{
@@ -153,7 +163,7 @@
 		/// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1" />.
 		/// </summary>
 		/// <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1" />.</param>
-		public void Add(KeyValuePair<string, DataAttribute> item)
+		public void Add(KeyValuePair<string, DataMember> item)
 		{
 			this.Add(item.Key, item.Value);
 		}
@@ -163,7 +173,7 @@
 		/// </summary>
 		public void Clear()
 		{
-			this.internalAttributes = new List<DataAttribute>();
+			this.internalAttributes = new List<DataMember>();
 		}
 
 		/// <summary>
@@ -173,9 +183,9 @@
 		/// <returns>
 		/// true if <paramref name="item" /> is found in the <see cref="T:System.Collections.Generic.ICollection`1" />; otherwise, false.
 		/// </returns>
-		public bool Contains(KeyValuePair<string, DataAttribute> item)
+		public bool Contains(KeyValuePair<string, DataMember> item)
 		{
-			DataAttribute result;
+			DataMember result;
 			this.TryGetValue(item.Key, out result);
 			return result == item.Value;
 		}
@@ -186,16 +196,21 @@
 		/// <param name="array">The array.</param>
 		/// <param name="arrayIndex">Index of the array.</param>
 		/// <exception cref="System.IndexOutOfRangeException">Index out of range</exception>
-		public void CopyTo(KeyValuePair<string, DataAttribute>[] array, int arrayIndex)
+		public void CopyTo(KeyValuePair<string, DataMember>[] array, int arrayIndex)
 		{
+			if (array == null)
+			{
+				throw new ArgumentNullException("array", "array must be provided");
+			}
+
 			if (this.internalAttributes.Count + arrayIndex > array.Length)
 			{
-				throw new IndexOutOfRangeException("Index out of range");
+				throw new ArgumentOutOfRangeException("arrayIndex", "arrayIndex out of range");
 			}
 
 			for (int i = 0; i < array.Length - arrayIndex; i++)
 			{
-				array[i + arrayIndex] = new KeyValuePair<string, DataAttribute>(this.internalAttributes[i].Name, this.internalAttributes[i]);
+				array[i + arrayIndex] = new KeyValuePair<string, DataMember>(this.internalAttributes[i].Name, this.internalAttributes[i]);
 			}
 		}
 
@@ -206,7 +221,7 @@
 		/// <returns>
 		/// true if <paramref name="item" /> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1" />; otherwise, false. This method also returns false if <paramref name="item" /> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1" />.
 		/// </returns>
-		public bool Remove(KeyValuePair<string, DataAttribute> item)
+		public bool Remove(KeyValuePair<string, DataMember> item)
 		{
 			// doesnt check whether the item only matches on one, could be bad data
 			return this.internalAttributes.RemoveAll(attribute => attribute.Name == item.Key && attribute == item.Value) > 0;
@@ -218,7 +233,7 @@
 		/// <returns>
 		/// A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
 		/// </returns>
-		public IEnumerator<KeyValuePair<string, DataAttribute>> GetEnumerator()
+		public IEnumerator<KeyValuePair<string, DataMember>> GetEnumerator()
 		{
 			return this.GetEnumerator();
 		}

@@ -12,6 +12,18 @@
 		: IAction
 	{
 		/// <summary>
+		/// Initializes a new instance of the <see cref="ScriptAction"/> class.
+		/// </summary>
+		/// <param name="name">The name.</param>
+		/// <param name="scriptName">Name of the script.</param>
+		public ScriptAction(string name, string scriptName)
+		{
+			this.Name = name;
+			this.ScriptName = scriptName;
+			this.Details = new ImplementationDetailsDictionary();
+		}
+
+		/// <summary>
 		/// Gets the name of the action.
 		/// </summary>
 		/// <value>
@@ -29,7 +41,7 @@
 		/// <value>
 		/// The details.
 		/// </value>
-		public ImplementationDetails Details
+		public ImplementationDetailsDictionary Details
 		{
 			get;
 			private set;

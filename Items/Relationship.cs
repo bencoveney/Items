@@ -1,9 +1,6 @@
 ﻿namespace Items
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+	using System.Collections.ObjectModel;
 
 	/// <summary>
 	/// Used to define relations between objects
@@ -14,6 +11,11 @@
 		: Thing
 	{
 		/// <summary>
+		/// Gets the links this relationship has to other items (should only be 2)
+		/// </summary>
+		private RelationshipLink[] relationshipLinks;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Relationship"/> class.
 		/// </summary>
 		/// <param name="name">The name.</param>
@@ -22,7 +24,7 @@
 		public Relationship(string name, Thing left, Thing right)
 			: base(name)
 		{
-			this.Links = new RelationshipLink[2];
+			this.relationshipLinks = new RelationshipLink[2];
 			this.Links[0] = new RelationshipLink() { AmountLower = 0, AmountUpper = null, Thing = left };
 			this.Links[1] = new RelationshipLink() { AmountLower = 0, AmountUpper = null, Thing = right };
 		}
@@ -33,10 +35,12 @@
 		/// <value>
 		/// The links.
 		/// </value>
-		public RelationshipLink[] Links
+		public Collection<RelationshipLink> Links
 		{
-			get;
-			private set;
+			get
+			{
+				return new Collection<RelationshipLink>(this.relationshipLinks);
+			}
 		}
 
 		/// <summary>
@@ -65,36 +69,6 @@
 			{
 				return this.Links[1];
 			}
-		}
-
-		/// <summary>
-		/// Used by a relationship to indicate what thing (and the quantity of those things) is being related 
-		/// </summary>
-		public class RelationshipLink
-		{
-			/// <summary>
-			/// Gets or sets the lowest amount of things which can be encompassed by this link (can't be negative)
-			/// </summary>
-			/// <value>
-			/// The amount lower.
-			/// </value>
-			public int AmountLower { get; set; }
-
-			/// <summary>
-			/// Gets or sets the highest amount of things which can be encompassed by this link (null if no limit)
-			/// </summary>
-			/// <value>
-			/// The amount upper.
-			/// </value>
-			public int? AmountUpper { get; set; }
-
-			/// <summary>
-			/// Gets or sets the thing being related by this link
-			/// </summary>
-			/// <value>
-			/// The thing.
-			/// </value>
-			public Thing Thing { get; set; }
 		}
 	}
 }

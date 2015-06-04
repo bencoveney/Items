@@ -34,24 +34,24 @@ namespace Manual
             Item kitchen = new Item("Kitchen");
 
             // Primary key
-            DataAttribute kitchenID = new DataAttribute("ID", new SystemType<Int32>(), Nullability.Invalid);
+            DataMember kitchenID = new DataMember("ID", new SystemType<Int32>(), NullConstraints.None);
             kitchenID.Constraints.Add(new NumericValueConstraint<Int32>(NumericValueComparison.GreaterThan, 0)); // Value must be greater than 0
             kitchenID.Constraints.Add(new AttributeConstraint(kitchenID, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             kitchen.Attributes.Add(kitchenID);
-            kitchen.IntegerIdentifer = kitchenID;
+            kitchen.IntegerIdentifier = kitchenID;
 
             // String key
-            DataAttribute name = new DataAttribute("Name", new SystemType<String>(), Nullability.Invalid);
+            DataMember name = new DataMember("Name", new SystemType<String>(), NullConstraints.None);
             name.Constraints.Add(StringLengthConstraint.NotEmpty); // Dont allow empty strings
             name.Constraints.Add(new StringLengthConstraint(LengthComparison.ShorterThan, 257)); // Maximum 256 chars
             name.Constraints.Add(new AttributeConstraint(name, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             kitchen.Attributes.Add(name);
-            kitchen.StringIdentifer = name;
+            kitchen.StringIdentifier = name;
 
-            DataAttribute containers = new DataAttribute("Containers", new ItemType("Container"), Nullability.Empty);
+            DataMember containers = new DataMember("Containers", new ItemType("Container"), NullConstraints.Empty);
             kitchen.Attributes.Add(containers);
 
-            DataAttribute people = new DataAttribute("Persons", new ItemType("Person"), Nullability.Empty);
+            DataMember people = new DataMember("Persons", new ItemType("Person"), NullConstraints.Empty);
             kitchen.Attributes.Add(people);
 
             return kitchen;
@@ -63,29 +63,29 @@ namespace Manual
             Item container = new Item("Container");
 
             // Primary key
-            DataAttribute containerID = new DataAttribute("ID", new SystemType<Int32>(), Nullability.Invalid);
+            DataMember containerID = new DataMember("ID", new SystemType<Int32>(), NullConstraints.None);
             containerID.Constraints.Add(new NumericValueConstraint<Int32>(NumericValueComparison.GreaterThan, 0)); // Value must be greater than 0
             containerID.Constraints.Add(new AttributeConstraint(containerID, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             container.Attributes.Add(containerID);
-            container.IntegerIdentifer = containerID;
+            container.IntegerIdentifier = containerID;
 
             // String key
-            DataAttribute name = new DataAttribute("Name", new SystemType<String>(), Nullability.Invalid);
+            DataMember name = new DataMember("Name", new SystemType<String>(), NullConstraints.None);
             name.Constraints.Add(StringLengthConstraint.NotEmpty); // Dont allow empty strings
             name.Constraints.Add(new StringLengthConstraint(LengthComparison.ShorterThan, 257)); // Maximum 256 chars
             name.Constraints.Add(new AttributeConstraint(name, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             container.Attributes.Add(name);
-            container.StringIdentifer = name;
+            container.StringIdentifier = name;
 
             // Kitchen foreign key
             // This is the equivalent of having a kitchenID DataAttribute which is constrained by saying it exists in the KitchenID column of the kitchenitem
-            DataAttribute kitchen = new DataAttribute("Kitchen", new ItemType("Kitchen"), Nullability.Invalid);
+            DataMember kitchen = new DataMember("Kitchen", new ItemType("Kitchen"), NullConstraints.None);
             container.Attributes.Add(kitchen);
 
-            DataAttribute category = new DataAttribute("Category", new CategoryType("ContainerCategory"), Nullability.Invalid);
+            DataMember category = new DataMember("Category", new CategoryType("ContainerCategory"), NullConstraints.None);
             container.Attributes.Add(category);
 
-            DataAttribute owners = new DataAttribute("Persons", new ItemType("Person"), Nullability.Empty);
+            DataMember owners = new DataMember("Persons", new ItemType("Person"), NullConstraints.Empty);
             container.Attributes.Add(owners);
 
             return container;
@@ -118,21 +118,21 @@ namespace Manual
             Item person = new Item("Person");
 
             // Primary key
-            DataAttribute personID = new DataAttribute("ID", new SystemType<Int32>(), Nullability.Invalid);
+            DataMember personID = new DataMember("ID", new SystemType<Int32>(), NullConstraints.None);
             personID.Constraints.Add(new NumericValueConstraint<Int32>(NumericValueComparison.GreaterThan, 0)); // Value must be greater than 0
             personID.Constraints.Add(new AttributeConstraint(personID, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             person.Attributes.Add(personID);
-            person.IntegerIdentifer = personID;
+            person.IntegerIdentifier = personID;
 
             // String key
-            DataAttribute name = new DataAttribute("Name", new SystemType<String>(), Nullability.Invalid);
+            DataMember name = new DataMember("Name", new SystemType<String>(), NullConstraints.None);
             name.Constraints.Add(StringLengthConstraint.NotEmpty); // Dont allow empty strings
             name.Constraints.Add(new StringLengthConstraint(LengthComparison.ShorterThan, 257)); // Maximum 256 chars
             name.Constraints.Add(new AttributeConstraint(name, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             person.Attributes.Add(name);
-            person.StringIdentifer = name;
+            person.StringIdentifier = name;
 
-            DataAttribute containers = new DataAttribute("Containers", new ItemType("Container"), Nullability.Empty);
+            DataMember containers = new DataMember("Containers", new ItemType("Container"), NullConstraints.Empty);
             person.Attributes.Add(containers);
 
             return person;
@@ -143,19 +143,19 @@ namespace Manual
             Category containerCategory = new Category("ContainerCategory");
 
             // Primary key
-            DataAttribute containerCategoryID = new DataAttribute("ID", new SystemType<Int32>(), Nullability.Invalid);
+            DataMember containerCategoryID = new DataMember("ID", new SystemType<Int32>(), NullConstraints.None);
             containerCategoryID.Constraints.Add(new NumericValueConstraint<Int32>(NumericValueComparison.GreaterThan, 0)); // Value must be greater than 0
             containerCategoryID.Constraints.Add(new AttributeConstraint(containerCategoryID, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             containerCategory.Attributes.Add(containerCategoryID);
-            containerCategory.IntegerIdentifer = containerCategoryID;
+            containerCategory.IntegerIdentifier = containerCategoryID;
 
             // String key
-            DataAttribute name = new DataAttribute("Name", new SystemType<String>(), Nullability.Invalid);
+            DataMember name = new DataMember("Name", new SystemType<String>(), NullConstraints.None);
             name.Constraints.Add(StringLengthConstraint.NotEmpty); // Dont allow empty strings
             name.Constraints.Add(new StringLengthConstraint(LengthComparison.ShorterThan, 257)); // Maximum 256 chars
             name.Constraints.Add(new AttributeConstraint(name, CollectionComparison.IsUniqueWithin)); // Value cannot be duplicated
             containerCategory.Attributes.Add(name);
-            containerCategory.StringIdentifer = name;
+            containerCategory.StringIdentifier = name;
 
             return containerCategory;
         }

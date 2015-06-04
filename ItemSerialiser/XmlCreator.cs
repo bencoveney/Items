@@ -95,7 +95,7 @@ namespace ItemSerialiser
             this.Write("\">\r\n\t\t<Attributes>\r\n");
             
             #line 9 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-			foreach(DataAttribute attribute in item.Attributes.Values)
+			foreach(DataMember attribute in item.Attributes.Values)
 			{
 				WriteAttribute(attribute);
 			}
@@ -183,7 +183,7 @@ namespace ItemSerialiser
         }
         
         #line 53 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
- public void WriteAttribute(DataAttribute attribute)
+ public void WriteAttribute(DataMember attribute)
 	{
 
         
@@ -226,7 +226,7 @@ this.Write("\">\r\n\t\t\t\t<Type>\r\n\t\t\t\t\t");
         #line hidden
         
         #line 58 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(TypeToXml(attribute.Type)));
+this.Write(this.ToStringHelper.ToStringWithCulture(TypeToXml(attribute.DataType)));
 
         
         #line default
@@ -302,7 +302,7 @@ this.Write("\t\t\t\t<Nullability>\r\n\t\t\t\t\t<");
         #line hidden
         
         #line 78 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Nullability));
+this.Write(this.ToStringHelper.ToStringWithCulture(attribute.NullConstraint));
 
         
         #line default

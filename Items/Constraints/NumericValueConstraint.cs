@@ -11,6 +11,11 @@
 	public enum NumericValueComparison
 	{
 		/// <summary>
+		/// Invalid value
+		/// </summary>
+		None = 0,
+
+		/// <summary>
 		/// The equal to
 		/// </summary>
 		EqualTo = 1,

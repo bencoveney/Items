@@ -11,6 +11,11 @@
 	public enum CollectionComparison
 	{
 		/// <summary>
+		/// Invalid value
+		/// </summary>
+		None = 0,
+
+		/// <summary>
 		/// Returns true if the value exists in the collection
 		/// </summary>
 		ExistsIn = 1,
@@ -18,13 +23,13 @@
 		/// <summary>
 		/// Returns true if the value doesn't exists in the collection
 		/// </summary>
-		DoesntExistIn = 2,
+		DoesNotExistIn = 2,
 
 		/// <summary>
 		/// Returns true if the value is unique within the collection
 		/// Might require additional logic to determine whether the item instance is being included in the check as it might match itself
 		/// </summary>
-		IsUniqueWithin
+		IsUniqueWithin = 3
 	}
 
 	/// <summary>
@@ -40,7 +45,7 @@
 		/// </summary>
 		/// <param name="attribute">The attribute.</param>
 		/// <param name="comparison">The comparison.</param>
-		public AttributeConstraint(DataAttribute attribute, CollectionComparison comparison)
+		public AttributeConstraint(DataMember attribute, CollectionComparison comparison)
 		{
 			this.Attribute = attribute;
 			this.Comparison = comparison;
@@ -52,7 +57,7 @@
 		/// <value>
 		/// The attribute.
 		/// </value>
-		public DataAttribute Attribute
+		public DataMember Attribute
 		{
 			get;
 			private set;

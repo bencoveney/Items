@@ -11,12 +11,13 @@
 	/// Describes whether an attribute accepts null values
 	/// </summary>
 	[Flags]
-	public enum Nullability
+	public enum NullConstraints
 	{
 		/// <summary>
 		/// Null values are not permitted
+		/// TODO should there be a separate invalid state?
 		/// </summary>
-		Invalid = 0,
+		None = 0,
 
 		/// <summary>
 		/// Null values signify that the field is intentionally blank
