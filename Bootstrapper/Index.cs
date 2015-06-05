@@ -138,7 +138,7 @@ namespace Bootstrapper
             this.Write("</p>\r\n\r\n\t");
             
             #line 7 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Items.ttinclude"
- foreach(DataMember attribute in item.Attributes.Values) { WriteAttribute(attribute, item.IntegerIdentifier == attribute); } 
+ foreach(DataMember attribute in item.Attributes) { WriteAttribute(attribute, item.IntegerIdentifier == attribute); } 
             
             #line default
             #line hidden
@@ -177,7 +177,7 @@ namespace Bootstrapper
 	");
             
             #line 7 "C:\Users\Ben\Desktop\Items\Bootstrapper\ttincludes\Categories.ttinclude"
- foreach(DataMember attribute in category.Attributes.Values) { WriteAttribute(attribute, category.IntegerIdentifier == attribute); } 
+ foreach(DataMember attribute in category.Attributes) { WriteAttribute(attribute, category.IntegerIdentifier == attribute); } 
             
             #line default
             #line hidden

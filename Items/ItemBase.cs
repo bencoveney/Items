@@ -28,7 +28,7 @@
 		protected Thing(string name)
 		{
 			this.Name = name;
-			this.Attributes = new AttributeDictionary();
+			this.Attributes = new NamedCollection<DataMember>();
 			this.Details = new ImplementationDetailsDictionary();
 		}
 
@@ -127,7 +127,7 @@
 		/// Gets the data for the instance of the item
 		/// Should be dictionary, with the identifier being a key on the dictionary
 		/// </summary>
-		public AttributeDictionary Attributes
+		public NamedCollection<DataMember> Attributes
 		{
 			get;
 			private set;

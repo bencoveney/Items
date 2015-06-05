@@ -1,4 +1,4 @@
-﻿<#+ public void WriteAttribute(DataAttribute attribute, bool isIdentifier) { #>
+﻿<#+ public void WriteAttribute(DataMember attribute, bool isIdentifier) { #>
 
 	<h3>
 
@@ -18,7 +18,7 @@
 		This attribute is the primary identifier for this item.
 	<#+ } #>
 	
-	<#= PrettifyType(attribute.Type) #> <#= PrettifyNullability(attribute.Nullability) #></p>
+	<#= PrettifyType(attribute.DataType) #> <#= PrettifyNullability(attribute.NullConstraint) #></p>
 
 	<#+ WriteConstraints(attribute); #>
 
@@ -26,7 +26,7 @@
 
 <#+ }
 
-public void WriteConstraints(DataAttribute attribute) { #>
+public void WriteConstraints(DataMember attribute) { #>
 
 	<#+ if (attribute.Constraints.Count == 0) return; #>
 
@@ -40,9 +40,9 @@ public void WriteConstraints(DataAttribute attribute) { #>
 
 <#+ }
 
-public void WriteSqlDetails(DataAttribute attribute) { #>
+public void WriteSqlDetails(DataMember attribute) { #>
 
-	<#+ if(attribute.Type.Details.ContainsKey("SqlDataType") && attribute.Details.ContainsKey("SqlColumn")) return; #>
+	<#+ if(attribute.DataType.Details.ContainsKey("SqlDataType") && attribute.Details.ContainsKey("SqlColumn")) return; #>
 
 	<strong>Sql Implementation Details:</strong>
 
@@ -52,8 +52,8 @@ public void WriteSqlDetails(DataAttribute attribute) { #>
 		<li>The attribute's column name is <#= attribute.Details["SqlColumn"] #>.</li>
 		<#+ } #>
 
-		<#+ if(attribute.Type.Details.ContainsKey("SqlDataType")) { #>
-		<li>The attribute's data type is <#= attribute.Type.Details["SqlDataType"] #>.</li>
+		<#+ if(attribute.DataType.Details.ContainsKey("SqlDataType")) { #>
+		<li>The attribute's data type is <#= attribute.DataType.Details["SqlDataType"] #>.</li>
 		<#+ } #>
 
 	</ul>

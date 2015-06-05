@@ -229,7 +229,7 @@ ORDER BY
 		/// <returns></returns>
 		public DataMember FindInModel(Model model)
 		{
-			return model.Things.Single(thing => this.Table.IsThingMatch(thing)).Attributes.Values.Single(attribute => attribute.Name == this.Name);
+			return model.Things.Single(thing => this.Table.IsThingMatch(thing)).Attributes.Single(attribute => attribute.Name == this.Name);
 		}
 
 		/// <summary>

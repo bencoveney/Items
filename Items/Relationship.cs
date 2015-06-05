@@ -25,8 +25,8 @@
 			: base(name)
 		{
 			this.relationshipLinks = new RelationshipLink[2];
-			this.Links[0] = new RelationshipLink() { AmountLower = 0, AmountUpper = null, Thing = left };
-			this.Links[1] = new RelationshipLink() { AmountLower = 0, AmountUpper = null, Thing = right };
+			this.relationshipLinks[0] = new RelationshipLink() { AmountLower = 0, AmountUpper = null, Thing = left };
+			this.relationshipLinks[1] = new RelationshipLink() { AmountLower = 0, AmountUpper = null, Thing = right };
 		}
 
 		/// <summary>

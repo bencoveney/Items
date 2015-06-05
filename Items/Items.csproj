@@ -55,10 +55,8 @@
   <ItemGroup>
     <Compile Include="Actions\BehaviorAction.cs" />
     <Compile Include="Actions\IAction.cs" />
-    <Compile Include="Attributes\Attributes.cs" />
-    <Compile Include="Attributes\DataAttribute.cs" />
+    <Compile Include="DataMember.cs" />
     <Compile Include="Behavior.cs" />
-    <Compile Include="Behaviors.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Condition.cs" />
     <Compile Include="Constraints\AttributeConstraint.cs" />
@@ -69,8 +67,10 @@
     <Compile Include="Constraints\IConstraint.cs" />
     <Compile Include="DataDefinition.cs" />
     <Compile Include="ImplementationDetails.cs" />
+    <Compile Include="INamedObject.cs" />
     <Compile Include="InvalidModelException.cs" />
     <Compile Include="ItemBase.cs" />
+    <Compile Include="NamedObjectCollection.cs" />
     <Compile Include="Parameters\Parameter.cs" />
     <Compile Include="Relationship.cs" />
     <Compile Include="Actions\ScriptAction.cs" />

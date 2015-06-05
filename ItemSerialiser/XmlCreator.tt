@@ -6,14 +6,14 @@
 #>
 	<Item Name="<#= item.Name #>">
 		<Attributes>
-<#			foreach(DataAttribute attribute in item.Attributes.Values)
+<#			foreach(DataMember attribute in item.Attributes)
 			{
 				WriteAttribute(attribute);
 			}
 #>
 		</Attributes>
 		<Behavior>
-<#		foreach(Behavior behavior in item.Behaviors.Values)
+<#		foreach(Behavior behavior in item.Behaviors)
 		{
 #>
 			<Behavior Name="<#= behavior.Name #>">
@@ -50,12 +50,12 @@
 #>
 </Model>
 
-<#+ public void WriteAttribute(DataAttribute attribute)
+<#+ public void WriteAttribute(DataMember attribute)
 	{
 #>
 			<<#= attribute.GetType().Name #> Name="<#= attribute.Name #>">
 				<Type>
-					<#= TypeToXml(attribute.Type) #>
+					<#= TypeToXml(attribute.DataType) #>
 				</Type>
 <#+			if(attribute.Constraints.Count > 0)
             {
@@ -75,7 +75,7 @@
 <#+         }
 #>
 				<Nullability>
-					<<#= attribute.Nullability #> />
+					<<#= attribute.NullConstraint #> />
 				</Nullability>
 			</<#= attribute.GetType().Name #>>
 <#+ }

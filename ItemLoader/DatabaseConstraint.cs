@@ -305,6 +305,13 @@ WHERE
 		/// <summary>
 		/// Gets the model constraints which can be inferred from this constraint.
 		/// </summary>
+		/// <param name="model">The model.</param>
+		/// <returns>The model constraints which can be inferred from this constraint.</returns>
+		/// <exception cref="InvalidModelException">
+		/// Primary key has an invalid number of columns
+		/// or
+		/// Invalid ConstraintType
+		/// </exception>
 		public IEnumerable<IConstraint> GetConstraints(Model model)
 		{
 			List<IConstraint> constraints = new List<IConstraint>();
@@ -316,16 +323,13 @@ WHERE
 					break;
 
 				case ConstraintType.PrimaryKey:
-
 					// TODO also NOT NULL when that is represented as a constraint
-
 					// Fall through to unique constraint, because thats all a primary key is
-
 				case ConstraintType.Unique:
 
 					// Find the attribute in the model that this constraint is referring to
 					DataMember targetAttribute;
-					if(this.Columns.Count != 1)
+					if (this.Columns.Count != 1)
 					{
 						targetAttribute = this.Columns.First().FindInModel(model);
 					}

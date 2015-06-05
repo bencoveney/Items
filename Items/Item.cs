@@ -19,7 +19,7 @@
 		public Item(string name)
 			: base(name)
 		{
-			this.Behaviors = new BehaviorsDictionary();
+			this.Behaviors = new NamedCollection<Behavior>();
 		}
 
 		/// <summary>
@@ -27,7 +27,7 @@
 		/// should static actions be a specific type of behavior which don't take the item as a parameter?
 		/// should be Dictionary
 		/// </summary>
-		public BehaviorsDictionary Behaviors
+		public NamedCollection<Behavior> Behaviors
 		{
 			get;
 			private set;

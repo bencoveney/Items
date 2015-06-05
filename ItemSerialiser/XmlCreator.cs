@@ -95,7 +95,7 @@ namespace ItemSerialiser
             this.Write("\">\r\n\t\t<Attributes>\r\n");
             
             #line 9 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-			foreach(DataMember attribute in item.Attributes.Values)
+			foreach(DataMember attribute in item.Attributes)
 			{
 				WriteAttribute(attribute);
 			}
@@ -106,7 +106,7 @@ namespace ItemSerialiser
             this.Write("\t\t</Attributes>\r\n\t\t<Behavior>\r\n");
             
             #line 16 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-		foreach(Behavior behavior in item.Behaviors.Values)
+		foreach(Behavior behavior in item.Behaviors)
 		{
 
             

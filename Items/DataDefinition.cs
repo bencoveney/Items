@@ -6,6 +6,7 @@
 	/// Base object for any object which needs to define the data it contains
 	/// </summary>
 	public abstract class DataDefinition
+		: INamedObject
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DataDefinition"/> class.

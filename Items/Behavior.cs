@@ -7,6 +7,7 @@
 	/// This defines some functionality which is either performed on/by an instance of an item, or cohesively grouped with the item
 	/// </summary>
 	public class Behavior
+		: INamedObject
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Behavior" /> class.

@@ -289,7 +289,7 @@
 		/// <summary>
 		/// Gets the model constraints that can be inferred from this type.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>The model constraints that can be inferred from this type.</returns>
 		public IEnumerable<IConstraint> GetConstraints()
 		{
 			List<IConstraint> constraints = new List<IConstraint>();
