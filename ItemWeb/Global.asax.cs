@@ -7,6 +7,7 @@ using System.Web.SessionState;
 using System.Web.Routing;
 using Items;
 using ItemLoader;
+using System.Configuration;
 
 namespace ItemWeb
 {
@@ -23,7 +24,8 @@ namespace ItemWeb
 		{
 			RouteTable.Routes.MapPageRoute("Thing", "{ThingType}/{ThingName}", "~/ThingPage.aspx");
 
-			DatabaseModel.LoadFromDatabase(@"Data Source=BENSDESKTOP\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True");
+			DatabaseModel.LoadFromDatabase(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+
 			Model = DatabaseModel.ConstructModel();
 		}
 
