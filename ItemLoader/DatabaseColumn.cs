@@ -226,7 +226,7 @@ ORDER BY
 		/// Finds a reference to this column in this model.
 		/// </summary>
 		/// <param name="model">The model.</param>
-		/// <returns></returns>
+		/// <returns>The data member in the model that references this item.</returns>
 		public DataMember FindInModel(Model model)
 		{
 			return model.Things.Single(thing => this.Table.IsThingMatch(thing)).Attributes.Single(attribute => attribute.Name == this.Name);

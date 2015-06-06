@@ -144,5 +144,15 @@
 			get;
 			private set;
 		}
+
+		/// <summary>
+		/// Gets the relationships which reference this thing.
+		/// </summary>
+		/// <param name="model">The model.</param>
+		/// <returns></returns>
+		public IEnumerable<Relationship> GetReferenceRelationships(Model model)
+		{
+			return model.Relationships.Values.Where(relationship => relationship.Links.Any(link => link.Thing == this));
+		}
 	}
 }

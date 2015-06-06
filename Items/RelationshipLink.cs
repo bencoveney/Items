@@ -28,5 +28,30 @@
 		/// The thing.
 		/// </value>
 		public Thing Thing { get; set; }
+
+		/// <summary>
+		/// Returns a <see cref="System.String" /> that represents this instance.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String" /> that represents this instance.
+		/// </returns>
+		public override string ToString()
+		{
+			if (AmountUpper.HasValue)
+			{
+				if (AmountLower == AmountUpper.Value)
+				{
+					return string.Format("{0} ({1})", this.Thing.Name, AmountLower);
+				}
+				else
+				{
+					return string.Format("{0} ({1} - {2})", this.Thing.Name, this.AmountLower, this.AmountUpper.Value);
+				}
+			}
+			else
+			{
+				return string.Format("{0} ({1} - *)", this.Thing.Name, AmountLower);
+			}
+		}
 	}
 }
