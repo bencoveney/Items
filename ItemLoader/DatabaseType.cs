@@ -132,6 +132,12 @@
 			private set;
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether this type is an integer type.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if this instance is integer; otherwise, <c>false</c>.
+		/// </value>
 		public bool IsInteger
 		{
 			get
@@ -149,6 +155,12 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether this type is a text type.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if this instance is text; otherwise, <c>false</c>.
+		/// </value>
 		public bool IsText
 		{
 			get

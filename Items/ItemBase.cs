@@ -149,9 +149,15 @@
 		/// Gets the relationships which reference this thing.
 		/// </summary>
 		/// <param name="model">The model.</param>
-		/// <returns></returns>
+		/// <returns>A collection of relationships which reference this thing.</returns>
+		/// <exception cref="ArgumentNullException">model;model can not be null</exception>
 		public IEnumerable<Relationship> GetReferenceRelationships(Model model)
 		{
+			if (model == null)
+			{
+				throw new ArgumentNullException("model", "model can not be null");
+			}
+
 			return model.Relationships.Values.Where(relationship => relationship.Links.Any(link => link.Thing == this));
 		}
 	}

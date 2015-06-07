@@ -1,5 +1,7 @@
 ﻿namespace Items
 {
+	using System.Globalization;
+
 	/// <summary>
 	/// Used by a relationship to indicate what thing (and the quantity of those things) is being related 
 	/// </summary>
@@ -37,20 +39,20 @@
 		/// </returns>
 		public override string ToString()
 		{
-			if (AmountUpper.HasValue)
+			if (this.AmountUpper.HasValue)
 			{
-				if (AmountLower == AmountUpper.Value)
+				if (this.AmountLower == this.AmountUpper.Value)
 				{
-					return string.Format("{0} ({1})", this.Thing.Name, AmountLower);
+					return string.Format(CultureInfo.CurrentCulture, "{0} ({1})", this.Thing.Name, this.AmountLower);
 				}
 				else
 				{
-					return string.Format("{0} ({1} - {2})", this.Thing.Name, this.AmountLower, this.AmountUpper.Value);
+					return string.Format(CultureInfo.CurrentCulture, "{0} ({1} - {2})", this.Thing.Name, this.AmountLower, this.AmountUpper.Value);
 				}
 			}
 			else
 			{
-				return string.Format("{0} ({1} - *)", this.Thing.Name, AmountLower);
+				return string.Format(CultureInfo.CurrentCulture, "{0} ({1} - *)", this.Thing.Name, this.AmountLower);
 			}
 		}
 	}

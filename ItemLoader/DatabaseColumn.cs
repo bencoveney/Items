@@ -244,7 +244,7 @@ ORDER BY
 		/// <summary>
 		/// Gets the name of the attribute.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>The model friendly name of this attribute</returns>
 		public string GetAttributeName()
 		{
 			// If this attribute's name begins with the table name, strip it off
