@@ -114,9 +114,9 @@
 				item.Details.Add("SqlTable", table.Name);
 
 				// Add columns (which aren't relationships)
-				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer && !dbColumn.IsReferenced))
+				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer))
 				{
-					DataMember dataAttribute = new DataMember(column.Name, column.Type.GetSystemType(), column.GetNullability());
+					DataMember dataAttribute = new DataMember(column.GetAttributeName(), column.Type.GetSystemType(), column.GetNullability());
 
 					// Populate implementation details
 					dataAttribute.Details.Add("SqlColumn", column.Name);
@@ -170,7 +170,7 @@
 				// Add columns (which aren't relationships)
 				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer && !dbColumn.IsReferenced))
 				{
-					DataMember dataAttribute = new DataMember(column.Name, column.Type.GetSystemType(), column.GetNullability());
+					DataMember dataAttribute = new DataMember(column.GetAttributeName(), column.Type.GetSystemType(), column.GetNullability());
 
 					// Populate implementation details
 					dataAttribute.Details.Add("SqlColumn", column.Name);

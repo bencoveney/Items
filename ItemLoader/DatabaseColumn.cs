@@ -242,6 +242,23 @@ ORDER BY
 		}
 
 		/// <summary>
+		/// Gets the name of the attribute.
+		/// </summary>
+		/// <returns></returns>
+		public string GetAttributeName()
+		{
+			// If this attribute's name begins with the table name, strip it off
+			if (this.Name.IndexOf(this.Table.Name) == 0)
+			{
+				return this.Name.Substring(this.Table.Name.Length);
+			}
+			else
+			{
+				return this.Name;
+			}
+		}
+
+		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
 		/// <returns>

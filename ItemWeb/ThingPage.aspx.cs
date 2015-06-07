@@ -340,6 +340,10 @@ namespace ItemWeb
 			}
 		}
 
+		protected void WriteRelationshipSqlDetails(Relationship relationship)
+		{
+		}
+
 		protected void WriteConstraints(DataMember attribute)
 		{
 			if(attribute.Constraints.Count == 0) return;
@@ -450,6 +454,29 @@ namespace ItemWeb
 			Response.Write("</div>");
 
 			Response.Write("</div>");
+
+			if(relationship.Details.ContainsKey("SqlCatalog") && relationship.Details.ContainsKey("SqlSchema") && relationship.Details.ContainsKey("SqlTable"))
+			{
+				Response.Write("<div class=\"row\">");
+				Response.Write("<div class=\"col-sm-12\">");
+
+				Response.Write("Represented by ");
+				Response.Write(relationship.Details["SqlCatalog"]);
+				Response.Write(" ");
+				Response.Write(relationship.Details["SqlSchema"]);
+				Response.Write(" ");
+				Response.Write(relationship.Details["SqlTable"]);
+
+				if(relationship.Details.ContainsKey("SqlConstraint"))
+				{
+					Response.Write(" ");
+					Response.Write(relationship.Details["SqlConstraint"]);
+				}
+
+				Response.Write("</div>");
+				Response.Write("</div>");
+			}
+
 			Response.Write("</div>");
 
 			Response.Write("</div>");
