@@ -338,6 +338,7 @@ WHERE
 						throw new InvalidModelException("Primary key has an invalid number of columns");
 					}
 
+					// TODO add implementation details
 					constraints.Add(new AttributeConstraint(targetAttribute, CollectionComparison.IsUniqueWithin));
 
 					break;

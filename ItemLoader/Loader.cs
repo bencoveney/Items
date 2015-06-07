@@ -202,8 +202,6 @@ WHERE
 				this.PopulateCollectionAttributes(connection, collectionName);
 			}
 
-			this.PopulateAdditionalData();
-
 			this.PopulateUniqueConstraints(connection);
 
 			this.PopulatePrimaryKeys(connection);
@@ -415,17 +413,6 @@ WHERE
 				secondCollection.Details["SqlColumn"] = string.Format("{0}.{1}ID", collectionName, referencedTables[0]);
 				Model.Items[referencedTables[1]].Attributes.Add(secondCollection);
 			}
-		}
-
-		/// <summary>
-		/// Populates the additional data such as descriptions.
-		/// </summary>
-		public void PopulateAdditionalData()
-		{
-			Model.Items["Container"].Description = "A container is a basic tool, consisting of any device creating a partially or fully enclosed space that can be used to contain, store, and transport objects or materials. In commerce, it includes any receptacle or enclosure for holding a product used in packaging and shipping. Things kept inside of a container are protected by being inside of its structure. The term is most frequently applied to devices made from materials that are durable and at least partly rigid.";
-			Model.Items["Person"].Description = "A person is a being, such as a human, that has certain capacities or attributes constituting personhood, which in turn is defined differently by different authors in different disciplines, and by different cultures in different times and places. In ancient Rome, the word persona (Latin) or prosopon (πρόσωπον; Greek) originally referred to the masks worn by actors on stage. The various masks represented the various personae in the stage play.";
-			Model.Items["Kitchen"].Description = "A kitchen is a room or part of a room used for cooking and food preparation. In the West, a modern residential kitchen is typically equipped with a stove, a sink with hot and cold running water, a refrigerator and kitchen cabinets arranged according to a modular design. Many households have a microwave oven, a dishwasher and other electric appliances. The main function of a kitchen is cooking or preparing food but it may also be used for dining, food storage, entertaining, dishwashing, laundry.";
-			Model.Items["Foodstuff"].Description = "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth. Historically, people secured food through two methods: hunting and gathering, and agriculture. Today, most of the food energy required by the ever increasing population of the world is supplied by the food industry.";
 		}
 
 		/// <summary>

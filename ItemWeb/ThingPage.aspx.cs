@@ -60,16 +60,16 @@ namespace ItemWeb
 
 			if (typeType.IsGenericType && typeType.GetGenericTypeDefinition() == typeof(SystemType<>))
 			{
-				String pureDefinition = String.Format("The attribute stores {0} data.", typeType.GetGenericArguments()[0].Name);
+				String pureDefinition = String.Format("The attribute stores <strong>{0}</strong> data.", typeType.GetGenericArguments()[0].Name);
 				Response.Write(pureDefinition);
 			}
 			else if (typeType == typeof(ItemType))
 			{
-				Response.Write(String.Format("This attribute stores {0} items.", type.Name));
+				Response.Write(String.Format("This attribute stores <strong>{0}</strong> items.", type.Name));
 			}
 			else if (typeType == typeof(CategoryType))
 			{
-				Response.Write(String.Format("This attribute is a {0} categorisation.", type.Name));
+				Response.Write(String.Format("This attribute is a <strong>{0}</strong> categorisation.", type.Name));
 			}
 			else
 			{
@@ -274,80 +274,140 @@ namespace ItemWeb
 
 		protected void WriteSqlDetails(DataMember attribute)
 		{
-			if(!attribute.DataType.Details.ContainsKey("SqlDataType") && !attribute.Details.ContainsKey("SqlColumn"))
-			{
-				return;
-			}
-			
-			Response.Write("<strong>Sql Implementation Details:</strong>");
-			Response.Write("<ul>");
+			// TODO make these tabular, read them sensibly instead of all these ifs with the same content
 
 			if(attribute.Details.ContainsKey("SqlColumn"))
 			{
-				Response.Write("<li>The attribute's column name is ");
+				Response.Write("<li>The column name is ");
 				Response.Write(attribute.Details["SqlColumn"]);
 				Response.Write(".</li>");
 			}
 
 			if(attribute.DataType.Details.ContainsKey("SqlDataType"))
 			{
-				Response.Write("<li>The attribute's data type is ");
+				Response.Write("<li>The data type is ");
 				Response.Write(attribute.DataType.Details["SqlDataType"]);
 				Response.Write(".</li>");
 			}
 
-			Response.Write("</ul>");
+			if (attribute.DataType.Details.ContainsKey("SqlNumericPrecision"))
+			{
+				Response.Write("<li>The numeric precision is ");
+				Response.Write(attribute.DataType.Details["SqlNumericPrecision"]);
+				Response.Write(".</li>");
+			}
+
+			if (attribute.DataType.Details.ContainsKey("SqlNumericPrecisionRadix"))
+			{
+				Response.Write("<li>The numeric precision radix is ");
+				Response.Write(attribute.DataType.Details["SqlNumericPrecisionRadix"]);
+				Response.Write(".</li>");
+			}
+
+			if (attribute.DataType.Details.ContainsKey("SqlNumericScale"))
+			{
+				Response.Write("<li>The numeric scale is ");
+				Response.Write(attribute.DataType.Details["SqlNumericScale"]);
+				Response.Write(".</li>");
+			}
+
+			if (attribute.DataType.Details.ContainsKey("SqlDateTimePrecision"))
+			{
+				Response.Write("<li>The date time precision is ");
+				Response.Write(attribute.DataType.Details["SqlDateTimePrecision"]);
+				Response.Write(".</li>");
+			}
+
+			if (attribute.DataType.Details.ContainsKey("SqlMaxCharacters"))
+			{
+				Response.Write("<li>The maximum number of characters is ");
+				Response.Write(attribute.DataType.Details["SqlMaxCharacters"]);
+				Response.Write(".</li>");
+			}
+
+			if (attribute.DataType.Details.ContainsKey("SqlCharacterSet"))
+			{
+				Response.Write("<li>The character set is ");
+				Response.Write(attribute.DataType.Details["SqlCharacterSet"]);
+				Response.Write(".</li>");
+			}
+
+			if (attribute.DataType.Details.ContainsKey("SqlCollationName"))
+			{
+				Response.Write("<li>The collation name is ");
+				Response.Write(attribute.DataType.Details["SqlCollationName"]);
+				Response.Write(".</li>");
+			}
 		}
 
 		protected void WriteConstraints(DataMember attribute)
 		{
 			if(attribute.Constraints.Count == 0) return;
-
-			Response.Write("<strong>Constraints</strong>");
-
-			Response.Write("<ul>");
 			foreach(IConstraint constraint in attribute.Constraints)
 			{
 				WriteConstraint(constraint);
 			}
-			Response.Write("</ul>");
 		}
 
 		protected void WriteAttribute(DataMember attribute, bool isIdentifier)
 		{
 			Response.Write("<div class=\"col-sm-6\">");
-			Response.Write("<div class=\"panel panel-default\">");
+			if (isIdentifier)
+			{
+				Response.Write("<div class=\"panel panel-primary\">");
+			}
+			else
+			{
+				Response.Write("<div class=\"panel panel-default\">");
+			}
 
 			Response.Write("<div class=\"panel-heading\">");
 			Response.Write("<h4 class=\"panel-title\">");
-			if(isIdentifier)
-			{
-				Response.Write("<strong>");
-			}
 			Response.Write(attribute.Name);
-			if(isIdentifier)
+			if (isIdentifier)
 			{
-				Response.Write("</strong>");
+				Response.Write(" <small>Identifier</small>");
 			}
 			Response.Write("</h4>");
 			Response.Write("</div>");
 
-			Response.Write("<div class=\"panel-body\">");
-			Response.Write("<p>");
-			Response.Write(attribute.Name);
-			Response.Write(" is a ");
-			Response.Write(attribute.GetType().Name);
-			Response.Write(". ");
-			if(isIdentifier)
-			{
-				Response.Write("This attribute is the primary identifier for this item.");
-			}
+			Response.Write("<ul class=\"list-group\">");
+
+			Response.Write("<li class=\"list-group-item\">");
+			Response.Write("<h5 class=\"list-group-item-heading\">Data Type</h5>");
+			Response.Write("<p class=\"list-group-item-text\">");
 			WriteType(attribute.DataType);
+			Response.Write("</p>");
+			Response.Write("</li>");
+
+			Response.Write("<li class=\"list-group-item\">");
+			Response.Write("<h5 class=\"list-group-item-heading\">Null Constraint</h5>");
+			Response.Write("<p class=\"list-group-item-text\">");
 			WriteNullability(attribute.NullConstraint);
 			Response.Write("</p>");
-			WriteConstraints(attribute);
-			WriteSqlDetails(attribute);
-			Response.Write("</div>");
+			Response.Write("</li>");
+
+			if (attribute.Constraints.Any())
+			{
+				Response.Write("<li class=\"list-group-item\">");
+				Response.Write("<h5 class=\"list-group-item-heading\">Constraints</h5>");
+				Response.Write("<ul class=\"list-group-item-text\">");
+				WriteConstraints(attribute);
+				Response.Write("</ul>");
+				Response.Write("</li>");
+			}
+
+			if (attribute.DataType.Details.ContainsKey("SqlDataType") || attribute.Details.ContainsKey("SqlColumn"))
+			{
+				Response.Write("<li class=\"list-group-item\">");
+				Response.Write("<h5 class=\"list-group-item-heading\">Sql Details</h5>");
+				Response.Write("<ul class=\"list-group-item-text\">");
+				WriteSqlDetails(attribute);
+				Response.Write("</ul>");
+				Response.Write("</li>");
+			}
+
+			Response.Write("</ul>");
 
 			Response.Write("</div>");
 			Response.Write("</div>");
@@ -403,6 +463,28 @@ namespace ItemWeb
 			Response.Write("/");
 			Response.Write(thing.Name);
 			Response.Write("\">");
+		}
+
+		protected void WriteSqlObject()
+		{
+			Response.Write("This ");
+			Response.Write(this.ThingType);
+			Response.Write(" is represented by the database schema object ");
+			Response.Write(" represents the dbo ");
+
+			Response.Write(this.Thing.Details["SqlCatalog"]);
+
+			Response.Write(".");
+			Response.Write(this.Thing.Details["SqlSchema"]);
+
+			Response.Write(".");
+			Response.Write(this.Thing.Details["SqlTable"]);
+
+			if(this.Thing.Details.ContainsKey("SqlConstraint"))
+			{
+				Response.Write(".");
+				Response.Write(this.Thing.Details["SqlConstraint"]);
+			}
 		}
 	}
 }

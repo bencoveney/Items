@@ -132,6 +132,42 @@
 			private set;
 		}
 
+		public bool IsInteger
+		{
+			get
+			{
+				switch (this.DataType.ToLower())
+				{
+					case "bigint":
+					case "int":
+					case "smallint":
+					case "tinyint":
+						return true;
+					default:
+						return false;
+				}
+			}
+		}
+
+		public bool IsText
+		{
+			get
+			{
+				switch (this.DataType.ToLower())
+				{
+					case "char":
+					case "nchar":
+					case "varchar":
+					case "nvarchar":
+					case "text":
+					case "ntext":
+						return true;
+					default:
+						return false;
+				}
+			}
+		}
+
 		/// <summary>
 		/// Gets a model system type from the column's data type.
 		/// </summary>
