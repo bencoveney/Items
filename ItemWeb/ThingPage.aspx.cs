@@ -513,5 +513,94 @@ namespace ItemWeb
 				Response.Write(this.Thing.Details["SqlConstraint"]);
 			}
 		}
+
+		protected void WriteBehaviors(Thing thing)
+		{
+			Item item = thing as Item;
+
+			if (item != null && item.Behaviors.Count > 0)
+			{
+				Response.Write("<div class=\"section\">");
+				Response.Write("<h3>Behaviors</h3>");
+				Response.Write("<div class=\"row\">");
+				foreach (Behavior behavior in item.Behaviors)
+				{
+					WriteBehavior(behavior);
+				}
+				Response.Write("</div>");
+				Response.Write("</div>");
+			}
+		}
+
+		protected void WriteBehavior(Behavior behavior)
+		{
+			Response.Write("<div class=\"col-sm-12\">");
+			Response.Write("<div class=\"panel panel-default\">");
+
+			Response.Write("<div class=\"panel-heading\">");
+			Response.Write("<h4 class=\"panel-title\">");
+			Response.Write(behavior.Name);
+			Response.Write("</h4>");
+			Response.Write("</div>");
+
+			Response.Write("<table class=\"table table-striped\">");
+
+			Response.Write("<thead>");
+			Response.Write("<tr>");
+			Response.Write("<th>#</th>");
+			Response.Write("<th>Name</th>");
+			Response.Write("<th>Direction</th>");
+			Response.Write("<th>Data Type</th>");
+			Response.Write("<th>SQL Type</th>");
+			Response.Write("</tr>");
+			Response.Write("<thead>");
+
+			Response.Write("<tbody>");
+			foreach (Items.Parameter parameter in behavior.Parameters)
+			{
+				Response.Write("<tr>");
+				Response.Write("<td>");
+				Response.Write(parameter.Details["SqlOrdinal"]);
+				Response.Write("</td>");
+				Response.Write("<td>");
+				Response.Write(parameter.Name);
+				Response.Write("</td>");
+				Response.Write("<td>");
+				Response.Write(parameter.Details["SqlMode"]);
+				Response.Write("</td>");
+				Response.Write("<td>");
+				WriteParameterType(parameter.DataType);
+				Response.Write("</td>");
+				Response.Write("<td class=\"text-uppercase\">");
+				Response.Write(parameter.DataType.Details["SqlDataType"]);
+				Response.Write("</td>");
+				Response.Write("</tr>");
+			}
+			Response.Write("</tbody>");
+
+			Response.Write("</table>");
+
+			Response.Write("</div>");
+			Response.Write("</div>");
+		}
+
+		protected void WriteParameterType(IType type)
+		{
+			Type typeType = type.GetType();
+
+			if (typeType.IsGenericType && typeType.GetGenericTypeDefinition() == typeof(SystemType<>))
+			{
+				String pureDefinition =typeType.GetGenericArguments()[0].Name;
+				Response.Write(pureDefinition);
+			}
+			else if (typeType == typeof(ItemType) || typeType == typeof(CategoryType))
+			{
+				Response.Write(type.Name);
+			}
+			else
+			{
+				Response.Write(String.Format("Unkown type ({0})", typeType.FullName));
+			}
+		}
 	}
 }

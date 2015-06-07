@@ -257,16 +257,29 @@
 
 			foreach (DatabaseRoutine routine in DatabaseModel.Routines)
 			{
-				Behavior behavior = new Behavior(routine.Name);
+				Item item = result.Items.Values.Single(routine.IsThingMatch);
+
+				string behaviorName = routine.Name;
+
+				// If this behavior's name begins with the item name, strip it off
+				if (routine.Name.IndexOf(item.Name) == 0)
+				{
+					behaviorName = routine.Name.Substring(item.Name.Length);
+				}
+
+				Behavior behavior = new Behavior(behaviorName);
 
 				foreach (DatabaseRoutineParameter routineParameter in routine.Parameters)
 				{
 					Parameter parameter = new Parameter(routineParameter.Name, routineParameter.Type.GetSystemType(), NullConstraints.NotApplicable);
 
+					// TODO Should these be 1st class properties of the parameter?
+					parameter.Details["SqlOrdinal"] = routineParameter.OrdinalPosition;
+					parameter.Details["SqlMode"] = routineParameter.Mode.ToString();
+
 					behavior.Parameters.Add(parameter);
 				}
 
-				Item item = result.Items.Values.Single(routine.IsThingMatch);
 				item.Behaviors.Add(behavior);
 			}
 

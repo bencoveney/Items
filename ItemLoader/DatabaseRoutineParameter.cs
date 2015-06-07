@@ -157,6 +157,12 @@ WHERE
 						// Build the proper data structure for return type
 						DatabaseType returnType = new DatabaseType(dataType, characterMaximumLength, characterSetName, collationName, numericPrecision, numericPrecisionRadix, numericScale, dateTimePrecision);
 
+						// Remove the @ from the front of the name
+						if (name.IndexOf("@") == 0)
+						{
+							name = name.Substring(1);
+						}
+
 						DatabaseRoutineParameter parameter = new DatabaseRoutineParameter(name, routine, ordinalPosition, mode, returnType);
 					}
 				}

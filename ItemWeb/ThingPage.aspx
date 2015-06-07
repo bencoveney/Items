@@ -71,33 +71,35 @@
 							%>
 						</div>
 					</div>
+
+					<% WriteBehaviors(this.Thing); %>
 				</div>
 			
 				<div class="col-sm-3 col-sm-offset-1">
 					<h2>Items</h2>
 					<ul>
 						<% foreach (Item item in Global.Model.Items.Values)
-		 {
-			 Response.Write(String.Format("<li><a href=\"../Item/{0}\">{0}</a></li>", item.Name));
-		 }
+						{
+							Response.Write(String.Format("<li><a href=\"../Item/{0}\">{0}</a></li>", item.Name));
+						}
 						%>
 					</ul>
 
 					<h2>Categories</h2>
 					<ul>
 						<% foreach (Category category in Global.Model.Categories.Values)
-		 {
-			 Response.Write(String.Format("<li><a href=\"../Category/{0}\">{0}</a></li>", category.Name));
-		 }
+						{
+							Response.Write(String.Format("<li><a href=\"../Category/{0}\">{0}</a></li>", category.Name));
+						}
 						%>
 					</ul>
 
 					<h2>Relationships</h2>
 					<ul>
 						<% foreach (Relationship relationship in Global.Model.Relationships.Values)
-		 {
-			 Response.Write(String.Format("<li><a href=\"../Relationship/{0}\">{0}</a></li>", relationship.Name));
-		 }
+						{
+							Response.Write(String.Format("<li><a href=\"../Relationship/{0}\">{0}</a></li>", relationship.Name));
+						}
 						%>
 					</ul>
 				</div>
