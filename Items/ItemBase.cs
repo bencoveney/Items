@@ -39,7 +39,7 @@
 		public string Name
 		{
 			get;
-			set;
+			private set;
 		}
 
 		/// <summary>
@@ -53,7 +53,6 @@
 			{
 				return this.stringIdentifier;
 			}
-
 			set
 			{
 				if (value == null)
@@ -93,7 +92,6 @@
 			{
 				return this.integerIdentifier;
 			}
-
 			set
 			{
 				if (value == null)

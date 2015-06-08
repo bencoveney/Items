@@ -10,6 +10,9 @@ namespace ItemsTests
 	[TestClass]
 	public class ModelTests
 	{
+		/// <summary>
+		/// Tests model construction.
+		/// </summary>
 		[TestMethod]
 		public void ModelConstruction()
 		{
@@ -19,6 +22,9 @@ namespace ItemsTests
 			Assert.IsNotNull(model.Relationships);
 		}
 
+		/// <summary>
+		/// Tests adding an item to the model.
+		/// </summary>
 		[TestMethod]
 		public void ModelAddItem()
 		{
@@ -29,6 +35,9 @@ namespace ItemsTests
 			Assert.IsTrue(model.Items.ContainsValue(item));
 		}
 
+		/// <summary>
+		/// Tests adding a relationship to the model.
+		/// </summary>
 		[TestMethod]
 		public void ModelAddRelationship()
 		{
@@ -39,6 +48,9 @@ namespace ItemsTests
 			Assert.IsTrue(model.Relationships.ContainsValue(relationship));
 		}
 
+		/// <summary>
+		/// Tests adding a category to the model.
+		/// </summary>
 		[TestMethod]
 		public void ModelAddCategory()
 		{
@@ -49,6 +61,9 @@ namespace ItemsTests
 			Assert.IsTrue(model.Categories.ContainsValue(category));
 		}
 
+		/// <summary>
+		/// Tests adding a thing to the model.
+		/// </summary>
 		[TestMethod]
 		public void ModelAddThing()
 		{
@@ -66,6 +81,9 @@ namespace ItemsTests
 			Assert.IsTrue(model.Categories.ContainsValue(category));
 		}
 
+		/// <summary>
+		/// Tests adding a duplicate item to the model.
+		/// </summary>
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
 		public void ModelAddDuplicateItem()
@@ -78,6 +96,9 @@ namespace ItemsTests
 			model.AddItem(item2);
 		}
 
+		/// <summary>
+		/// Tests adding a duplicate relationship to the model.
+		/// </summary>
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
 		public void ModelAddDuplicateRelationship()
@@ -90,6 +111,9 @@ namespace ItemsTests
 			model.AddRelationship(relationship2);
 		}
 
+		/// <summary>
+		/// Tests adding a duplicate category to the model.
+		/// </summary>
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
 		public void ModelAddDuplicateCategory()
