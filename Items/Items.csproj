@@ -69,8 +69,8 @@
     <Compile Include="ImplementationDetails.cs" />
     <Compile Include="INamedObject.cs" />
     <Compile Include="InvalidModelException.cs" />
-    <Compile Include="ItemBase.cs" />
-    <Compile Include="NamedObjectCollection.cs" />
+    <Compile Include="Thing.cs" />
+    <Compile Include="NamedCollection.cs" />
     <Compile Include="Parameters\Parameter.cs" />
     <Compile Include="Relationship.cs" />
     <Compile Include="Actions\ScriptAction.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="Types\ItemType.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Item.cs" />
-    <Compile Include="Nullability.cs" />
+    <Compile Include="NullConstraints.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\IType.cs" />
     <Compile Include="Types\SystemType.cs" />

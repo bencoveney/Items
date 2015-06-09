@@ -7,6 +7,7 @@
 
 	/// <summary>
 	/// Defines an attribute type which is an Item in the model
+	/// TODO Remove, this is a relationship now
 	/// </summary>
 	public class ItemType
 		: IType
