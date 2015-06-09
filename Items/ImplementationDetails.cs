@@ -6,6 +6,7 @@
 
 	/// <summary>
 	/// A key, value collection of implementation detail names and their values
+	/// TODO concept of a details "schema" to only allow certain values as keys?
 	/// </summary>
 	[Serializable]
 	public class ImplementationDetailsDictionary

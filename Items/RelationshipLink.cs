@@ -1,5 +1,6 @@
 ﻿namespace Items
 {
+	using System;
 	using System.Globalization;
 
 	/// <summary>
@@ -8,28 +9,117 @@
 	public class RelationshipLink
 	{
 		/// <summary>
-		/// Gets or sets the lowest amount of things which can be encompassed by this link (can't be negative)
+		/// Backing variable for AmountLower property
+		/// </summary>
+		private int amountLower;
+
+		/// <summary>
+		/// Backing variable for AmountUpper property
+		/// </summary>
+		private int? amountUpper;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RelationshipLink"/> class.
+		/// </summary>
+		/// <param name="thing">The thing.</param>
+		/// <param name="amountLower">The the lowest amount of things which can be encompassed by this link (can't be negative).</param>
+		public RelationshipLink(Thing thing, int amountLower)
+			: this(thing, amountLower, null)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RelationshipLink" /> class.
+		/// </summary>
+		/// <param name="thing">The thing.</param>
+		/// <param name="amountLower">The lowest amount of things which can be encompassed by this link (can't be negative).</param>
+		/// <param name="amountUpper">The upper amount of things which can be encompassed by this link (can't be negative).</param>
+		public RelationshipLink(Thing thing, int amountLower, int? amountUpper)
+		{
+			if (thing == null)
+			{
+				throw new ArgumentNullException("thing", "thing cannot be null");
+			}
+
+			this.Thing = thing;
+			this.AmountLower = amountLower;
+			this.AmountUpper = amountUpper;
+		}
+
+		/// <summary>
+		/// Gets the lowest amount of things which can be encompassed by this link (can't be negative)
 		/// </summary>
 		/// <value>
 		/// The amount lower.
 		/// </value>
-		public int AmountLower { get; set; }
+		/// <exception cref="ArgumentException">
+		/// AmountLower cannot be negative;value
+		/// or
+		/// AmountLower must be smaller than AmountUpper;value
+		/// </exception>
+		public int AmountLower
+		{
+			get
+			{
+				return this.amountLower;
+			}
+
+			private set
+			{
+				if (value < 0)
+				{
+					throw new ArgumentException("AmountLower cannot be negative", "value");
+				}
+
+				if (this.AmountUpper.HasValue && this.AmountUpper < value)
+				{
+					throw new ArgumentException("AmountLower must be smaller than (or equal to) AmountUpper", "value");
+				}
+
+				this.amountLower = value;
+			}
+		}
 
 		/// <summary>
-		/// Gets or sets the highest amount of things which can be encompassed by this link (null if no limit)
+		/// Gets the highest amount of things which can be encompassed by this link (null if no limit)
 		/// </summary>
 		/// <value>
 		/// The amount upper.
 		/// </value>
-		public int? AmountUpper { get; set; }
+		public int? AmountUpper
+		{
+			get
+			{
+				return this.amountUpper;
+			}
+
+			private set
+			{
+				if (value.HasValue && value < 0)
+				{
+					throw new ArgumentException("AmountLower cannot be negative", "value");
+				}
+
+				if (value.HasValue && this.AmountLower > value)
+				{
+					throw new ArgumentException("AmountUpper must be larger than (or equal to) AmountLower", "value");
+				}
+
+				this.amountUpper = value;
+			}
+		}
 
 		/// <summary>
-		/// Gets or sets the thing being related by this link
+		/// Gets the thing being related by this link
 		/// </summary>
 		/// <value>
 		/// The thing.
 		/// </value>
-		public Thing Thing { get; set; }
+		public Thing Thing
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.

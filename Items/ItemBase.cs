@@ -33,7 +33,7 @@
 		}
 
 		/// <summary>
-		/// Gets or sets the name of the item
+		/// Gets the name of the item
 		/// ReadOnly?
 		/// </summary>
 		public string Name
@@ -53,6 +53,7 @@
 			{
 				return this.stringIdentifier;
 			}
+
 			set
 			{
 				if (value == null)
@@ -92,6 +93,7 @@
 			{
 				return this.integerIdentifier;
 			}
+
 			set
 			{
 				if (value == null)

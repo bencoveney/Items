@@ -51,9 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryTest.cs" />
+    <Compile Include="ImplementationDetailsDictionaryTest.cs" />
     <Compile Include="ItemTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModelTests.cs" />
+    <Compile Include="RelationshipLinkTest.cs" />
     <Compile Include="RelationshipTest.cs" />
     <Compile Include="ThingTest.cs" />
   </ItemGroup>
