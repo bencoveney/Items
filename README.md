@@ -7,33 +7,28 @@ Included Projects
 -----------------
 
 - **Items:**  The model building objects.
-- **Tests\Manual:** Testing building models manually with method calls.
+- **Tests\Manual:** Testing building models manually with method calls (Out of date).
+- **Tests\ItemTests:** Unit tests for classes in the items project.
 - **IO\ItemLoader:** Responsible for loading database objects and constructing an (items) model from them.
 - **IO\ItemsDB:** An example database schema which can be used to test the ItemLoader.
-- **IO\ItemSerialiser**: Builds XML to represent the model.
-- **IO\Bootstrapper**: Builds HTML documentation on the model using the bootstrap frontend library.
+- **IO\ItemSerialiser**: Builds XML to represent the model (To be replaced by real serialization).
+- **IO\ItemWeb**: ASP website which generates and displays a model.
 
 TODO List
 ---------
 
-- [x] Maybe the implementation specific details should be stored in a dictionary rather than in partial classes.
-  - [x] Currently makes the object model messy and spreads implementation out incohesively.
-  - [x] Currently has DB implementation details in the Items project.
-  - [x] Examples: "description": "blah blah", "sql datatype": "blah blah", "sql column": "blah blah".
-  - [x] Might still need to mess up object model in order to add functionality instead of data.
-- [ ] Develop a smarter way of loading from the database rather than one long messy file.
-  - [x] Create schema object model
-  - [x] Loader Column and constraint should be properties of the table rather than including table data
-  - [x] Loader FK support todo properly
-  - [ ] Use schema object model to build items model.
-	- [ ] Routines
-	- [ ] Constraints
-	- [ ] Alter bootstrapper to use imeplementation details
-  - [x] Should database reads be using enums/some other method of column ordinal identification? (Now using extension methods)
-  - [x] Automate exlusion of system tables such as refactorlog, sysdiagrams (Now handled only by table loading)
-  - [x] Move all type details to DatabaseType class
-  - [x] Add ToString() to DatabaseType (and maybe everything else?)
-- [ ] Generate code.
+- [ ] Currently anything can be added to the ImplementationDetailsDictionary. It might be better to have a schema concept inside it which dictates what can be added and removed (For example the database loader might specift that the attribute details object takes a string called column name). This would help mitigate the fact that using an ImplementationDetailsDictionary removes a lot of type safety.
+- [ ] Think about alternate ways of loading the database. It was one long file, and has now been split out somewhat into the classes in the Database Loader project however there is still a lot of logic in one very long method (in DatabaseModel.cs) and it doesn't allow for customisation (ie it is only tailored for the test database).
+- [ ] More widespread implementation of ToString to aid debugging.
+- [ ] More widespread code quality tools.
+  - Currently only Items is under code analysis and (partial) unit testing.
+  - Currently only Items and ItemsLoader are under coding styles (stylecop).
+- [ ] Code Generation.
+  - Probably best left until the project has matured and the object model is more stable.
+  - Will require some interesting unit testing.
+- [ ] Query Generation. This is specifying what you want in the model and then generating SQL queries from that to run on the database.
+- [ ] Better building of .aspx pages. All text templating was removed when transitioning from "bootstrapper" project but it may be a good idea to bring some back to remove the big mess of Response.Write statements. There may be alternatives in ASP (components?).
+- [ ] ItemsWeb needs to fully represent the model generated. Currently the relationships page is sparse.
 - [ ] Plan for different "stages" of model building. May want to generate the model from multiple different sources at different times.
   - [ ] Adding to the model can be expressed in xml/code/however and then "unioned".
   - [ ] Removing/changing could be more complicated.
@@ -42,78 +37,33 @@ TODO List
     - [ ] Would allow them to be re-applied after regenerating from a changed database.
     - [ ] Would allow you to check them in.
     - [ ] Would allow you to get visibility of how your database implementation deviates from the pure model.
-- [ ] Split code/xml/text generation out better into files.
-- [ ] Serialisation and deserialisation via text templates probably isn't a good idea.
-- [ ] Classes like Attributes and Behaviors (in order to string index things) could be improved
-- [x] Collections should have support for extra data.
-- [x] Collections should probably be relationships.
-- [ ] Unit tests.
+- [ ] Split code/xml/text generation out better into files
+- [ ] A lot of classes should be using the NamedCollection (ie Item in the Model, Relationship in the Model). The model should probably only have one internal named collection as well.
 - [ ] Add relationships to this document.
 - [ ] Add behaviors to this document.
 
 Model
 -----
 
-### Implementation
-
-Mainly just a simple data container.
+Represents the entire domain model and everything it contains
 
 #### Todo
 
-- [ ] Model validation
-
-### Loading from Database
-
-Instance is created rather than loaded.
-
-### Generating Xml
-
-Not applicable.
-
-### Generating Code
-
-Not implemented.
-
-### Generating Documentation
-
-Not applicable.
+- [ ] Validation
 
 Item
 ----
 
-### Implementation
-
 Represents an object in the model. Has data attributes and behaviours. Allows (admittedly not great) specification of which attributes can be used to identify instances of the item.
 
-#### Todo
-
-- [x] Identifiers should have to have certain constraints (eg unique).
 - [ ] The way in which attributes are marked as identifiers could be improved.
 - [ ] Singletons.
 - [ ] Support for static behaviour (not tied to an instance of an object but related to it).
 
-### Loading from Database
-
-Done, loads table names.
-
-### Generating Xml
-
-Done, creates item nodes.
-
-### Generating Code
-
-Not implemented.
-
-### Generating Documentation
-
-Could be improved by adding support for things like a description.
-
-Attributes
+Data Members
 ----------
 
-### Implementation
-
-A named data member for an item. Allows specification of what type of data this attribute contains and what constraints are placed on that data.
+A named attribute for an item. Allows specification of what type of data this attribute contains and what constraints are placed on that data.
 
 There is a concept of nullability which defines whether the attribute accepts different types of null values (Not applicable, Applicable but empty).
 
@@ -124,61 +74,24 @@ There are two types of attribute: Value attributes and Collection attributes. Va
 - [ ] Nullability isn't specified in a great way.
   - [ ] Nullability is essentially a constraint and should be represented as such.
   - [ ] Applicable but empty is usually going to be an in-band value however there is no way for specifying this.
-- [x] I have chosen to represent One to Many and Many to Many relationships as a collection attribute on one or both items however other models use a relationship concept which may have merit (and simplify parsing collection tables).
+  - [ ] Maybe allow the specification of "special values" such as empty, default, other.
 - [ ] Some attributes should have a default value (even Items).
 - [ ] There could be value in providing "calculated" attributes which define an operation to perform in order to get a value/collection. Maybe a special case of behaviour?
-
-### Loading from Database
-
-Columns get loaded as attributes. Foreign keys which reference the table are assumed to be collections. Collection tables (which have a many to many relationship) are not loaded.
-
-### Generating Xml
-
-Implemented.
-
-### Generating Code
-
-Not implemented.
-
-### Generating Documentation
-
-Could be improved by adding support for things like a description.
 
 Types
 -----
 
-### Implementation
-
-Defines what type of data an attribute represents. This can either be a C# type (system type), an item or a category.
+Defines what type of data an attribute represents. This should only be a C# type now that we have relationships.
 
 #### Todo
 
-- [ ] Category type implementation.
 - [ ] Types currently have a Name however this might be redundant.
-
-### Loading from Database
-
-System types are calculated by looking at foreign keys and calculating what 
-
-### Generating Xml
-
-Implemented however TypeToXml() should be inside the template really.
-
-### Generating Code
-
-Not implemented.
-
-### Generating Documentation
-
-Implemented however PrettifyType() should be inside the template really.
 
 Constraints
 -----------
 
-### Implementation
-
 Constraints dictate rules about what data (not what type of data) can be put in an attribute. Types of constraint currently implemented include:
-* Numeric Value - Is generic, allows for dates etc (might fuck up on %).
+* Numeric Value - Is generic, allows for dates etc.
   * ==
   * >
   * <
@@ -232,76 +145,12 @@ Constraints dictate rules about what data (not what type of data) can be put in 
 - [ ] string value # of instances of in addition to contains.
 - [ ] Allow you allow/disallow the default value?
 
-### Loading from Database
-
-string length is loaded from the column definition. Unique constraints are used to apply unique attribute constraints.
-
-Null values arent enforced here (enforced by nullability instead) but some useful info could be inferred from it.
-
-Foreign keys are not currently used as constraints as we don't need to specify that kitchen.containerid points to container.containerid. Instead we can just say that kitchen contains a container. We might want to enforce null values?
-
-### Generating Xml
-
-Numeric Value Constraint isn't correctly writing the generic type info.
-
-### Generating Code
-
-Not implemented.
-
-### Generating Documentation
-
-Implementation is a mess and only "finished" for attribute constraints.
-
 Category
 --------
-
-### Implementation
 
 Represents a set of categorisations. These are designed to parallel enumerations in that they have attributes (however unlike c# enums they can have data additional to the name and number) but do not have any behavior associated. Instances of them (eg new values for the category) probably shouldn't be added/removed at runtime, however it might not be beneficial to universally restrict this (maybe allow as a special case?).
 
 #### Todo
 
 - [ ] Flags?
-
-### Loading from Database
-
-Categories are loaded and constraints are added using the same logic as items.
-
-### Generating Xml
-
-Not implemented.
-
-### Generating Code
-
-Not implemented.
-
-### Generating Documentation
-
-Not implemented.
-
-Class
------
-
-### Implementation
-
-Details
-
-#### Todo
-
-- [ ]
-
-### Loading from Database
-
-Details
-
-### Generating Xml
-
-Details
-
-### Generating Code
-
-Not implemented.
-
-### Generating Documentation
-
-Details
+- [ ] If the category's values are constant then they should probably be part of the model rather than part of the instance od the model.
