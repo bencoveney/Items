@@ -28,6 +28,21 @@ namespace ItemsTests
 			Assert.IsNotNull(relationship.LeftLink);
 			Assert.IsNotNull(relationship.RightLink);
 		}
+		/// <summary>
+		/// A test for Relationship Constructor
+		/// </summary>
+		[TestMethod()]
+		public void RelationshipConstructorLinkTest()
+		{
+			RelationshipLink leftLink = new RelationshipLink(new Item("Left"), 0);
+			RelationshipLink rightLink = new RelationshipLink(new Item("Right"), 0);
+			Relationship relationship = new Relationship("Test", leftLink, rightLink);
+
+			Assert.IsNotNull(relationship.Attributes);
+			Assert.IsNotNull(relationship.Details);
+			Assert.IsNotNull(relationship.LeftLink);
+			Assert.IsNotNull(relationship.RightLink);
+		}
 
 		/// <summary>
 		///A test for LeftLink

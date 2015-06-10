@@ -9,6 +9,7 @@
 	/// A basic "thing". A container of data
 	/// </summary>
 	public abstract class Thing
+		: INamedObject
 	{
 		/// <summary>
 		/// The string identifier
@@ -158,7 +159,7 @@
 				throw new ArgumentNullException("model", "model can not be null");
 			}
 
-			return model.Relationships.Values.Where(relationship => relationship.Links.Any(link => link.Thing == this));
+			return model.Relationships.Where(relationship => relationship.Links.Any(link => link.Thing == this));
 		}
 	}
 }

@@ -32,7 +32,7 @@ namespace ItemsTests
 			Item item = new Item("Test");
 
 			model.AddItem(item);
-			Assert.IsTrue(model.Items.ContainsValue(item));
+			Assert.IsTrue(model.Items.Contains(item));
 		}
 
 		/// <summary>
@@ -45,7 +45,7 @@ namespace ItemsTests
 			Relationship relationship = new Relationship("Test", new Item("left"), new Item("right"));
 
 			model.AddRelationship(relationship);
-			Assert.IsTrue(model.Relationships.ContainsValue(relationship));
+			Assert.IsTrue(model.Relationships.Contains(relationship));
 		}
 
 		/// <summary>
@@ -58,7 +58,7 @@ namespace ItemsTests
 			Category category = new Category("Test");
 
 			model.AddCategory(category);
-			Assert.IsTrue(model.Categories.ContainsValue(category));
+			Assert.IsTrue(model.Categories.Contains(category));
 		}
 
 		/// <summary>
@@ -76,9 +76,9 @@ namespace ItemsTests
 			model.AddThing(relationship);
 			model.AddThing(category);
 
-			Assert.IsTrue(model.Items.ContainsValue(item));
-			Assert.IsTrue(model.Relationships.ContainsValue(relationship));
-			Assert.IsTrue(model.Categories.ContainsValue(category));
+			Assert.IsTrue(model.Items.Contains(item));
+			Assert.IsTrue(model.Relationships.Contains(relationship));
+			Assert.IsTrue(model.Categories.Contains(category));
 		}
 
 		/// <summary>

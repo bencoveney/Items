@@ -30,6 +30,20 @@
 		}
 
 		/// <summary>
+		/// Initializes a new instance of the <see cref="Relationship"/> class.
+		/// </summary>
+		/// <param name="name">The name.</param>
+		/// <param name="left">The left.</param>
+		/// <param name="right">The right.</param>
+		public Relationship(string name, RelationshipLink left, RelationshipLink right)
+			: base(name)
+		{
+			this.relationshipLinks = new RelationshipLink[2];
+			this.relationshipLinks[0] = left;
+			this.relationshipLinks[1] = right;
+		}
+
+		/// <summary>
 		/// Gets the links this relationship has to other items (should only be 2)
 		/// </summary>
 		/// <value>

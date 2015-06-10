@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using System.Data;
 	using System.Data.SqlClient;
+	using System.Linq;
 	using Items;
 
 	/// <summary>
@@ -186,14 +187,14 @@ WHERE
 			{
 				// TODO Make Add only take the string/item?
 				Item newItem = new Item(itemName);
-				this.Model.Items.Add(itemName, newItem);
+				this.Model.Items.Add( newItem);
 				this.PopulateAttributesForItemBase(connection, newItem);
 			}
 
 			foreach (string categoryName in this.GetCategoryNames(connection))
 			{
 				Category newCategory = new Category(categoryName);
-				this.Model.Categories.Add(categoryName, newCategory);
+				this.Model.Categories.Add(newCategory);
 				this.PopulateAttributesForItemBase(connection, newCategory);
 			}
 
@@ -489,7 +490,7 @@ WHERE
 						}
 
 						// Assign the attribute as the primary key
-						Thing thing = Model.Items.ContainsKey(tableName) ? (Thing)Model.Items[tableName] : (Thing)Model.Categories[tableName];
+						Thing thing = Model.Items.Any(item => item.Name == tableName) ? (Thing)Model.Items[tableName] : (Thing)Model.Categories[tableName];
 						DataMember primaryKey = thing.Attributes[columnName];
 						thing.IntegerIdentifier = (DataMember)primaryKey;
 					}

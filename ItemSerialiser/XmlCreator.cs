@@ -17,69 +17,12 @@ namespace ItemSerialiser
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "10.0.0.0")]
     public partial class XmlCreator : XmlCreatorBase
     {
-        #region ToString Helpers
-        /// <summary>
-        /// Utility class to produce culture-oriented representation of an object as a string.
-        /// </summary>
-        public class ToStringInstanceHelper
-        {
-            private System.IFormatProvider formatProviderField  = global::System.Globalization.CultureInfo.InvariantCulture;
-            /// <summary>
-            /// Gets or sets format provider to be used by ToStringWithCulture method.
-            /// </summary>
-            public System.IFormatProvider FormatProvider
-            {
-                get
-                {
-                    return this.formatProviderField ;
-                }
-                set
-                {
-                    if ((value != null))
-                    {
-                        this.formatProviderField  = value;
-                    }
-                }
-            }
-            /// <summary>
-            /// This is called from the compile/run appdomain to convert objects within an expression block to a string
-            /// </summary>
-            public string ToStringWithCulture(object objectToConvert)
-            {
-                if ((objectToConvert == null))
-                {
-                    throw new global::System.ArgumentNullException("objectToConvert");
-                }
-                System.Type t = objectToConvert.GetType();
-                System.Reflection.MethodInfo method = t.GetMethod("ToString", new System.Type[] {
-                            typeof(System.IFormatProvider)});
-                if ((method == null))
-                {
-                    return objectToConvert.ToString();
-                }
-                else
-                {
-                    return ((string)(method.Invoke(objectToConvert, new object[] {
-                                this.formatProviderField })));
-                }
-            }
-        }
-        private ToStringInstanceHelper toStringHelperField = new ToStringInstanceHelper();
-        public ToStringInstanceHelper ToStringHelper
-        {
-            get
-            {
-                return this.toStringHelperField;
-            }
-        }
-        #endregion
         public virtual string TransformText()
         {
-            this.GenerationEnvironment = null;
             this.Write("<Model>\r\n");
             
             #line 4 "C:\Users\Ben\Desktop\Items\ItemSerialiser\XmlCreator.tt"
-	foreach(Item item in _model.Items.Values)
+	foreach(Item item in _model.Items)
 	{ 
 
             
@@ -803,6 +746,62 @@ this.Write("\" />\r\n");
         {
             this.indentLengths.Clear();
             this.currentIndentField = "";
+        }
+        #endregion
+        #region ToString Helpers
+        /// <summary>
+        /// Utility class to produce culture-oriented representation of an object as a string.
+        /// </summary>
+        public class ToStringInstanceHelper
+        {
+            private System.IFormatProvider formatProviderField  = global::System.Globalization.CultureInfo.InvariantCulture;
+            /// <summary>
+            /// Gets or sets format provider to be used by ToStringWithCulture method.
+            /// </summary>
+            public System.IFormatProvider FormatProvider
+            {
+                get
+                {
+                    return this.formatProviderField ;
+                }
+                set
+                {
+                    if ((value != null))
+                    {
+                        this.formatProviderField  = value;
+                    }
+                }
+            }
+            /// <summary>
+            /// This is called from the compile/run appdomain to convert objects within an expression block to a string
+            /// </summary>
+            public string ToStringWithCulture(object objectToConvert)
+            {
+                if ((objectToConvert == null))
+                {
+                    throw new global::System.ArgumentNullException("objectToConvert");
+                }
+                System.Type t = objectToConvert.GetType();
+                System.Reflection.MethodInfo method = t.GetMethod("ToString", new System.Type[] {
+                            typeof(System.IFormatProvider)});
+                if ((method == null))
+                {
+                    return objectToConvert.ToString();
+                }
+                else
+                {
+                    return ((string)(method.Invoke(objectToConvert, new object[] {
+                                this.formatProviderField })));
+                }
+            }
+        }
+        private ToStringInstanceHelper toStringHelperField = new ToStringInstanceHelper();
+        public ToStringInstanceHelper ToStringHelper
+        {
+            get
+            {
+                return this.toStringHelperField;
+            }
         }
         #endregion
     }

@@ -240,9 +240,7 @@
 					// Create the relationship
 					// The left hand side (referencer) can only point to a single item on the right hand side (referenced)
 					// TODO it might be possible to infer more detail here using unique and NOT NULL constraints
-					Relationship relationship = new Relationship(constraint.Name, leftThing, rightThing);
-					relationship.RightLink.AmountLower = 1;
-					relationship.RightLink.AmountUpper = 1;
+					Relationship relationship = new Relationship(constraint.Name, new RelationshipLink(leftThing, 0), new RelationshipLink(rightThing, 1, 1));
 
 					// Add additional details
 					relationship.Details.Add("SqlCatalog", table.Catalog);
@@ -257,7 +255,7 @@
 
 			foreach (DatabaseRoutine routine in DatabaseModel.Routines)
 			{
-				Item item = result.Items.Values.Single(routine.IsThingMatch);
+				Item item = result.Items.Single(routine.IsThingMatch);
 
 				string behaviorName = routine.Name;
 

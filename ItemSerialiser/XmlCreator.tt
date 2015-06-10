@@ -1,7 +1,7 @@
 ﻿<#@ template language="C#" #>
 <#@ import namespace="Items" #>
 <Model>
-<#	foreach(Item item in _model.Items.Values)
+<#	foreach(Item item in _model.Items)
 	{ 
 #>
 	<Item Name="<#= item.Name #>">

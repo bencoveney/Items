@@ -15,9 +15,9 @@
 		/// </summary>
 		public Model()
 		{
-			this.Items = new Dictionary<string, Item>();
-			this.Categories = new Dictionary<string, Category>();
-			this.Relationships = new Dictionary<string, Relationship>();
+			this.Items = new NamedCollection<Item>();
+			this.Categories = new NamedCollection<Category>();
+			this.Relationships = new NamedCollection<Relationship>();
 		}
 
 		/// <summary>
@@ -26,7 +26,7 @@
 		/// <value>
 		/// The items.
 		/// </value>
-		public Dictionary<string, Item> Items
+		public NamedCollection<Item> Items
 		{
 			get;
 			private set;
@@ -38,7 +38,7 @@
 		/// <value>
 		/// The categories.
 		/// </value>
-		public Dictionary<string, Category> Categories
+		public NamedCollection<Category> Categories
 		{
 			get;
 			private set;
@@ -50,7 +50,7 @@
 		/// <value>
 		/// The relationships.
 		/// </value>
-		public Dictionary<string, Relationship> Relationships
+		public NamedCollection<Relationship> Relationships
 		{
 			get;
 			private set;
@@ -66,7 +66,7 @@
 		{
 			get
 			{
-				return ((IEnumerable<Thing>)this.Items.Values).Concat(this.Categories.Values).Concat(this.Relationships.Values);
+				return ((IEnumerable<Thing>)this.Items).Concat(this.Categories).Concat(this.Relationships);
 			}
 		}
 
@@ -81,7 +81,7 @@
 				throw new ArgumentNullException("item", "item cannot be null");
 			}
 
-			this.Items.Add(item.Name, item);
+			this.Items.Add(item);
 		}
 
 		/// <summary>
@@ -95,7 +95,7 @@
 				throw new ArgumentNullException("category", "category cannot be null");
 			}
 
-			this.Categories.Add(category.Name, category);
+			this.Categories.Add(category);
 		}
 
 		/// <summary>
@@ -109,7 +109,7 @@
 				throw new ArgumentNullException("relationship", "relationship cannot be null");
 			}
 
-			this.Relationships.Add(relationship.Name, relationship);
+			this.Relationships.Add(relationship);
 		}
 
 		/// <summary>
@@ -150,7 +150,7 @@
 		public void Validate()
 		{
 			// For all items
-			foreach (Item item in this.Items.Values)
+			foreach (Item item in this.Items)
 			{
 				// Check for items with no identifiers 
 				if (item.IntegerIdentifier == null && item.StringIdentifier == null)
@@ -163,7 +163,7 @@
 				{
 					// If the item type is neither a category nor an item
 					// TODO handle categories seperately
-					if (!this.Items.ContainsKey(((ItemType)attribute.DataType).Name) && !this.Categories.ContainsKey(((ItemType)attribute.DataType).Name))
+					if (!this.Items.Any(thing => ((ItemType)attribute.DataType).Name == thing.Name) && !this.Categories.Any(thing => ((ItemType)attribute.DataType).Name == thing.Name))
 					{
 						// Disallow
 						throw new InvalidModelException("Attribute has an item type which is not found in the model");
