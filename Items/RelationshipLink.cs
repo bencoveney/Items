@@ -122,6 +122,32 @@
 		}
 
 		/// <summary>
+		/// Gets a string indicating the amount of items this link can represent.
+		/// </summary>
+		/// <returns>A string indicating the amount of items this link can represent.</returns>
+		public string AmountString
+		{
+			get
+			{
+				if (this.AmountUpper.HasValue)
+				{
+					if (this.AmountLower == this.AmountUpper.Value)
+					{
+						return this.AmountLower.ToString(CultureInfo.CurrentCulture);
+					}
+					else
+					{
+						return string.Format(CultureInfo.CurrentCulture, "{0} - {1}", this.AmountLower, this.AmountUpper.Value);
+					}
+				}
+				else
+				{
+					return string.Format(CultureInfo.CurrentCulture, "{0} - *", this.AmountLower);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
 		/// <returns>
@@ -129,21 +155,7 @@
 		/// </returns>
 		public override string ToString()
 		{
-			if (this.AmountUpper.HasValue)
-			{
-				if (this.AmountLower == this.AmountUpper.Value)
-				{
-					return string.Format(CultureInfo.CurrentCulture, "{0} ({1})", this.Thing.Name, this.AmountLower);
-				}
-				else
-				{
-					return string.Format(CultureInfo.CurrentCulture, "{0} ({1} - {2})", this.Thing.Name, this.AmountLower, this.AmountUpper.Value);
-				}
-			}
-			else
-			{
-				return string.Format(CultureInfo.CurrentCulture, "{0} ({1} - *)", this.Thing.Name, this.AmountLower);
-			}
+			return string.Format(CultureInfo.CurrentCulture, "{0} ({1})", this.Thing.Name, this.AmountString);
 		}
 	}
 }

@@ -524,6 +524,42 @@ namespace ItemWeb
 			}
 		}
 
+		protected void WriteAttributes(Thing thing)
+		{
+			Item item = thing as Item;
+
+			if (item != null && item.Behaviors.Count > 0)
+			{
+				Response.Write("<div class=\"section\">");
+				Response.Write("<h3>Attributes</h3>");
+				Response.Write("<div class=\"row\">");
+				foreach (DataMember attribute in this.Thing.Attributes)
+				{
+					WriteAttribute(attribute, this.Thing.IntegerIdentifier == attribute || this.Thing.StringIdentifier == attribute);
+				}
+				Response.Write("</div>");
+				Response.Write("</div>");
+			}
+		}
+
+		protected void WriteRelationships(Thing thing)
+		{
+			Item item = thing as Item;
+
+			if (item != null && item.Behaviors.Count > 0)
+			{
+				Response.Write("<div class=\"section\">");
+				Response.Write("<h3>Relationships</h3>");
+				Response.Write("<div class=\"row\">");
+				foreach (Relationship relationship in this.Thing.GetReferenceRelationships(Global.Model))
+				{
+					WriteRelationship(relationship);
+				}
+				Response.Write("</div>");
+				Response.Write("</div>");
+			}
+		}
+
 		protected void WriteBehavior(Behavior behavior)
 		{
 			Response.Write("<div class=\"col-sm-12\">");
@@ -571,6 +607,50 @@ namespace ItemWeb
 			Response.Write("</tbody>");
 
 			Response.Write("</table>");
+
+			Response.Write("</div>");
+			Response.Write("</div>");
+		}
+
+		protected void WriteRelationshipSides(Thing thing)
+		{
+			if (thing.GetType() != typeof(Relationship))
+			{
+				return;
+			}
+
+			Relationship relationship = (Relationship)thing;
+
+			Response.Write("<div class=\"section\">");
+			Response.Write("<div class=\"row\">");
+
+			Response.Write("<div class=\"col-sm-6 relationship-side\">");
+			Response.Write("<div class=\"well text-center\">");
+			Response.Write("<h3>");
+			Response.Write(relationship.LeftLink.Thing.Name);
+			Response.Write("</h3>");
+			Response.Write("<span class=\"big-number\">");
+			Response.Write(relationship.LeftLink.AmountString);
+			Response.Write("</span>");
+			Response.Write("</div>");
+			Response.Write("<p>");
+			Response.Write(relationship.LeftLink.Thing.Description);
+			Response.Write("</p>");
+			Response.Write("</div>");
+
+			Response.Write("<div class=\"col-sm-6 relationship-side\">");
+			Response.Write("<div class=\"well text-center\">");
+			Response.Write("<h3>");
+			Response.Write(relationship.RightLink.Thing.Name);
+			Response.Write("</h3>");
+			Response.Write("<span class=\"big-number\">");
+			Response.Write(relationship.RightLink.AmountString);
+			Response.Write("</span>");
+			Response.Write("</div>");
+			Response.Write("<p>");
+			Response.Write(relationship.RightLink.Thing.Description);
+			Response.Write("</p>");
+			Response.Write("</div>");
 
 			Response.Write("</div>");
 			Response.Write("</div>");

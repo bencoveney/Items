@@ -32,7 +32,7 @@
 				<div class="col-sm-4">
 					<h2>Items</h2>
 					<ul>
-						<% foreach (Item item in Global.Model.Items.Values)
+						<% foreach (Item item in Global.Model.Items)
 						{
 							Response.Write(String.Format("<li><a href=\"./Item/{0}\">{0}</a></li>", item.Name));
 						}
@@ -43,7 +43,7 @@
 				<div class="col-sm-4">
 					<h2>Categories</h2>
 					<ul>
-						<% foreach (Category category in Global.Model.Categories.Values)
+						<% foreach (Category category in Global.Model.Categories)
 						{
 							Response.Write(String.Format("<li><a href=\"./Category/{0}\">{0}</a></li>", category.Name));
 						}
@@ -54,7 +54,7 @@
 				<div class="col-sm-4">
 					<h2>Relationships</h2>
 					<ul>
-						<% foreach (Relationship relationship in Global.Model.Relationships.Values)
+						<% foreach (Relationship relationship in Global.Model.Relationships)
 						{
 							Response.Write(String.Format("<li><a href=\"./Relationship/{0}\">{0}</a></li>", relationship.Name));
 						}
