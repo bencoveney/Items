@@ -147,7 +147,7 @@
 		/// </returns>
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
-			return this.internalCollection.GetEnumerator();
+			return this.GetEnumerator();
 		}
 	}
 }

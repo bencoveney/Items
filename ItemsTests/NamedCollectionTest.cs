@@ -85,6 +85,17 @@ namespace ItemsTests
 		}
 
 		/// <summary>
+		/// A test for NamedCollection Add
+		/// </summary>
+		[TestMethod()]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void AddTestNull()
+		{
+			NamedCollection<INamedObject> namedCollection = new NamedCollection<INamedObject>();
+			namedCollection.Add(null);
+		}
+
+		/// <summary>
 		/// A test for NamedCollection Count
 		/// </summary>
 		[TestMethod()]
@@ -167,6 +178,29 @@ namespace ItemsTests
 
 			Assert.AreEqual(2, namedCollection.Count);
 			Assert.IsFalse(namedCollection.Contains(item2));
+		}
+
+		/// <summary>
+		/// A test for NamedCollection GetEnumerator
+		/// </summary>
+		[TestMethod()]
+		public void GetEnumeratorTest()
+		{
+			NamedCollection<INamedObject> namedCollection = new NamedCollection<INamedObject>();
+			
+			Item item1 = new Item("Test 1");
+			Item item2 = new Item("Test 2");
+
+			namedCollection.Add(item1);
+			namedCollection.Add(item2);
+
+			IEnumerator<INamedObject> enumerator = namedCollection.GetEnumerator();
+
+			enumerator.MoveNext();
+			Assert.AreEqual(item1, enumerator.Current);
+
+			enumerator.MoveNext();
+			Assert.AreEqual(item2, enumerator.Current);
 		}
 	}
 }

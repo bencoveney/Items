@@ -57,6 +57,7 @@
     <Compile Include="ModelTests.cs" />
     <Compile Include="RelationshipLinkTest.cs" />
     <Compile Include="RelationshipTest.cs" />
+    <Compile Include="SystemTypeTest.cs" />
     <Compile Include="ThingTest.cs" />
     <Compile Include="NamedCollectionTest.cs" />
   </ItemGroup>
