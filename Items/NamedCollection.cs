@@ -7,6 +7,8 @@
 
 	/// <summary>
 	/// Specific class for behavior collections which guarantees unique names
+	/// 
+	/// TODO: upate method documentation to match ICollection
 	/// </summary>
 	/// <typeparam name="T">The type of the named elements in the collection.</typeparam>
 	public class NamedCollection<T>
@@ -105,10 +107,10 @@
 		}
 
 		/// <summary>
-		/// Copies to.
+		/// Copies the elements of the NamedCollection<T> to an Array, starting at a particular Array index.
 		/// </summary>
-		/// <param name="array">The array.</param>
-		/// <param name="arrayIndex">Index of the array.</param>
+		/// <param name="array">The one-dimensional Array that is the destination of the elements copied from NamedCollection<T>. The Array must have zero-based indexing.</param>
+		/// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
 		public void CopyTo(T[] array, int arrayIndex)
 		{
 			this.internalCollection.CopyTo(array, arrayIndex);

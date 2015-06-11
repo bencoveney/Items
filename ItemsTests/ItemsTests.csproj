@@ -58,6 +58,7 @@
     <Compile Include="RelationshipLinkTest.cs" />
     <Compile Include="RelationshipTest.cs" />
     <Compile Include="ThingTest.cs" />
+    <Compile Include="NamedCollectionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Items\Items.csproj">
