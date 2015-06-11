@@ -141,7 +141,7 @@ namespace ItemsTests
 			namedCollection.CopyTo(namedObjectArray, 0);
 
 			Assert.AreEqual(item1, namedObjectArray[0]);
-			Assert.AreEqual(item2, namedObjectArray[2]);
+			Assert.AreEqual(item2, namedObjectArray[1]);
 		}
 
 		/// <summary>

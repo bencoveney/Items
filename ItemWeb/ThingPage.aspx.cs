@@ -63,14 +63,6 @@ namespace ItemWeb
 				String pureDefinition = String.Format("The attribute stores <strong>{0}</strong> data.", typeType.GetGenericArguments()[0].Name);
 				Response.Write(pureDefinition);
 			}
-			else if (typeType == typeof(ItemType))
-			{
-				Response.Write(String.Format("This attribute stores <strong>{0}</strong> items.", type.Name));
-			}
-			else if (typeType == typeof(CategoryType))
-			{
-				Response.Write(String.Format("This attribute is a <strong>{0}</strong> categorisation.", type.Name));
-			}
 			else
 			{
 				Response.Write(String.Format("This attribute is of unknown type ({0})", typeType.FullName));
@@ -593,13 +585,9 @@ namespace ItemWeb
 				String pureDefinition =typeType.GetGenericArguments()[0].Name;
 				Response.Write(pureDefinition);
 			}
-			else if (typeType == typeof(ItemType) || typeType == typeof(CategoryType))
-			{
-				Response.Write(type.Name);
-			}
 			else
 			{
-				Response.Write(String.Format("Unkown type ({0})", typeType.FullName));
+				Response.Write(String.Format("Unknown type ({0})", typeType.FullName));
 			}
 		}
 	}

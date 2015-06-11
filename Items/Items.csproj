@@ -71,23 +71,22 @@
     <Compile Include="InvalidModelException.cs" />
     <Compile Include="Thing.cs" />
     <Compile Include="NamedCollection.cs" />
-    <Compile Include="Parameters\Parameter.cs" />
+    <Compile Include="Parameter.cs" />
     <Compile Include="Relationship.cs" />
     <Compile Include="Actions\ScriptAction.cs" />
     <Compile Include="Actions\StoredProcedureAction.cs" />
     <Compile Include="RelationshipLink.cs" />
-    <Compile Include="Types\CategoryType.cs" />
-    <Compile Include="Types\ItemType.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="NullConstraints.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\IType.cs" />
-    <Compile Include="Types\SystemType.cs" />
+    <Compile Include="IType.cs" />
+    <Compile Include="SystemType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ItemsKey.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

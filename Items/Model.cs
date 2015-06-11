@@ -157,22 +157,9 @@
 				{
 					throw new InvalidModelException(string.Format(CultureInfo.InvariantCulture, "Item {0} has no identifiers", item.Name));
 				}
-
-				// Check for attributes which refer to items which don't exist
-				foreach (DataMember attribute in item.Attributes.Where(attribute => attribute.DataType.GetType() == typeof(ItemType)))
-				{
-					// If the item type is neither a category nor an item
-					// TODO handle categories seperately
-					if (!this.Items.Any(thing => ((ItemType)attribute.DataType).Name == thing.Name) && !this.Categories.Any(thing => ((ItemType)attribute.DataType).Name == thing.Name))
-					{
-						// Disallow
-						throw new InvalidModelException("Attribute has an item type which is not found in the model");
-					}
-				}
 			}
 
 			// Check for attributes which arent constrained sufficiently
-			// Check for items where referrals are only one way
 			// Check for constraints which dont fit the datatype of the attribute
 		}
 	}

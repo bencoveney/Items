@@ -24,11 +24,6 @@ namespace ItemSerialiser
                 return String.Format("<SystemType Type=\"{0}\" />", typeType.GetGenericArguments()[0].Name);
             }
 
-            if (typeType == typeof(ItemType))
-            {
-                return String.Format("<ItemType Item=\"{0}\" />", type.Name);
-            }
-
             if (typeType == typeof(Category))
             {
                 return String.Format("<CategoryType Item=\"{0}\" />", type.Name);
