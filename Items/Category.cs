@@ -5,8 +5,6 @@
     using System.Linq;
     using System.Text;
 
-    // TODO From model - make into proper category classes
-
     /// <summary>
     /// Categories are similar to items in the way they contain data
     /// Unlike items, categories do not have any functionality (not even add/edit/delete)
