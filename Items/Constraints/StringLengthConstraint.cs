@@ -46,6 +46,7 @@
 		{
 			this.Comparison = comparison;
 			this.Value = value;
+			this.IsDeferrable = false;
 		}
 
 		/// <summary>

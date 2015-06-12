@@ -93,6 +93,7 @@
 			this.Comparison = comparison;
 			this.Comparer = comparer;
 			this.Value = value;
+			this.IsDeferrable = false;
 		}
 
 		/// <summary>
