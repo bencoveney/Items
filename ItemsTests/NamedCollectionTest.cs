@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace ItemsTests
 {
@@ -184,10 +185,10 @@ namespace ItemsTests
 		/// A test for NamedCollection GetEnumerator
 		/// </summary>
 		[TestMethod()]
-		public void GetEnumeratorTest()
+		public void GetEnumeratorTest1()
 		{
 			NamedCollection<INamedObject> namedCollection = new NamedCollection<INamedObject>();
-			
+
 			Item item1 = new Item("Test 1");
 			Item item2 = new Item("Test 2");
 
@@ -195,6 +196,31 @@ namespace ItemsTests
 			namedCollection.Add(item2);
 
 			IEnumerator<INamedObject> enumerator = namedCollection.GetEnumerator();
+
+			enumerator.MoveNext();
+			Assert.AreEqual(item1, enumerator.Current);
+
+			enumerator.MoveNext();
+			Assert.AreEqual(item2, enumerator.Current);
+		}
+
+		/// <summary>
+		/// A test for NamedCollection GetEnumerator
+		/// </summary>
+		[TestMethod()]
+		public void GetEnumeratorTest2()
+		{
+			NamedCollection<INamedObject> namedCollection = new NamedCollection<INamedObject>();
+
+			Item item1 = new Item("Test 1");
+			Item item2 = new Item("Test 2");
+
+			namedCollection.Add(item1);
+			namedCollection.Add(item2);
+
+			IEnumerable namedCollectionCast = namedCollection;
+
+			IEnumerator enumerator = namedCollectionCast.GetEnumerator();
 
 			enumerator.MoveNext();
 			Assert.AreEqual(item1, enumerator.Current);

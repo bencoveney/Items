@@ -82,6 +82,50 @@ namespace ItemsTests
 		}
 
 		/// <summary>
+		/// Tests adding an item to the model.
+		/// </summary>
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void ModelAddItemNull()
+		{
+			Model model = new Model();
+			model.AddItem(null);
+		}
+
+		/// <summary>
+		/// Tests adding a relationship to the model.
+		/// </summary>
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void ModelAddRelationshipNull()
+		{
+			Model model = new Model();
+			model.AddRelationship(null);
+		}
+
+		/// <summary>
+		/// Tests adding a category to the model.
+		/// </summary>
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void ModelAddCategoryNull()
+		{
+			Model model = new Model();
+			model.AddCategory(null);
+		}
+
+		/// <summary>
+		/// Tests adding a thing to the model.
+		/// </summary>
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void ModelAddThingNull()
+		{
+			Model model = new Model();
+			model.AddThing(null);
+		}
+
+		/// <summary>
 		/// Tests adding a duplicate item to the model.
 		/// </summary>
 		[TestMethod]

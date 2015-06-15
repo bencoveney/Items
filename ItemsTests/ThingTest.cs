@@ -165,6 +165,19 @@ namespace ItemsTests
 		/// </summary>
 		[TestMethod()]
 		[ExpectedException(typeof(ArgumentException))]
+		public void IntegerIdentifierNullable()
+		{
+			foreach (Thing thing in CreateThings())
+			{
+				thing.IntegerIdentifier = new DataMember("Test Member", new SystemType<int>(), NullConstraints.EmptyOrNotApplicable);
+			}
+		}
+
+		/// <summary>
+		/// A test for IntegerIdentifier
+		/// </summary>
+		[TestMethod()]
+		[ExpectedException(typeof(ArgumentException))]
 		public void IntegerIdentifierWrongTypeTest()
 		{
 			foreach (Thing thing in CreateThings())

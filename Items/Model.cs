@@ -119,6 +119,11 @@
 		/// <exception cref="System.ArgumentException">Unknown thing type;thing</exception>
 		public void AddThing(Thing thing)
 		{
+			if (thing == null)
+			{
+				throw new ArgumentNullException("thing", "thing cannot be null");
+			}
+
 			// Only cast once
 			// TODO there should probably only be one backing collection to avoid having to do this
 			Item itemThing = thing as Item;
