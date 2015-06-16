@@ -12,14 +12,19 @@
 		: INamedObject
 	{
 		/// <summary>
-		/// The string identifier
+		/// The backing variable for the string identifier
 		/// </summary>
 		private DataMember stringIdentifier;
 
 		/// <summary>
-		/// The integer identifier
+		/// The backing variable for the integer identifier
 		/// </summary>
 		private DataMember integerIdentifier;
+
+		/// <summary>
+		/// The backing variable for the name
+		/// </summary>
+		private string name;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Thing" /> class.
@@ -39,8 +44,22 @@
 		/// </summary>
 		public string Name
 		{
-			get;
-			private set;
+			get
+			{
+				return this.name;
+			}
+
+			private set
+			{
+				if (string.IsNullOrEmpty(value))
+				{
+					throw new ArgumentNullException("value", "value cannot be null or empty");
+				}
+				else
+				{
+					this.name = value;
+				}
+			}
 		}
 
 		/// <summary>

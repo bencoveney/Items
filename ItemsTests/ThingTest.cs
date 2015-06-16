@@ -201,6 +201,16 @@ namespace ItemsTests
 		}
 
 		/// <summary>
+		/// A test for setting an empty Name
+		/// </summary>
+		[TestMethod()]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void NameTestNullOrEmpty()
+		{
+			Item item = new Item("");
+		}
+
+		/// <summary>
 		/// A test for StringIdentifier
 		/// </summary>
 		[TestMethod()]
