@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace ItemsTests
 {
@@ -13,8 +15,8 @@ namespace ItemsTests
 	public class InvalidModelExceptionTest
 	{
 		/// <summary>
-		///A test for InvalidModelException Constructor
-		///</summary>
+		/// A test for InvalidModelException Constructor
+		/// </summary>
 		[TestMethod()]
 		public void InvalidModelExceptionConstructorTest()
 		{
@@ -22,13 +24,34 @@ namespace ItemsTests
 		}
 
 		/// <summary>
-		///A test for InvalidModelException Constructor
-		///</summary>
+		/// A test for InvalidModelException Constructor
+		/// </summary>
 		[TestMethod()]
 		public void InvalidModelExceptionConstructorTest1()
 		{
 			InvalidModelException target = new InvalidModelException("Message Test");
 			Assert.AreEqual("Message Test", target.Message);
+		}
+
+		/// <summary>
+		/// A test for InvalidModelException Constructor
+		/// </summary>
+		[TestMethod()]
+		public void InvalidModelExceptionConstructorTest2()
+		{
+			InvalidModelException target = new InvalidModelException("Serialization Test");
+
+			// Serialize it to memory
+			MemoryStream memoryStream = new MemoryStream();
+			BinaryFormatter formatter = new BinaryFormatter();
+			formatter.Serialize(memoryStream, target);
+
+			// Deserialize it back out
+			memoryStream.Flush();
+			memoryStream.Seek(0, SeekOrigin.Begin);
+			InvalidModelException output = (InvalidModelException)formatter.Deserialize(memoryStream);
+
+			Assert.AreEqual("Serialization Test", output.Message);
 		}
 
 		/// <summary>
