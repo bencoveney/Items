@@ -50,7 +50,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BehaviorActionTest.cs" />
     <Compile Include="CategoryTest.cs" />
+    <Compile Include="ConditionTest.cs" />
     <Compile Include="DataDefinitionTest.cs" />
     <Compile Include="DataMemberTest.cs" />
     <Compile Include="ImplementationDetailsDictionaryTest.cs" />
@@ -61,6 +63,8 @@
     <Compile Include="ModelTests.cs" />
     <Compile Include="RelationshipLinkTest.cs" />
     <Compile Include="RelationshipTest.cs" />
+    <Compile Include="ScriptActionTest.cs" />
+    <Compile Include="StoredProcedureActionTest.cs" />
     <Compile Include="StringLengthConstraintTest.cs" />
     <Compile Include="StringValueConstraintTest.cs" />
     <Compile Include="SystemTypeTest.cs" />

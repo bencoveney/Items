@@ -41,6 +41,8 @@ TODO List
 - [ ] A lot of classes should be using the NamedCollection (ie Item in the Model, Relationship in the Model). The model should probably only have one internal named collection as well.
 - [ ] Add relationships to this document.
 - [ ] Add behaviors to this document.
+- [ ] Anything that has a name should be an INamedItem
+- [ ] Anything that takes a string as a param (eg for name) should check it for null/empty
 
 Model
 -----

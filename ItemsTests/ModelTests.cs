@@ -169,5 +169,80 @@ namespace ItemsTests
 			model.AddCategory(category1);
 			model.AddCategory(category2);
 		}
+
+		/// <summary>
+		/// Dummy class for testing adding a thing of unknown type
+		/// </summary>
+		public class UnknownThingType : Thing
+		{
+			public UnknownThingType()
+				: base("Test")
+			{
+			}
+		}
+
+		/// <summary>
+		/// Tests adding a thing to the model.
+		/// </summary>
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentException))]
+		public void ModelAddThingUnknownType()
+		{
+			Model model = new Model();
+			model.AddThing(new UnknownThingType());
+		}
+
+		/// <summary>
+		/// Tests the Things property.
+		/// </summary>
+		[TestMethod]
+		public void ModelThingsTest()
+		{
+			Model model = new Model();
+
+			Category category = new Category("Test Category");
+			Item item = new Item("Test Item");
+			Relationship relationship = new Relationship("Test Relationship", new RelationshipLink(new Item("Left Item"), 0), new RelationshipLink(new Item("Right Item"), 0));
+
+			model.AddCategory(category);
+			model.AddItem(item);
+			model.AddRelationship(relationship);
+
+			Assert.IsTrue(model.Things.Contains(category));
+			Assert.IsTrue(model.Things.Contains(item));
+			Assert.IsTrue(model.Things.Contains(relationship));
+		}
+
+		/// <summary>
+		/// Tests the successful validation functionality.
+		/// </summary>
+		[TestMethod]
+		public void ModelValidateTest()
+		{
+			Item item = new Item("Test Item");
+			DataMember dataMember = new DataMember("String Attribute", new SystemType<string>(), NullConstraints.None);
+			item.Attributes.Add(dataMember);
+			item.StringIdentifier = dataMember;
+
+			Model model = new Model();
+			model.AddItem(item);
+			model.Validate();
+		}
+
+		/// <summary>
+		/// Tests the validation functionality identifies items without identifiers.
+		/// </summary>
+		[TestMethod]
+		[ExpectedException(typeof(InvalidModelException))]
+		public void ModelValidateTestNoIdentifier()
+		{
+			Item item = new Item("Test Item");
+			DataMember dataMember = new DataMember("String Attribute", new SystemType<string>(), NullConstraints.None);
+			item.Attributes.Add(dataMember);
+
+			Model model = new Model();
+			model.AddItem(item);
+			model.Validate();
+		}
 	}
 }
