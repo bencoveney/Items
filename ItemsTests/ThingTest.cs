@@ -1,14 +1,15 @@
 ﻿using Items;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace ItemsTests
 {
-    /// <summary>
-    ///This is a test class for ThingTest and is intended
-    ///to contain all ThingTest Unit Tests
-    ///</summary>
+	/// <summary>
+	///This is a test class for ThingTest and is intended
+	///to contain all ThingTest Unit Tests
+	///</summary>
 	[TestClass()]
 	public class ThingTest
 	{
@@ -27,10 +28,36 @@ namespace ItemsTests
 		[TestMethod()]
 		public void GetReferenceRelationshipsTest()
 		{
+			Thing target = new Item("Referenced");
+
+			// Build a model containing relationships which reference the target
+			Model model = new Model();
 			foreach (Thing thing in CreateThings())
 			{
-				Assert.Inconclusive("Test not written");
+				model.AddThing(thing);
+				model.AddRelationship(new Relationship("Test Relationship " + model.Relationships.Count, target, thing));
 			}
+
+			// Add an extra which doesn't reference the target
+			model.AddRelationship(new Relationship("Dummy", new Item("Left Item"), new Item("Right Item")));
+
+			IEnumerable<Relationship> referenceRelationships = target.GetReferenceRelationships(model);
+			Assert.AreEqual(3, referenceRelationships.Count());
+			foreach (Relationship relationship in referenceRelationships)
+			{
+				Assert.IsTrue(relationship.Name.StartsWith("Test Relationship "));
+			}
+		}
+
+		/// <summary>
+		/// A test for GetReferenceRelationships
+		/// </summary>
+		[TestMethod()]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void GetReferenceRelationshipsTestNullModel()
+		{
+			Thing target = new Item("Referenced");
+			target.GetReferenceRelationships(null);
 		}
 
 		/// <summary>

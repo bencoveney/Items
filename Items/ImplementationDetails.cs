@@ -175,6 +175,7 @@
 		/// <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1" />.</param>
 		public void Add(KeyValuePair<string, object> item)
 		{
+			// TODO Are we breaking the IEnumerable interface by not doing preserving the reference here?
 			this.internalDictionary.Add(item.Key, item.Value);
 		}
 
