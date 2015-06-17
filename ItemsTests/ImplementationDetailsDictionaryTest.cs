@@ -18,27 +18,12 @@ namespace ItemsTests
 		///A test for ImplementationDetailsDictionary Constructor
 		///</summary>
 		[TestMethod()]
-		[DeploymentItem("Items.dll")]
-		public void ImplementationDetailsDictionaryConstructorTestSerialization()
-		{
-			SerializationInfo info = new SerializationInfo(typeof(ImplementationDetailsDictionary), new FormatterConverter());
-			StreamingContext context = new StreamingContext();
-
-			ImplementationDetailsDictionary_Accessor accessor = new ImplementationDetailsDictionary_Accessor(info, context);
-
-			// TODO what am I supposed to do with this to test it?
-		}
-
-		/// <summary>
-		///A test for ImplementationDetailsDictionary Constructor
-		///</summary>
-		[TestMethod()]
 		public void ImplementationDetailsDictionaryConstructorTest()
 		{
 			object obj = new object();
 			ImplementationDetailsDictionary target = new ImplementationDetailsDictionary(new Dictionary<string, Type>());
 			Assert.IsFalse(target.ContainsKey("Hello"));
-			Assert.IsFalse(target.ContainsValue(obj));
+			Assert.IsFalse(target.Values.Contains(obj));
 			target["Hello"] = obj;
 			Assert.AreEqual(obj, target["Hello"]);
 		}
