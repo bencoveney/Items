@@ -12,6 +12,11 @@
 		: IAction
 	{
 		/// <summary>
+		/// The schema of implementation details which are allowed to be put into the implementation details dictionary for this class.
+		/// </summary>
+		private static Dictionary<string, Type> schema = new Dictionary<string, Type>();
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="BehaviorAction"/> class.
 		/// </summary>
 		/// <param name="name">The name.</param>
@@ -20,7 +25,7 @@
 		{
 			this.Name = name;
 			this.Behavior = behavior;
-			this.Details = new ImplementationDetailsDictionary();
+			this.Details = new ImplementationDetailsDictionary(schema);
 		}
 
 		/// <summary>

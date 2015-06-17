@@ -13,11 +13,16 @@
 		: IType
 	{
 		/// <summary>
+		/// The schema of implementation details which are allowed to be put into the implementation details dictionary for this class.
+		/// </summary>
+		private static Dictionary<string, Type> schema = new Dictionary<string, Type>();
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="SystemType{T}"/> class.
 		/// </summary>
 		public SystemType()
 		{
-			this.Details = new ImplementationDetailsDictionary();
+			this.Details = new ImplementationDetailsDictionary(schema);
 		}
 
 		/// <summary>

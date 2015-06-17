@@ -1,5 +1,7 @@
 ﻿namespace Items
 {
+	using System;
+	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 
 	/// <summary>
@@ -8,6 +10,11 @@
 	public abstract class DataDefinition
 		: INamedObject
 	{
+		/// <summary>
+		/// The schema of implementation details which are allowed to be put into the implementation details dictionary for this class.
+		/// </summary>
+		private static Dictionary<string, Type> schema = new Dictionary<string, Type>();
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DataDefinition"/> class.
 		/// </summary>
@@ -20,7 +27,7 @@
 			this.DataType = type;
 			this.NullConstraint = nullConstraint;
 			this.Constraints = new Collection<IConstraint>();
-			this.Details = new ImplementationDetailsDictionary();
+			this.Details = new ImplementationDetailsDictionary(schema);
 		}
 
 		/// <summary>

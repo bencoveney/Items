@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
 
 namespace ItemsTests
 {
@@ -35,7 +36,7 @@ namespace ItemsTests
 		public void ImplementationDetailsDictionaryConstructorTest()
 		{
 			object obj = new object();
-			ImplementationDetailsDictionary target = new ImplementationDetailsDictionary();
+			ImplementationDetailsDictionary target = new ImplementationDetailsDictionary(new Dictionary<string, Type>());
 			Assert.IsFalse(target.ContainsKey("Hello"));
 			Assert.IsFalse(target.ContainsValue(obj));
 			target["Hello"] = obj;

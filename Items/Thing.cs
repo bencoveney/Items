@@ -12,6 +12,11 @@
 		: INamedObject
 	{
 		/// <summary>
+		/// The schema of implementation details which are allowed to be put into the implementation details dictionary for this class.
+		/// </summary>
+		private static Dictionary<string, Type> schema = new Dictionary<string, Type>();
+
+		/// <summary>
 		/// The backing variable for the string identifier
 		/// </summary>
 		private DataMember stringIdentifier;
@@ -35,7 +40,7 @@
 		{
 			this.Name = name;
 			this.Attributes = new NamedCollection<DataMember>();
-			this.Details = new ImplementationDetailsDictionary();
+			this.Details = new ImplementationDetailsDictionary(schema);
 		}
 
 		/// <summary>
