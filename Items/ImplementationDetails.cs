@@ -13,7 +13,8 @@
 		: IDictionary<string, object>, ICollection<KeyValuePair<string, object>>, IEnumerable<KeyValuePair<string, object>>
 	{
 		/// <summary>
-		/// The internal dictionary of implementation details
+		/// The internal dictionary of implementation details.
+		/// Additions to this collection should only be made through the class' Add() method as that checks against the Schema.
 		/// </summary>
 		private Dictionary<string, object> internalDictionary;
 
@@ -24,6 +25,11 @@
 		public ImplementationDetailsDictionary(Dictionary<string, Type> schema)
 			: base()
 		{
+			if (schema == null)
+			{
+				throw new ArgumentNullException("schema cannot be null", "schema");
+			}
+
 			this.internalDictionary = new Dictionary<string, object>();
 			this.Schema = schema;
 		}
@@ -98,7 +104,7 @@
 
 			set
 			{
-				this.internalDictionary[key] = value;
+				this.Add(key, value);
 			}
 		}
 
@@ -109,6 +115,20 @@
 		/// <param name="value">The object to use as the value of the element to add.</param>
 		public void Add(string key, object value)
 		{
+			Type type;
+
+			// Check the key exists in the schema
+			if (!this.Schema.TryGetValue(key, out type))
+			{
+				throw new KeyNotFoundException("The given key does not exist in this dictionary's schema");
+			}
+
+			// Check the type of the object matches the schema's type
+			if (value.GetType() != type)
+			{
+				throw new ArgumentException("value does not have the correct type", "value");
+			}
+
 			this.internalDictionary.Add(key, value);
 		}
 
