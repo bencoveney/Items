@@ -27,6 +27,8 @@ namespace ItemWeb
 			DatabaseModel.LoadFromDatabase(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 			Model = DatabaseModel.ConstructModel();
+
+			RequireImplementationDetailSchemas();
 		}
 
 		/// <summary>
@@ -81,6 +83,30 @@ namespace ItemWeb
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void Application_End(object sender, EventArgs e)
 		{
+		}
+
+		private static void RequireImplementationDetailSchemas()
+		{
+			Thing.RequireSchemaEntry("SqlCatalog", typeof(string));
+			Thing.RequireSchemaEntry("SqlSchema", typeof(string));
+			Thing.RequireSchemaEntry("SqlTable", typeof(string));
+			Thing.RequireSchemaEntry("SqlConstraint", typeof(string));
+			Thing.RequireSchemaEntry("SqlColumns", typeof(string));
+
+			DataDefinition.RequireSchemaEntry("SqlColumn", typeof(string));
+			DataDefinition.RequireSchemaEntry("OrdinalPosition", typeof(int));
+			DataDefinition.RequireSchemaEntry("DefaultValue", typeof(string));
+			DataDefinition.RequireSchemaEntry("SqlOrdinal", typeof(int));
+			DataDefinition.RequireSchemaEntry("SqlMode", typeof(string));
+
+			SystemTypeBase.RequireSchemaEntry("SqlDataType", typeof(string));
+			SystemTypeBase.RequireSchemaEntry("SqlNumericPrecision", typeof(int));
+			SystemTypeBase.RequireSchemaEntry("SqlNumericPrecisionRadix", typeof(int));
+			SystemTypeBase.RequireSchemaEntry("SqlNumericScale", typeof(int?));
+			SystemTypeBase.RequireSchemaEntry("SqlMaxCharacters", typeof(int));
+			SystemTypeBase.RequireSchemaEntry("SqlCharacterSet", typeof(string));
+			SystemTypeBase.RequireSchemaEntry("SqlCollationName", typeof(string));
+			SystemTypeBase.RequireSchemaEntry("SqlDateTimePrecision", typeof(string));
 		}
 	}
 }

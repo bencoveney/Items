@@ -214,6 +214,24 @@
 		}
 
 		/// <summary>
+		/// Checks that the requested schema entry exists.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="type">The type.</param>
+		public static void RequireSchemaEntry(string key, Type value)
+		{
+			if (!schema.ContainsKey(key))
+			{
+				throw new InvalidModelException("Implementation details schema does not contain required key");
+			}
+
+			if (schema[key] != value)
+			{
+				throw new InvalidModelException("Implementation details schema's value does not match the type value given");
+			}
+		}
+
+		/// <summary>
 		/// Gets the relationships which reference this thing.
 		/// </summary>
 		/// <param name="model">The model.</param>
