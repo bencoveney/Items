@@ -30,6 +30,7 @@ namespace ItemsTests
 		[DeploymentItem("Items.dll")]
 		public void DetailsTest()
 		{
+			StoredProcedureAction.AddDetailsSchemaEntry("Test Key", typeof(string));
 			StoredProcedureAction storedProcedureAction = new StoredProcedureAction("Test Procedure", "MyProc");
 			Assert.IsNotNull(storedProcedureAction.Details);
 

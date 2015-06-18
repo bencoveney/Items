@@ -266,8 +266,8 @@ namespace ItemsTests
 		public void ImplementationDetailsDictionaryCopyToTest()
 		{
 			object dummyObject = new object();
-			object dummyString = new object();
-			object dummyInt = new object();
+			string dummyString = "Dummy String Test";
+			int dummyInt = new int();
 			ImplementationDetailsDictionary target = new ImplementationDetailsDictionary(GetSchemaForTesting());
 			target.Add("Test Object", dummyObject);
 			target.Add("Test String", dummyString);

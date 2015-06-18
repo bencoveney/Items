@@ -171,6 +171,49 @@
 		}
 
 		/// <summary>
+		/// Adds an entry to the schema which limits what can be inserted into the implementation details dictionary.
+		/// If the item already exists no error will be emitted.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
+		/// <exception cref="ArgumentNullException">
+		/// key;key cannot be null or empty
+		/// or
+		/// value;value cannot be null
+		/// </exception>
+		/// <exception cref="ArgumentException">Schema already contains a different type for this key;value</exception>
+		public static void AddDetailsSchemaEntry(string key, Type value)
+		{
+			if (string.IsNullOrEmpty(key))
+			{
+				throw new ArgumentNullException("key", "key cannot be null or empty");
+			}
+
+			if (value == null)
+			{
+				throw new ArgumentNullException("value", "value cannot be null");
+			}
+
+			// The key might already exist
+			if (schema.ContainsKey(key))
+			{
+				// Check for clashes
+				if (schema[key] != value)
+				{
+					throw new ArgumentException("Schema already contains a different type for this key", "value");
+				}
+				else
+				{
+					// If it has already been added this is fine
+					return;
+				}
+			}
+
+			// Add it to the schema
+			schema.Add(key, value);
+		}
+
+		/// <summary>
 		/// Gets the relationships which reference this thing.
 		/// </summary>
 		/// <param name="model">The model.</param>

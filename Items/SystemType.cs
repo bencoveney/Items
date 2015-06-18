@@ -10,19 +10,14 @@
 	/// </summary>
 	/// <typeparam name="T">The system type</typeparam>
 	public class SystemType<T>
-		: IType
+		: SystemTypeBase, IType
 	{
-		/// <summary>
-		/// The schema of implementation details which are allowed to be put into the implementation details dictionary for this class.
-		/// </summary>
-		private static Dictionary<string, Type> schema = new Dictionary<string, Type>();
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SystemType{T}"/> class.
 		/// </summary>
 		public SystemType()
+			: base()
 		{
-			this.Details = new ImplementationDetailsDictionary(schema);
 		}
 
 		/// <summary>
@@ -45,18 +40,6 @@
 			{
 				return this.DataType.FullName;
 			}
-		}
-
-		/// <summary>
-		/// Gets the implementation specific details attached to the type
-		/// </summary>
-		/// <value>
-		/// The details.
-		/// </value>
-		public ImplementationDetailsDictionary Details
-		{
-			get;
-			private set;
 		}
 	}
 }

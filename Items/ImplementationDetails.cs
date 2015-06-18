@@ -27,7 +27,7 @@
 		{
 			if (schema == null)
 			{
-				throw new ArgumentNullException("schema cannot be null", "schema");
+				throw new ArgumentNullException("schema", "schema cannot be null");
 			}
 
 			this.internalDictionary = new Dictionary<string, object>();
@@ -113,11 +113,27 @@
 		/// </summary>
 		/// <param name="key">The object to use as the key of the element to add.</param>
 		/// <param name="value">The object to use as the value of the element to add.</param>
+		/// <exception cref="ArgumentNullException">
+		/// key;key cannot be null or empty
+		/// or
+		/// value;value cannot be null
+		/// </exception>
+		/// <exception cref="KeyNotFoundException">The given key does not exist in this dictionary's schema</exception>
+		/// <exception cref="ArgumentException">value does not have the correct type;value</exception>
 		public void Add(string key, object value)
 		{
-			Type type;
+			if (string.IsNullOrEmpty(key))
+			{
+				throw new ArgumentNullException("key", "key cannot be null or empty");
+			}
+
+			if (value == null)
+			{
+				throw new ArgumentNullException("value", "value cannot be null");
+			}
 
 			// Check the key exists in the schema
+			Type type;
 			if (!this.Schema.TryGetValue(key, out type))
 			{
 				throw new KeyNotFoundException("The given key does not exist in this dictionary's schema");

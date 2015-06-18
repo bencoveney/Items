@@ -69,6 +69,7 @@
     <Compile Include="ImplementationDetails.cs" />
     <Compile Include="INamedObject.cs" />
     <Compile Include="InvalidModelException.cs" />
+    <Compile Include="SystemTypeBase.cs" />
     <Compile Include="Thing.cs" />
     <Compile Include="NamedCollection.cs" />
     <Compile Include="Parameter.cs" />

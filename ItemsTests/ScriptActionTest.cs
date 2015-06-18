@@ -30,6 +30,7 @@ namespace ItemsTests
 		[DeploymentItem("Items.dll")]
 		public void DetailsTest()
 		{
+			ScriptAction.AddDetailsSchemaEntry("Test Key", typeof(string));
 			ScriptAction scriptAction = new ScriptAction("Test Script", "scriptName.cs");
 			Assert.IsNotNull(scriptAction.Details);
 

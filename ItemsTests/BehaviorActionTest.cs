@@ -43,6 +43,7 @@ namespace ItemsTests
 		[DeploymentItem("Items.dll")]
 		public void DetailsTest()
 		{
+			BehaviorAction.AddDetailsSchemaEntry("Test Key", typeof(string));
 			Behavior behavior = new Behavior("Test Behavior");
 			BehaviorAction behaviorAction = new BehaviorAction("Test Action", behavior);
 			Assert.IsNotNull(behaviorAction.Details);

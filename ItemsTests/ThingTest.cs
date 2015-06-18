@@ -15,6 +15,7 @@ namespace ItemsTests
 	{
 		internal IEnumerable<Thing> CreateThings()
 		{
+			Thing.AddDetailsSchemaEntry("Test", typeof(int));
 			List<Thing> things = new List<Thing>();
 			things.Add(new Item("Test Item"));
 			things.Add(new Relationship("Test Relationship", new Item("Left"), new Item("Right")));
