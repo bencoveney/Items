@@ -127,11 +127,6 @@
 				throw new ArgumentNullException("key", "key cannot be null or empty");
 			}
 
-			if (value == null)
-			{
-				throw new ArgumentNullException("value", "value cannot be null");
-			}
-
 			// Check the key exists in the schema
 			Type type;
 			if (!this.Schema.TryGetValue(key, out type))
@@ -139,8 +134,14 @@
 				throw new KeyNotFoundException("The given key does not exist in this dictionary's schema");
 			}
 
+			// De-nullify the type
+			if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+			{
+				type = type.GetGenericArguments()[0];
+			}
+
 			// Check the type of the object matches the schema's type
-			if (value.GetType() != type)
+			if (value != null && value.GetType() != type)
 			{
 				throw new ArgumentException("value does not have the correct type", "value");
 			}

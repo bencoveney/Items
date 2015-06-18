@@ -90,9 +90,35 @@
 		/// <param name="connectionString">The connection string.</param>
 		public static void LoadFromDatabase(string connectionString)
 		{
+			InitialiseImplementationDetailSchemas();
+
 			// Load the database objects
 			DatabaseTable.LoadTables(connectionString);
 			DatabaseRoutine.LoadRoutines(connectionString);
+		}
+
+		private static void InitialiseImplementationDetailSchemas()
+		{
+			Thing.AddDetailsSchemaEntry("SqlCatalog", typeof(string));
+			Thing.AddDetailsSchemaEntry("SqlSchema", typeof(string));
+			Thing.AddDetailsSchemaEntry("SqlTable", typeof(string));
+			Thing.AddDetailsSchemaEntry("SqlConstraint", typeof(string));
+			Thing.AddDetailsSchemaEntry("SqlColumns", typeof(string));
+
+			DataDefinition.AddDetailsSchemaEntry("SqlColumn", typeof(string));
+			DataDefinition.AddDetailsSchemaEntry("OrdinalPosition", typeof(int));
+			DataDefinition.AddDetailsSchemaEntry("DefaultValue", typeof(string));
+			DataDefinition.AddDetailsSchemaEntry("SqlOrdinal", typeof(int));
+			DataDefinition.AddDetailsSchemaEntry("SqlMode", typeof(string));
+
+			SystemTypeBase.AddDetailsSchemaEntry("SqlDataType", typeof(string));
+			SystemTypeBase.AddDetailsSchemaEntry("SqlNumericPrecision", typeof(int));
+			SystemTypeBase.AddDetailsSchemaEntry("SqlNumericPrecisionRadix", typeof(int));
+			SystemTypeBase.AddDetailsSchemaEntry("SqlNumericScale", typeof(int?));
+			SystemTypeBase.AddDetailsSchemaEntry("SqlMaxCharacters", typeof(int));
+			SystemTypeBase.AddDetailsSchemaEntry("SqlCharacterSet", typeof(string));
+			SystemTypeBase.AddDetailsSchemaEntry("SqlCollationName", typeof(string));
+			SystemTypeBase.AddDetailsSchemaEntry("SqlDateTimePrecision", typeof(string));
 		}
 
 		/// <summary>
