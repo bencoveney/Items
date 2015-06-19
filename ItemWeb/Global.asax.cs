@@ -22,7 +22,8 @@ namespace ItemWeb
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void Application_Start(object sender, EventArgs e)
 		{
-			RouteTable.Routes.MapPageRoute("Thing", "{ThingType}/{ThingName}", "~/ThingPage.aspx");
+			RouteTable.Routes.MapPageRoute("Query", "Query/{ThingName}", "~/QueryPage.aspx");
+			RouteTable.Routes.MapPageRoute("Thing", "Docs/{ThingType}/{ThingName}", "~/ThingPage.aspx");
 
 			DatabaseModel.LoadFromDatabase(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="ItemWeb.Index" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="QueryPage.aspx.cs" Inherits="ItemWeb.QueryPage" %>
 <%@ Import Namespace="Items" %>
 <%@ Import Namespace="ItemWeb" %>
 
@@ -9,58 +9,73 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Model documentation</title>
-		<link href="./css/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
 		<!--[if lt IE 9]>
 			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		<style>
+			.big-number 
+			{
+				font-size: 3em;
+			}
 		</style>
 	</head>
 	<body>
 
-		<div class="jumbotron">
-			<div class="container">
-				<h1>Items</h1>
-				<p>Items is a toolkit designed for building (and applying) domain specific models backed by database schemas. The following objects (and these webpages) were generated from a test schema by the project.</p>
-				<p><a class="btn btn-primary btn-lg" href="https://github.com/bencoveney/Items" role="button">View project on Github &raquo;</a></p>
-			</div>
-		</div>
-
 		<div class="container">
+
+			<div class="page-header">
+				<h1 class="title"><a href="../Index.aspx">Kitchen Model</a> <small>Generated using the Items library.</small></h1>
+			</div>
+
 			<div class="row">
-				<div class="col-sm-4">
+
+				<div class="col-sm-8">
+					<h2>
+						<% Response.Write(this.Thing.Name); %> <small><% Response.Write(this.ThingType); %></small>
+					</h2>
+
+					<table>
+						<thead>
+						
+						</thead>
+
+						<tbody>
+						
+						</tbody>
+					</table>
+				</div>
+			
+				<div class="col-sm-3 col-sm-offset-1">
 					<h2>Items</h2>
 					<ul>
 						<% foreach (Item item in Global.Model.Items)
 						{
-							Response.Write(String.Format("<li><a href=\"./Docs/Item/{0}\">{0}</a></li>", item.Name));
+							Response.Write(String.Format("<li><a href=\"../Docs/Item/{0}\">{0}</a></li>", item.Name));
 						}
 						%>
 					</ul>
-				</div>
-				
-				<div class="col-sm-4">
+
 					<h2>Categories</h2>
 					<ul>
 						<% foreach (Category category in Global.Model.Categories)
 						{
-							Response.Write(String.Format("<li><a href=\"./Docs/Category/{0}\">{0}</a></li>", category.Name));
+							Response.Write(String.Format("<li><a href=\"../Docs/Category/{0}\">{0}</a></li>", category.Name));
 						}
 						%>
 					</ul>
-				</div>
-					
-				<div class="col-sm-4">
+
 					<h2>Relationships</h2>
 					<ul>
 						<% foreach (Relationship relationship in Global.Model.Relationships)
 						{
-							Response.Write(String.Format("<li><a href=\"./Docs/Relationship/{0}\">{0}</a></li>", relationship.Name));
+							Response.Write(String.Format("<li><a href=\"../Docs/Relationship/{0}\">{0}</a></li>", relationship.Name));
 						}
 						%>
 					</ul>
 				</div>
+
 			</div>
 
 			<hr>
