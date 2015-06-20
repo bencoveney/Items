@@ -10,6 +10,6 @@
 namespace ItemWeb {
     
     
-    public partial class QueryPage {
+    public partial class ThingPage {
     }
 }

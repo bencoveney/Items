@@ -153,7 +153,7 @@ namespace ItemSelector
 					toLink.Thing.Details["SqlSchema"],
 					toLink.Thing.Details["SqlTable"],
 					childLink.Key.Details["SqlColumns"],
-					childLink.Key.Details["SqlTable"]);
+					fromLink.Thing.Details["SqlTable"]);
 
 				childLink.Value.AppendJoins(stringBuilder);
 			}

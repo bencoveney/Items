@@ -29,7 +29,17 @@
 
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-4">
+				<div class="col-sm-3">
+					<h2>Query</h2>
+					<ul>
+						<% foreach (Item item in Global.Model.Items)
+						{
+							Response.Write(String.Format("<li><a href=\"./Query/{0}\">{0}</a></li>", item.Name));
+						}
+						%>
+					</ul>
+				</div>
+				<div class="col-sm-3">
 					<h2>Items</h2>
 					<ul>
 						<% foreach (Item item in Global.Model.Items)
@@ -40,7 +50,7 @@
 					</ul>
 				</div>
 				
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<h2>Categories</h2>
 					<ul>
 						<% foreach (Category category in Global.Model.Categories)
@@ -51,7 +61,7 @@
 					</ul>
 				</div>
 					
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<h2>Relationships</h2>
 					<ul>
 						<% foreach (Relationship relationship in Global.Model.Relationships)

@@ -9,7 +9,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Model documentation</title>
-		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="<% Response.Write(this.GetSiteURL()); %>/css/bootstrap.min.css" rel="stylesheet">
 		<!--[if lt IE 9]>
 			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -36,46 +36,59 @@
 						<% Response.Write(this.Thing.Name); %> <small><% Response.Write(this.ThingType); %></small>
 					</h2>
 
-					<table>
-						<thead>
-						
-						</thead>
+					<% this.ProduceTable(); %>
 
-						<tbody>
-						
-						</tbody>
-					</table>
+					<h2>Include Relationships</h2>
+					<ul>
+					<%
+					foreach(Relationship relationship in this.Thing.GetReferenceRelationships(Global.Model).Where(relationship => relationship.Details.ContainsKey("SqlConstraint")))
+					{
+						Response.Write(String.Format(@"<li><a href=""{0}/Query/{1}/{2}"">{2}</a></li>", this.GetSiteURL(), this.Thing.Name, relationship.Name));
+					}
+					%>
+					</ul>
+
+					<h2>Executed Sql</h2>
+					<pre><% Response.Write(this.executedSql); %></pre>
 				</div>
 			
 				<div class="col-sm-3 col-sm-offset-1">
-					<h2>Items</h2>
+					<h2>Build Query</h2>
 					<ul>
 						<% foreach (Item item in Global.Model.Items)
 						{
-							Response.Write(String.Format("<li><a href=\"../Docs/Item/{0}\">{0}</a></li>", item.Name));
+							Response.Write(String.Format("<li><a href=\"{0}/Query/{1}\">{1}</a></li>", this.GetSiteURL(), item.Name));
 						}
 						%>
 					</ul>
 
-					<h2>Categories</h2>
+					<h2>Item Docs</h2>
+					<ul>
+						<% foreach (Item item in Global.Model.Items)
+						{
+							Response.Write(String.Format("<li><a href=\"{0}/Docs/Item/{1}\">{1}</a></li>", this.GetSiteURL(), item.Name));
+						}
+						%>
+					</ul>
+
+					<h2>Category Docs</h2>
 					<ul>
 						<% foreach (Category category in Global.Model.Categories)
 						{
-							Response.Write(String.Format("<li><a href=\"../Docs/Category/{0}\">{0}</a></li>", category.Name));
+							Response.Write(String.Format("<li><a href=\"{0}/Docs/Category/{1}\">{1}</a></li>", this.GetSiteURL(), category.Name));
 						}
 						%>
 					</ul>
 
-					<h2>Relationships</h2>
+					<h2>Relationship Docs</h2>
 					<ul>
 						<% foreach (Relationship relationship in Global.Model.Relationships)
 						{
-							Response.Write(String.Format("<li><a href=\"../Docs/Relationship/{0}\">{0}</a></li>", relationship.Name));
+							Response.Write(String.Format("<li><a href=\"{0}/Docs/Relationship/{1}\">{1}</a></li>", this.GetSiteURL(), relationship.Name));
 						}
 						%>
 					</ul>
 				</div>
-
 			</div>
 
 			<hr>
@@ -87,7 +100,7 @@
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
+		<script src="<% Response.Write(this.GetSiteURL()); %>/js/bootstrap.min.js"></script>
 
 	</body>
 </html>
