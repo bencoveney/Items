@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Items;
-	using System.Data.SqlClient;
+using System.Collections.ObjectModel;
 
 namespace ItemSelector
 {
@@ -73,15 +73,41 @@ namespace ItemSelector
 			}
 		}
 
-		public SqlCommand GetQuery(SqlConnection connection)
+		public string GetSql()
 		{
+			// Begin the select clause
 			StringBuilder queryText = new StringBuilder();
 			queryText.AppendFormat(@"SELECT
-	*
+	");
+			
+			// Work out which columns are being selected
+			Dictionary<Item, IEnumerable<DataMember>> queryColumns = new Dictionary<Item,IEnumerable<DataMember>>();
+			this.rootItemLink.PopulateSelectedColumns(ref queryColumns);
+
+			// Build the statements for the columns in the select statement
+			// Iterate through the items
+			Collection<string> columnClauses = new Collection<string>();
+			foreach(KeyValuePair<Item, IEnumerable<DataMember>> itemWithColumns in queryColumns)
+			{
+				// Iterate through the data members for those items
+				foreach(DataMember column in itemWithColumns.Value)
+				{
+					columnClauses.Add(string.Format(@"{0}.{1} AS ""{0} {1}""", itemWithColumns.Key.Details["SqlTable"], column.Details["SqlColumn"]));
+				}
+			}
+
+			// join the individual select statements into a single unit
+			queryText.Append(string.Join(@",
+	", columnClauses));
+
+			// Begin the from clause
+			queryText.AppendFormat(@"
 FROM
 	{0}", this.rootItemLink.Item.Details["SqlTable"]);
-			this.rootItemLink.AppendJoinsToStringBuilder(queryText);
-			return new SqlCommand(queryText.ToString(), connection);
+
+			// Add all the joins to the FROM clause
+			this.rootItemLink.AppendJoins(queryText);
+			return queryText.ToString();
 		}
 	}
 }

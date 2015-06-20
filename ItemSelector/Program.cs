@@ -29,20 +29,7 @@ namespace ItemSelector
 			query.JoinThroughRelationship(model.Relationships["FK_Foodstuff_PersonID"]);
 			query.JoinThroughRelationship(model.Relationships["FK_Person_KitchenID"]);
 
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
-			{
-				connection.Open();
-
-				using (SqlCommand command = query.GetQuery(connection))
-				{
-					using (SqlDataReader reader = command.ExecuteReader())
-					{
-						while (reader.Read())
-						{
-						}
-					}
-				}
-			}
+			string querySql = query.GetSql();
 
 			// Might be useful to be able to get all available data members for the query
 			// query.DataMembers

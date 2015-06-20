@@ -19,6 +19,8 @@ namespace ItemSelector
 		/// </summary>
 		private Dictionary<Relationship, ModelQueryItemLink> childLinks;
 
+		private Collection<DataMember> selectedDataMembers;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ModelQueryItemLink"/> class.
 		/// </summary>
@@ -27,6 +29,7 @@ namespace ItemSelector
 		{
 			this.item = item;
 			this.childLinks = new Dictionary<Relationship, ModelQueryItemLink>();
+			this.selectedDataMembers = new Collection<DataMember>();
 		}
 
 		internal Item Item
@@ -83,12 +86,54 @@ namespace ItemSelector
 			childLinks.Add(relationship, new ModelQueryItemLink(target));
 		}
 
+		internal void PopulateSelectedColumns(ref Dictionary<Item, IEnumerable<DataMember>> columns)
+		{
+			if (columns == null)
+			{
+				throw new ArgumentNullException("columns", "columns cannot be null");
+			}
+
+			// Work out which data members have been included from this link's items
+			IEnumerable<DataMember> dataMembers;
+			if (this.selectedDataMembers.Count > 0)
+			{
+				dataMembers = this.selectedDataMembers;
+			}
+			else
+			{
+				// If there are no data members defined, build up a selection of some.
+				// TODO finalise what we should do in this situation. The user might specifically not want to show rows from this table.
+				Collection<DataMember> identifiers = new Collection<DataMember>();
+
+				// If there is an integer identifier, show it
+				if (this.Item.IntegerIdentifier != null)
+				{
+					identifiers.Add(this.Item.IntegerIdentifier);
+				}
+
+				// If there is a string identifier, show it
+				if (this.Item.StringIdentifier != null)
+				{
+					identifiers.Add(this.Item.StringIdentifier);
+				}
+
+				dataMembers = identifiers;
+			}
+			columns.Add(this.Item, dataMembers);
+
+			// Recurse on child links
+			foreach (ModelQueryItemLink link in this.childLinks.Values)
+			{
+				link.PopulateSelectedColumns(ref columns);
+			}
+		}
+
 		/// <summary>
 		/// Builds a string containing the join statements for all child links.
 		/// TODO pass the bulder around.
 		/// </summary>
 		/// <returns></returns>
-		internal void AppendJoinsToStringBuilder(StringBuilder stringBuilder)
+		internal void AppendJoins(StringBuilder stringBuilder)
 		{
 			foreach (KeyValuePair<Relationship, ModelQueryItemLink> childLink in this.childLinks)
 			{
@@ -110,7 +155,7 @@ namespace ItemSelector
 					childLink.Key.Details["SqlColumns"],
 					childLink.Key.Details["SqlTable"]);
 
-				childLink.Value.AppendJoinsToStringBuilder(stringBuilder);
+				childLink.Value.AppendJoins(stringBuilder);
 			}
 		}
 	}
