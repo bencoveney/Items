@@ -1,6 +1,8 @@
 ﻿namespace Items
 {
 	using System.Collections.ObjectModel;
+	using System.Collections.Generic;
+	using System.Linq;
 
 	/// <summary>
 	/// Used to define relations between objects
@@ -54,6 +56,20 @@
 			get
 			{
 				return new Collection<RelationshipLink>(this.relationshipLinks);
+			}
+		}
+
+		/// <summary>
+		/// Gets the linked things.
+		/// </summary>
+		/// <value>
+		/// The linked things.
+		/// </value>
+		public IEnumerable<Thing> LinkedThings
+		{
+			get
+			{
+				return this.Links.Select<RelationshipLink, Thing>(link => link.Thing);
 			}
 		}
 

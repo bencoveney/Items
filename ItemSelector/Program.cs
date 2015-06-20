@@ -5,11 +5,17 @@ using System.Text;
 using Items;
 using ItemLoader;
 using System.Configuration;
+using System.Data.SqlClient;
 
 namespace ItemSelector
 {
 	class Program
 	{
+		/// <summary>
+		/// The connection string
+		/// </summary>
+		private const string ConnectionString = @"Data Source=BENSDESKTOP\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True";
+
 		private static Model model;
 
 		static void Main(string[] args)
@@ -17,14 +23,26 @@ namespace ItemSelector
 			Initialise();
 
 			// Create the query object by specifying a starting thing
-			// ModelQuery query = new ModelQuery(startingItem);
+			ModelQuery query = new ModelQuery(model.Items["Foodstuff"]);
 			
 			// Follow the relationship to another item
-			// query.joinThroughRelationship(anotherItem);
-			// Bearing in mind that we might be following a relationship from a non-root item, maybe we want to specify which item we join from
-			// query[startingItem].joinThroughRelationship(anotherItem);
-			// OR
-			// query.CurrentItems[startingItem].joinThroughRelationships
+			query.JoinThroughRelationship(model.Relationships["FK_Foodstuff_PersonID"]);
+			query.JoinThroughRelationship(model.Relationships["FK_Person_KitchenID"]);
+
+			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			{
+				connection.Open();
+
+				using (SqlCommand command = query.GetQuery(connection))
+				{
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+						}
+					}
+				}
+			}
 
 			// Might be useful to be able to get all available data members for the query
 			// query.DataMembers
@@ -35,9 +53,9 @@ namespace ItemSelector
 
 		public static void Initialise()
 		{
-			DatabaseModel.LoadFromDatabase(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+			DatabaseModel.LoadFromDatabase(ConnectionString);
 
-			Model model = DatabaseModel.ConstructModel();
+			model = DatabaseModel.ConstructModel();
 
 			RequireImplementationDetailSchemas();
 		}

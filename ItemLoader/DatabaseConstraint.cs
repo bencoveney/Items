@@ -90,7 +90,6 @@
 
 		/// <summary>
 		/// Gets the column names covered by this constraint.
-		/// TODO point at actual columns. at that point would we need to keep the reference to the table?
 		/// </summary>
 		/// <value>
 		/// The column names.
@@ -120,6 +119,20 @@
 		///   <c>true</c> if [initially deferred]; otherwise, <c>false</c>.
 		/// </value>
 		public bool InitiallyDeferred { get; private set; }
+
+		/// <summary>
+		/// Gets a value indicating whether this instance is unique constraint.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if this instance is unique constraint; otherwise, <c>false</c>.
+		/// </value>
+		public bool IsUniqueConstraint
+		{
+			get
+			{
+				return (this.Type == ConstraintType.PrimaryKey || this.Type == ConstraintType.Unique);
+			}
+		}
 
 		/// <summary>
 		/// Loads unique and primary key constraints from the database.

@@ -264,16 +264,26 @@
 					DatabaseConstraint constraint = AllConstraints.Single(dbConstraint => dbConstraint.Type == ConstraintType.ForeignKey && dbConstraint.Columns.Contains(column));
 
 					// Create the relationship
-					// The left hand side (referencer) can only point to a single item on the right hand side (referenced)
-					// TODO it might be possible to infer more detail here using unique and NOT NULL constraints
-					Relationship relationship = new Relationship(constraint.Name, new RelationshipLink(leftThing, 0), new RelationshipLink(rightThing, 1, 1));
+
+					// If this constraint is not nullable then there will always be a reference
+					int leftMinimum = column.IsNullable ? 0 : 1;
+
+					// If there is a unique constraint which has this column as it's only column then this field has to be unique
+					int? leftMaximum = null;
+					if (table.Constraints.Any(uniqueConstraint => uniqueConstraint.IsUniqueConstraint && uniqueConstraint.Columns.Count() == 1 && uniqueConstraint.Columns.Single() == column))
+					{
+						// If the referring column is unique there can only be one row for each target row
+						leftMaximum = 1;
+					}
+
+					Relationship relationship = new Relationship(constraint.Name, new RelationshipLink(leftThing, leftMinimum, leftMaximum), new RelationshipLink(rightThing, 1, 1));
 
 					// Add additional details
 					relationship.Details.Add("SqlCatalog", table.Catalog);
 					relationship.Details.Add("SqlSchema", table.Schema);
 					relationship.Details.Add("SqlTable", table.Name);
 					relationship.Details.Add("SqlConstraint", constraint.Name);
-					relationship.Details.Add("SqlColumns", string.Join(", ", constraint.Columns));
+					relationship.Details.Add("SqlColumns", string.Join(", ", constraint.Columns.Select<DatabaseColumn, string>(relationshipColumn => relationshipColumn.Name)));
 
 					result.AddRelationship(relationship);
 				}
