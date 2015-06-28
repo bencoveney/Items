@@ -49,26 +49,24 @@ namespace ItemSelector
 
 		private static void RequireImplementationDetailSchemas()
 		{
-			Thing.RequireSchemaEntry("SqlCatalog", typeof(string));
-			Thing.RequireSchemaEntry("SqlSchema", typeof(string));
-			Thing.RequireSchemaEntry("SqlTable", typeof(string));
-			Thing.RequireSchemaEntry("SqlConstraint", typeof(string));
-			Thing.RequireSchemaEntry("SqlColumns", typeof(string));
-
-			DataDefinition.RequireSchemaEntry("SqlColumn", typeof(string));
-			DataDefinition.RequireSchemaEntry("OrdinalPosition", typeof(int));
-			DataDefinition.RequireSchemaEntry("DefaultValue", typeof(string));
-			DataDefinition.RequireSchemaEntry("SqlOrdinal", typeof(int));
-			DataDefinition.RequireSchemaEntry("SqlMode", typeof(string));
-
-			SystemTypeBase.RequireSchemaEntry("SqlDataType", typeof(string));
-			SystemTypeBase.RequireSchemaEntry("SqlNumericPrecision", typeof(int));
-			SystemTypeBase.RequireSchemaEntry("SqlNumericPrecisionRadix", typeof(int));
-			SystemTypeBase.RequireSchemaEntry("SqlNumericScale", typeof(int?));
-			SystemTypeBase.RequireSchemaEntry("SqlMaxCharacters", typeof(int));
-			SystemTypeBase.RequireSchemaEntry("SqlCharacterSet", typeof(string));
-			SystemTypeBase.RequireSchemaEntry("SqlCollationName", typeof(string));
-			SystemTypeBase.RequireSchemaEntry("SqlDateTimePrecision", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(Thing), "SqlCatalog", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(Thing), "SqlSchema", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(Thing), "SqlTable", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(Thing), "SqlConstraint", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(Thing), "SqlColumns", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(DataDefinition), "SqlColumn", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(DataDefinition), "OrdinalPosition", typeof(int));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(DataDefinition), "DefaultValue", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(DataDefinition), "SqlOrdinal", typeof(int));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(DataDefinition), "SqlMode", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlDataType", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlNumericPrecision", typeof(int));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlNumericPrecisionRadix", typeof(int));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlNumericScale", typeof(int?));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlMaxCharacters", typeof(int));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlCharacterSet", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlCollationName", typeof(string));
+			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlDateTimePrecision", typeof(string));
 		}
 	}
 }

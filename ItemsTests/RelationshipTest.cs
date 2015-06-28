@@ -28,6 +28,7 @@ namespace ItemsTests
 			Assert.IsNotNull(relationship.LeftLink);
 			Assert.IsNotNull(relationship.RightLink);
 		}
+
 		/// <summary>
 		/// A test for Relationship Constructor
 		/// </summary>
@@ -83,6 +84,23 @@ namespace ItemsTests
 			Relationship relationship = new Relationship("Test", left, right);
 
 			Assert.AreEqual(relationship.RightLink.Thing, right);
+		}
+
+		/// <summary>
+		/// A test for LinkedThings
+		/// </summary>
+		[TestMethod()]
+		public void RelationshipLinkedThingsTest()
+		{
+			Thing leftThing = new Item("Left");
+			Thing rightThing = new Item("Right");
+			RelationshipLink leftLink = new RelationshipLink(leftThing, 0);
+			RelationshipLink rightLink = new RelationshipLink(rightThing, 0);
+			Relationship relationship = new Relationship("Test", leftLink, rightLink);
+
+			Assert.AreEqual(2, relationship.LinkedThings.Count());
+			Assert.IsTrue(relationship.LinkedThings.Contains(leftThing));
+			Assert.IsTrue(relationship.LinkedThings.Contains(leftThing));
 		}
 	}
 }

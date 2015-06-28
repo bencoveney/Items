@@ -37,7 +37,6 @@ namespace ItemsTests
 		[TestMethod()]
 		public void DetailsTest()
 		{
-			SystemType<Int32>.AddDetailsSchemaEntry("Test", typeof(int));
 			SystemType<Int32> target = new SystemType<Int32>();
 			target.Details.Add("Test", 5);
 			Assert.AreEqual(5, target.Details["Test"]);

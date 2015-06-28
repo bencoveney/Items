@@ -546,7 +546,7 @@ namespace ItemWeb
 		{
 			Item item = thing as Item;
 
-			if (item != null && item.Behaviors.Count > 0)
+			if (item != null && item.GetReferenceRelationships(Global.Model).Count() > 0)
 			{
 				Response.Write("<div class=\"section\">");
 				Response.Write("<h3>Relationships</h3>");

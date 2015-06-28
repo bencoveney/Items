@@ -13,6 +13,12 @@
 		: IDictionary<string, object>, ICollection<KeyValuePair<string, object>>, IEnumerable<KeyValuePair<string, object>>
 	{
 		/// <summary>
+		/// The schema defining: for each type, what you can put in it's implementation details dictionary
+		/// This is expressed as a collection of detail names and the types of data they contain
+		/// </summary>
+		private static Dictionary<Type, Dictionary<string, Type>> schema = new Dictionary<Type, Dictionary<string, Type>>();
+
+		/// <summary>
 		/// The internal dictionary of implementation details.
 		/// Additions to this collection should only be made through the class' Add() method as that checks against the Schema.
 		/// </summary>
@@ -22,28 +28,10 @@
 		/// Initializes a new instance of the <see cref="ImplementationDetailsDictionary" /> class.
 		/// </summary>
 		/// <param name="schema">The schema.</param>
-		public ImplementationDetailsDictionary(Dictionary<string, Type> schema)
+		public ImplementationDetailsDictionary()
 			: base()
 		{
-			if (schema == null)
-			{
-				throw new ArgumentNullException("schema", "schema cannot be null");
-			}
-
 			this.internalDictionary = new Dictionary<string, object>();
-			this.Schema = schema;
-		}
-
-		/// <summary>
-		/// Gets the schema defining which keys and value types are allowed.
-		/// </summary>
-		/// <value>
-		/// The schema.
-		/// </value>
-		public Dictionary<string, Type> Schema
-		{
-			get;
-			private set;
 		}
 
 		/// <summary>
@@ -109,6 +97,108 @@
 		}
 
 		/// <summary>
+		/// Adds an entry to the schema which limits what can be inserted into the implementation details dictionary.
+		/// If the item already exists no error will be emitted.
+		/// </summary>
+		/// <param name="type">The type the schema entry is being added for.</param>
+		/// <param name="key">The key allowed in this type's .</param>
+		/// <param name="value">The type for the key's corresponding value.</param>
+		/// <exception cref="ArgumentNullException">key;key cannot be null or empty
+		/// or
+		/// value;value cannot be null</exception>
+		/// <exception cref="ArgumentException">Schema already contains a different type for this key;value</exception>
+		public static void AddSchemaEntry(Type type, string key, Type value)
+		{
+			if (type == null)
+			{
+				throw new ArgumentNullException("type", "type cannot be null");
+			}
+
+			if (string.IsNullOrEmpty(key))
+			{
+				throw new ArgumentNullException("key", "key cannot be null or empty");
+			}
+
+			if (value == null)
+			{
+				throw new ArgumentNullException("value", "value cannot be null");
+			}
+
+			// The key might already exist
+			if (schema.ContainsKey(type) && schema[type].ContainsKey(key))
+			{
+				// Check for clashes
+				if (schema[type][key] != value)
+				{
+					throw new ArgumentException("Schema already contains a different type for this key", "value");
+				}
+				else
+				{
+					// If it has already been added this is fine
+					return;
+				}
+			}
+
+			// make sure the type exists in the schema
+			if (!schema.ContainsKey(type))
+			{
+				schema.Add(type, new Dictionary<string, Type>());
+			}
+
+			// Add it to the schema
+			schema[type].Add(key, value);
+		}
+
+		/// <summary>
+		/// Checks that the requested schema entry exists.
+		/// </summary>
+		/// <param name="type">The type the schema entry is being added for.</param>
+		/// <param name="key">The key allowed in this type's .</param>
+		/// <param name="value">The type for the key's corresponding value.</param>
+		/// <exception cref="ArgumentNullException">
+		/// type;type cannot be null
+		/// or
+		/// key;key cannot be null or empty
+		/// or
+		/// value;value cannot be null
+		/// </exception>
+		/// <exception cref="InvalidModelException">Implementation details schema does not contain required key
+		/// or
+		/// Implementation details schema's value does not match the type value given</exception>
+		public static void RequireSchemaEntry(Type type, string key, Type value)
+		{
+			if (type == null)
+			{
+				throw new ArgumentNullException("type", "type cannot be null");
+			}
+
+			if (string.IsNullOrEmpty(key))
+			{
+				throw new ArgumentNullException("key", "key cannot be null or empty");
+			}
+
+			if (value == null)
+			{
+				throw new ArgumentNullException("value", "value cannot be null");
+			}
+
+			if (!schema.ContainsKey(type))
+			{
+				throw new InvalidModelException("No implementation details schema entries have been defined for this type");
+			}
+
+			if (!schema[type].ContainsKey(key))
+			{
+				throw new InvalidModelException("Implementation details schema does not contain required key");
+			}
+
+			if (schema[type][key] != value)
+			{
+				throw new InvalidModelException("Implementation details schema's value does not match the type value given");
+			}
+		}
+
+		/// <summary>
 		/// Adds an element with the provided key and value to the <see cref="T:System.Collections.Generic.IDictionary`2" />.
 		/// </summary>
 		/// <param name="key">The object to use as the key of the element to add.</param>
@@ -127,24 +217,26 @@
 				throw new ArgumentNullException("key", "key cannot be null or empty");
 			}
 
-			// Check the key exists in the schema
-			Type type;
-			if (!this.Schema.TryGetValue(key, out type))
-			{
-				throw new KeyNotFoundException("The given key does not exist in this dictionary's schema");
-			}
+			// TODO this schema check needs to go back in. probably will require the Add() method to take a type?
 
-			// De-nullify the type
-			if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
-			{
-				type = type.GetGenericArguments()[0];
-			}
+			//// Check the key exists in the schema
+			//Type type;
+			//if (!this.Schema.TryGetValue(key, out type))
+			//{
+			//    throw new KeyNotFoundException("The given key does not exist in this dictionary's schema");
+			//}
 
-			// Check the type of the object matches the schema's type
-			if (value != null && value.GetType() != type)
-			{
-				throw new ArgumentException("value does not have the correct type", "value");
-			}
+			//// De-nullify the type
+			//if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+			//{
+			//    type = type.GetGenericArguments()[0];
+			//}
+
+			//// Check the type of the object matches the schema's type
+			//if (value != null && value.GetType() != type)
+			//{
+			//    throw new ArgumentException("value does not have the correct type", "value");
+			//}
 
 			this.internalDictionary.Add(key, value);
 		}
