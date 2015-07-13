@@ -1,24 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Items;
-using ItemLoader;
-using System.Configuration;
-using System.Data.SqlClient;
-
-namespace ItemSelector
+﻿namespace ItemSelector
 {
-	class Program
+	using ItemLoader;
+	using Items;
+
+	/// <summary>
+	/// The program
+	/// </summary>
+	public class Program
 	{
 		/// <summary>
 		/// The connection string
 		/// </summary>
 		private const string ConnectionString = @"Data Source=BENSDESKTOP\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True";
 
+		/// <summary>
+		/// The model
+		/// </summary>
 		private static Model model;
 
-		static void Main(string[] args)
+		/// <summary>
+		/// The program entry point.
+		/// </summary>
+		/// <param name="args">The arguments.</param>
+		public static void Main(string[] args)
 		{
 			Initialise();
 
@@ -38,6 +42,9 @@ namespace ItemSelector
 			// Alternatively you could have it so all columns for all relationships are availible and bringing in a column automatically brings in the relationship
 		}
 
+		/// <summary>
+		/// Initializes this instance.
+		/// </summary>
 		public static void Initialise()
 		{
 			DatabaseModel.LoadFromDatabase(ConnectionString);
@@ -47,6 +54,9 @@ namespace ItemSelector
 			RequireImplementationDetailSchemas();
 		}
 
+		/// <summary>
+		/// Asserts the schema of required implementation details
+		/// </summary>
 		private static void RequireImplementationDetailSchemas()
 		{
 			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(Thing), "SqlCatalog", typeof(string));

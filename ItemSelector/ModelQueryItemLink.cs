@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Items;
-using System.Collections.ObjectModel;
-
-namespace ItemSelector
+﻿namespace ItemSelector
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Text;
+	using Items;
+	
+	/// <summary>
+	/// A link to an item in the query
+	/// </summary>
 	internal class ModelQueryItemLink
 	{
 		/// <summary>
-		/// The item
+		/// The item this link points to
 		/// </summary>
 		private Item item;
 
@@ -19,6 +21,9 @@ namespace ItemSelector
 		/// </summary>
 		private Dictionary<Relationship, ModelQueryItemLink> childLinks;
 
+		/// <summary>
+		/// The selected data members
+		/// </summary>
 		private Collection<DataMember> selectedDataMembers;
 
 		/// <summary>
@@ -32,6 +37,12 @@ namespace ItemSelector
 			this.selectedDataMembers = new Collection<DataMember>();
 		}
 
+		/// <summary>
+		/// Gets the item.
+		/// </summary>
+		/// <value>
+		/// The item.
+		/// </value>
 		internal Item Item
 		{
 			get
@@ -43,7 +54,7 @@ namespace ItemSelector
 		/// <summary>
 		/// Gets all items in this link and all child links.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>All items contained by this link and all child links.</returns>
 		internal IEnumerable<Item> GetAllItems()
 		{
 			List<Item> items = new List<Item>();
@@ -59,9 +70,9 @@ namespace ItemSelector
 		}
 
 		/// <summary>
-		/// Gets all items in this link and all child links.
+		/// Gets this link and all child links.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>This link and all child links.</returns>
 		internal IEnumerable<ModelQueryItemLink> GetAllItemLinks()
 		{
 			List<ModelQueryItemLink> links = new List<ModelQueryItemLink>();
@@ -76,6 +87,11 @@ namespace ItemSelector
 			return links;
 		}
 
+		/// <summary>
+		/// Joins the through relationship.
+		/// </summary>
+		/// <param name="relationship">The relationship.</param>
+		/// <param name="target">The target.</param>
 		internal void JoinThroughRelationship(Relationship relationship, Item target)
 		{
 			// Check the relationship goes from the current item to the target
@@ -83,9 +99,14 @@ namespace ItemSelector
 			// Maybe allow an overload where you only specify the relationship? is there any instance where you'd need the target?
 			// What happens when an item is in a relationship with itself? lol
 
-			childLinks.Add(relationship, new ModelQueryItemLink(target));
+			this.childLinks.Add(relationship, new ModelQueryItemLink(target));
 		}
 
+		/// <summary>
+		/// Populates the selected columns.
+		/// </summary>
+		/// <param name="columns">The columns.</param>
+		/// <exception cref="ArgumentNullException">columns;columns cannot be null</exception>
 		internal void PopulateSelectedColumns(ref Dictionary<Item, IEnumerable<DataMember>> columns)
 		{
 			if (columns == null)
@@ -119,6 +140,7 @@ namespace ItemSelector
 
 				dataMembers = identifiers;
 			}
+
 			columns.Add(this.Item, dataMembers);
 
 			// Recurse on child links
@@ -130,9 +152,8 @@ namespace ItemSelector
 
 		/// <summary>
 		/// Builds a string containing the join statements for all child links.
-		/// TODO pass the bulder around.
 		/// </summary>
-		/// <returns></returns>
+		/// <param name="stringBuilder">The string builder.</param>
 		internal void AppendJoins(StringBuilder stringBuilder)
 		{
 			foreach (KeyValuePair<Relationship, ModelQueryItemLink> childLink in this.childLinks)
@@ -157,6 +178,24 @@ namespace ItemSelector
 
 				childLink.Value.AppendJoins(stringBuilder);
 			}
+		}
+
+		/// <summary>
+		/// Includes the column.
+		/// </summary>
+		/// <param name="dataMember">The data member.</param>
+		internal void IncludeDataMember(DataMember dataMember)
+		{
+			this.selectedDataMembers.Add(dataMember);
+		}
+
+		/// <summary>
+		/// Excludes the column.
+		/// </summary>
+		/// <param name="dataMember">The data member.</param>
+		internal void ExcludeDataMember(DataMember dataMember)
+		{
+			this.selectedDataMembers.Remove(dataMember);
 		}
 	}
 }
