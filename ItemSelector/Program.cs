@@ -1,12 +1,13 @@
 ﻿namespace ItemSelector
 {
+	using System;
 	using ItemLoader;
 	using Items;
 
 	/// <summary>
 	/// The program
 	/// </summary>
-	public class Program
+	public static class Program
 	{
 		/// <summary>
 		/// The connection string
@@ -21,10 +22,9 @@
 		/// <summary>
 		/// The program entry point.
 		/// </summary>
-		/// <param name="args">The arguments.</param>
-		public static void Main(string[] args)
+		public static void Main()
 		{
-			Initialise();
+			Initialize();
 
 			// Create the query object by specifying a starting thing
 			ModelQuery query = new ModelQuery(model.Items["Foodstuff"]);
@@ -33,7 +33,8 @@
 			query.JoinThroughRelationship(model.Relationships["FK_Foodstuff_PersonID"]);
 			query.JoinThroughRelationship(model.Relationships["FK_Person_KitchenID"]);
 
-			string querySql = query.GetSql();
+			string querySql = query.BuildSql();
+			Console.Write(querySql);
 
 			// Might be useful to be able to get all available data members for the query
 			// query.DataMembers
@@ -45,7 +46,7 @@
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
-		public static void Initialise()
+		public static void Initialize()
 		{
 			DatabaseModel.LoadFromDatabase(ConnectionString);
 

@@ -78,7 +78,7 @@ namespace ItemWeb
 
 			SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 			connection.Open();
-			executedSql = query.GetSql();
+			executedSql = query.BuildSql();
 			SqlCommand command = new SqlCommand(executedSql, connection);
 			this.reader = command.ExecuteReader();
 

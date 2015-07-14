@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
+	using System.Globalization;
 	using System.Text;
 	using Items;
 	
@@ -49,24 +50,6 @@
 			{
 				return this.item;
 			}
-		}
-
-		/// <summary>
-		/// Gets all items in this link and all child links.
-		/// </summary>
-		/// <returns>All items contained by this link and all child links.</returns>
-		internal IEnumerable<Item> GetAllItems()
-		{
-			List<Item> items = new List<Item>();
-
-			items.Add(this.item);
-
-			foreach (ModelQueryItemLink childLink in this.childLinks.Values)
-			{
-				items.AddRange(childLink.GetAllItems());
-			}
-
-			return items;
 		}
 
 		/// <summary>
@@ -156,6 +139,9 @@
 		/// <param name="stringBuilder">The string builder.</param>
 		internal void AppendJoins(StringBuilder stringBuilder)
 		{
+			const string JoinFormat = @"
+	{0} JOIN {1}.{2}.{3} ON {5}.{4} = {3}.{4}";
+
 			foreach (KeyValuePair<Relationship, ModelQueryItemLink> childLink in this.childLinks)
 			{
 				// Work out if we are travelling from left to right
@@ -167,8 +153,8 @@
 				// TODO this makes a big assumption that both columns will be named the same thing. maybe this should be checked?
 				bool isInnerJoin = fromLink.AmountLower >= 1;
 				stringBuilder.AppendFormat(
-					@"
-	{0} JOIN {1}.{2}.{3} ON {5}.{4} = {3}.{4}",
+					CultureInfo.InvariantCulture,
+					JoinFormat,
 					isInnerJoin ? "INNER" : "LEFT OUTER",
 					toLink.Thing.Details["SqlCatalog"],
 					toLink.Thing.Details["SqlSchema"],

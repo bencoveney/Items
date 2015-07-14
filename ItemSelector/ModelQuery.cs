@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
+	using System.Globalization;
 	using System.Linq;
 	using System.Text;
 	using Items;
@@ -115,12 +116,14 @@
 		/// Gets the SQL which represents the current query.
 		/// </summary>
 		/// <returns>The SQL which represents the current query.</returns>
-		public string GetSql()
+		public string BuildSql()
 		{
+			const string SelectStatement = @"SELECT
+	";
+
 			// Begin the select clause
 			StringBuilder queryText = new StringBuilder();
-			queryText.AppendFormat(@"SELECT
-	");
+			queryText.AppendFormat(CultureInfo.InvariantCulture, SelectStatement);
 			
 			// Work out which columns are being selected
 			Dictionary<Item, IEnumerable<DataMember>> queryColumns = new Dictionary<Item, IEnumerable<DataMember>>();
@@ -134,7 +137,7 @@
 				// Iterate through the data members for those items
 				foreach (DataMember column in itemWithColumns.Value)
 				{
-					columnClauses.Add(string.Format(@"{0}.{1} AS ""{0} {1}""", itemWithColumns.Key.Details["SqlTable"], column.Details["SqlColumn"]));
+					columnClauses.Add(string.Format(CultureInfo.InvariantCulture, @"{0}.{1} AS ""{0} {1}""", itemWithColumns.Key.Details["SqlTable"], column.Details["SqlColumn"]));
 				}
 			}
 

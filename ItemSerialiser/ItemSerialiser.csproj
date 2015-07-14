@@ -30,6 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ItemsKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,6 +55,7 @@
     <Compile Include="XmlCreatorCode.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ItemsKey.snk" />
     <None Include="XmlCreator.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>XmlCreator.cs</LastGenOutput>
