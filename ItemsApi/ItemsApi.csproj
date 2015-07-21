@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5562A2FE-D0B8-476C-8440-E2B94309641A}</ProjectGuid>
+    <ProjectGuid>{37A5188A-8D7E-46F9-913C-259F1EC98706}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -77,9 +77,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\SelectorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Selector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -93,8 +95,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ItemLoader\ItemLoader.csproj">
+      <Project>{e9352bc3-224d-44f6-a2d9-3d7a8599aca8}</Project>
+      <Name>ItemLoader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ItemSelector\ItemSelector.csproj">
+      <Project>{f3cbb9bf-6e5f-4fd1-b5ff-3c16f5abcef4}</Project>
+      <Name>ItemSelector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Items\Items.csproj">
+      <Project>{a09f7505-dd95-4f3f-a449-bcbaa897fa9d}</Project>
+      <Name>Items</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

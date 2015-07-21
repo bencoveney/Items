@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IO", "IO", "{6F71363A-4392-4E9E-BA4D-222E9C2A9440}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{265F96B3-9D73-4EA0-AFB3-BF57E386B7A5}"
@@ -32,9 +30,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemsTests", "ItemsTests\It
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemSelector", "ItemSelector\ItemSelector.csproj", "{F3CBB9BF-6E5F-4FD1-B5FF-3C16F5ABCEF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemsApi", "ItemsApi\ItemsApi.csproj", "{5562A2FE-D0B8-476C-8440-E2B94309641A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemsApi", "ItemsApi\ItemsApi.csproj", "{37A5188A-8D7E-46F9-913C-259F1EC98706}"
 EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Items.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -128,16 +129,16 @@ Global
 		{F3CBB9BF-6E5F-4FD1-B5FF-3C16F5ABCEF4}.Release|Mixed Platforms.Build.0 = Release|x86
 		{F3CBB9BF-6E5F-4FD1-B5FF-3C16F5ABCEF4}.Release|x86.ActiveCfg = Release|x86
 		{F3CBB9BF-6E5F-4FD1-B5FF-3C16F5ABCEF4}.Release|x86.Build.0 = Release|x86
-		{5562A2FE-D0B8-476C-8440-E2B94309641A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5562A2FE-D0B8-476C-8440-E2B94309641A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5562A2FE-D0B8-476C-8440-E2B94309641A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{5562A2FE-D0B8-476C-8440-E2B94309641A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{5562A2FE-D0B8-476C-8440-E2B94309641A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5562A2FE-D0B8-476C-8440-E2B94309641A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5562A2FE-D0B8-476C-8440-E2B94309641A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5562A2FE-D0B8-476C-8440-E2B94309641A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{5562A2FE-D0B8-476C-8440-E2B94309641A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{5562A2FE-D0B8-476C-8440-E2B94309641A}.Release|x86.ActiveCfg = Release|Any CPU
+		{37A5188A-8D7E-46F9-913C-259F1EC98706}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37A5188A-8D7E-46F9-913C-259F1EC98706}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37A5188A-8D7E-46F9-913C-259F1EC98706}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{37A5188A-8D7E-46F9-913C-259F1EC98706}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{37A5188A-8D7E-46F9-913C-259F1EC98706}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{37A5188A-8D7E-46F9-913C-259F1EC98706}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37A5188A-8D7E-46F9-913C-259F1EC98706}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37A5188A-8D7E-46F9-913C-259F1EC98706}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{37A5188A-8D7E-46F9-913C-259F1EC98706}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{37A5188A-8D7E-46F9-913C-259F1EC98706}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,13 +146,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E9352BC3-224D-44F6-A2D9-3D7A8599ACA8} = {6F71363A-4392-4E9E-BA4D-222E9C2A9440}
 		{4C98AC6B-4989-49C1-93E3-BD488BF54477} = {6F71363A-4392-4E9E-BA4D-222E9C2A9440}
-		{B0A4A1D4-987D-4510-B7FC-A4D6517D91B0} = {265F96B3-9D73-4EA0-AFB3-BF57E386B7A5}
 		{3AA6646B-CC66-4A54-9FEA-86B808751EDF} = {6F71363A-4392-4E9E-BA4D-222E9C2A9440}
-		{0E604889-8961-496F-B2CE-AD0A659B3BA0} = {265F96B3-9D73-4EA0-AFB3-BF57E386B7A5}
 		{F3CBB9BF-6E5F-4FD1-B5FF-3C16F5ABCEF4} = {6F71363A-4392-4E9E-BA4D-222E9C2A9440}
-		{5562A2FE-D0B8-476C-8440-E2B94309641A} = {6F71363A-4392-4E9E-BA4D-222E9C2A9440}
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Items.vsmdi
+		{37A5188A-8D7E-46F9-913C-259F1EC98706} = {6F71363A-4392-4E9E-BA4D-222E9C2A9440}
+		{B0A4A1D4-987D-4510-B7FC-A4D6517D91B0} = {265F96B3-9D73-4EA0-AFB3-BF57E386B7A5}
+		{0E604889-8961-496F-B2CE-AD0A659B3BA0} = {265F96B3-9D73-4EA0-AFB3-BF57E386B7A5}
 	EndGlobalSection
 EndGlobal
