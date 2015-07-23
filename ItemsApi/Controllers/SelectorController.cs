@@ -6,9 +6,13 @@
     using System.Collections.Generic;
     using System.Web.Http;
     using System.Linq;
+    using System.Net.Http;
 
+    [RoutePrefix("api/Items")]
     public class ItemSelectorController : ApiController
     {
+        [Route("")]
+        [HttpGet]
         public IEnumerable<ItemSelector> GetAllItemSelectors()
         {
             foreach(Item item in WebApiApplication.Model.Items)
@@ -34,6 +38,8 @@
             }
         }
 
+        [Route("Item/{name}")]
+        [HttpGet]
         public IHttpActionResult GetItemSelector(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -45,6 +51,16 @@
                 return NotFound();
 
             return Ok(selector);
+        }
+
+        [Route("Data")]
+        [HttpPost]
+        public IHttpActionResult GetDataPost([FromBody]ItemSelector selection)
+        {
+            if (selection == null)
+                return BadRequest("selection must be provided");
+
+            return Ok("Bello!");
         }
     }
 }
