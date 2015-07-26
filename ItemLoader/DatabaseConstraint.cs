@@ -130,7 +130,7 @@
 		{
 			get
 			{
-				return (this.Type == ConstraintType.PrimaryKey || this.Type == ConstraintType.Unique);
+				return this.Type == ConstraintType.PrimaryKey || this.Type == ConstraintType.Unique;
 			}
 		}
 

@@ -2,10 +2,12 @@
 {
 	using System;
 	using System.Globalization;
+    using System.Runtime.Serialization;
 
 	/// <summary>
 	/// Used by a relationship to indicate what thing (and the quantity of those things) is being related 
-	/// </summary>
+    /// </summary>
+    [DataContract]
 	public class RelationshipLink
 	{
 		/// <summary>
@@ -57,6 +59,7 @@
 		/// or
 		/// AmountLower must be smaller than AmountUpper;value
 		/// </exception>
+        [DataMember]
 		public int AmountLower
 		{
 			get
@@ -85,7 +88,8 @@
 		/// </summary>
 		/// <value>
 		/// The amount upper.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public int? AmountUpper
 		{
 			get
@@ -114,7 +118,8 @@
 		/// </summary>
 		/// <value>
 		/// The thing.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public Thing Thing
 		{
 			get;

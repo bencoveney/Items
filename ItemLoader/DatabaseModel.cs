@@ -97,28 +97,6 @@
 			DatabaseRoutine.LoadRoutines(connectionString);
 		}
 
-		private static void InitialiseImplementationDetailSchemas()
-		{
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlCatalog", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlSchema", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlTable", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlConstraint", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlColumns", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "SqlColumn", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "OrdinalPosition", typeof(int));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "DefaultValue", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "SqlOrdinal", typeof(int));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "SqlMode", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlDataType", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlNumericPrecision", typeof(int));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlNumericPrecisionRadix", typeof(int));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlNumericScale", typeof(int?));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlMaxCharacters", typeof(int));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlCharacterSet", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlCollationName", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlDateTimePrecision", typeof(string));
-		}
-
 		/// <summary>
 		/// Constructs a model from the loaded database objects.
 		/// </summary>
@@ -319,6 +297,31 @@
 
 			return result;
 		}
+
+        /// <summary>
+        /// Initialises the implementation detail schemas.
+        /// </summary>
+        private static void InitialiseImplementationDetailSchemas()
+        {
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlCatalog", typeof(string));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlSchema", typeof(string));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlTable", typeof(string));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlConstraint", typeof(string));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlColumns", typeof(string));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "SqlColumn", typeof(string));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "OrdinalPosition", typeof(int));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "DefaultValue", typeof(string));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "SqlOrdinal", typeof(int));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "SqlMode", typeof(string));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlDataType", typeof(string));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlNumericPrecision", typeof(int));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlNumericPrecisionRadix", typeof(int));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlNumericScale", typeof(int?));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlMaxCharacters", typeof(int));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlCharacterSet", typeof(string));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlCollationName", typeof(string));
+            ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlDateTimePrecision", typeof(string));
+        }
 
 		/// <summary>
 		/// Populates the additional data such as descriptions.

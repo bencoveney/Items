@@ -1,21 +1,18 @@
 ﻿namespace Items
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
 
 	/// <summary>
 	/// An action which is a script execution.
 	/// </summary>
+    [DataContract]
 	public class ScriptAction
 		: IAction
 	{
-		/// <summary>
-		/// The schema of implementation details which are allowed to be put into the implementation details dictionary for this class.
-		/// </summary>
-		private static Dictionary<string, Type> schema = new Dictionary<string, Type>();
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ScriptAction"/> class.
 		/// </summary>
@@ -34,6 +31,7 @@
 		/// <value>
 		/// The name.
 		/// </value>
+        [DataMember]
 		public string Name
 		{
 			get;
@@ -45,7 +43,8 @@
 		/// </summary>
 		/// <value>
 		/// The details.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public ImplementationDetailsDictionary Details
 		{
 			get;
@@ -57,7 +56,8 @@
 		/// </summary>
 		/// <value>
 		/// The name of the script.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public string ScriptName
 		{
 			get;

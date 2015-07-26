@@ -1,13 +1,15 @@
 ﻿namespace Items
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
 
 	/// <summary>
 	/// Defines a type which exists in the system
-	/// </summary>
+    /// </summary>
+    [DataContract]
 	public class SystemTypeBase
 	{
 		/// <summary>
@@ -23,7 +25,8 @@
 		/// </summary>
 		/// <value>
 		/// The details.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public ImplementationDetailsDictionary Details
 		{
 			get;

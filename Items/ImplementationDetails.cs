@@ -24,10 +24,9 @@
 		/// </summary>
 		private Dictionary<string, object> internalDictionary;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ImplementationDetailsDictionary" /> class.
-		/// </summary>
-		/// <param name="schema">The schema.</param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImplementationDetailsDictionary" /> class.
+        /// </summary>
 		public ImplementationDetailsDictionary()
 			: base()
 		{
@@ -216,27 +215,6 @@
 			{
 				throw new ArgumentNullException("key", "key cannot be null or empty");
 			}
-
-			// TODO this schema check needs to go back in. probably will require the Add() method to take a type?
-
-			//// Check the key exists in the schema
-			//Type type;
-			//if (!this.Schema.TryGetValue(key, out type))
-			//{
-			//    throw new KeyNotFoundException("The given key does not exist in this dictionary's schema");
-			//}
-
-			//// De-nullify the type
-			//if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
-			//{
-			//    type = type.GetGenericArguments()[0];
-			//}
-
-			//// Check the type of the object matches the schema's type
-			//if (value != null && value.GetType() != type)
-			//{
-			//    throw new ArgumentException("value does not have the correct type", "value");
-			//}
 
 			this.internalDictionary.Add(key, value);
 		}

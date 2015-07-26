@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
     using System.Text;
 
     /// <summary>
@@ -10,6 +11,7 @@
     /// Unlike items, categories do not have any functionality (not even add/edit/delete)
     /// instances of them are not created
     /// </summary>
+    [DataContract]
     public class Category
         : Thing
     {

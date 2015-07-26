@@ -61,10 +61,6 @@
     <Compile Include="SqlDataReaderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ItemSerialiser\ItemSerialiser.csproj">
-      <Project>{4C98AC6B-4989-49C1-93E3-BD488BF54477}</Project>
-      <Name>ItemSerialiser</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Items\Items.csproj">
       <Project>{A09F7505-DD95-4F3F-A449-BCBAA897FA9D}</Project>
       <Name>Items</Name>

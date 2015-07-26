@@ -2,10 +2,12 @@
 {
 	using System;
 	using System.Collections.ObjectModel;
+    using System.Runtime.Serialization;
 
 	/// <summary>
 	/// This defines some functionality which is either performed on/by an instance of an item, or cohesively grouped with the item
 	/// </summary>
+    [DataContract]
 	public class Behavior
 		: INamedObject
 	{
@@ -25,6 +27,7 @@
 		/// <summary>
 		/// Gets the name of the behavior
 		/// </summary>
+        [DataMember]
 		public string Name
 		{
 			get;
@@ -33,7 +36,8 @@
 
 		/// <summary>
 		/// Gets the list of conditions which determine whether behavior can be performed
-		/// </summary>
+        /// </summary>
+        [DataMember]
 		public Collection<Condition> Conditions
 		{
 			get;
@@ -42,7 +46,8 @@
 
 		/// <summary>
 		/// Gets what the behavior takes as input
-		/// </summary>
+        /// </summary>
+        [DataMember]
 		public Collection<Parameter> Parameters
 		{
 			get;
@@ -51,7 +56,8 @@
 
 		/// <summary>
 		/// Gets the changes the behavior makes to the model, for example creation of an item, or a change to an existing single item, or multiple items, or itself
-		/// </summary>
+        /// </summary>
+        [DataMember]
 		public Collection<Action> Actions
 		{
 			get;

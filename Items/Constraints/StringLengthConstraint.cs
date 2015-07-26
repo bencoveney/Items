@@ -1,9 +1,10 @@
 ﻿namespace Items
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
 
 	/// <summary>
 	/// Lists the types of comparison that can be performed against a string
@@ -34,6 +35,7 @@
 	/// <summary>
 	/// Performs a string comparison against the specified static value
 	/// </summary>
+    [DataContract]
 	public class StringLengthConstraint
 		: IConstraint
 	{
@@ -54,7 +56,7 @@
 		/// </summary>
 		/// <value>
 		/// The not empty.
-		/// </value>
+        /// </value>
 		public static StringLengthConstraint NotEmpty
 		{
 			get
@@ -68,7 +70,8 @@
 		/// </summary>
 		/// <value>
 		/// The value.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public int Value
 		{
 			get;
@@ -80,7 +83,8 @@
 		/// </summary>
 		/// <value>
 		/// The comparison.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public LengthComparison Comparison
 		{
 			get;
@@ -92,7 +96,8 @@
 		/// </summary>
 		/// <value>
 		/// <c>true</c> if this instance is deferrable; otherwise, <c>false</c>.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public bool IsDeferrable
 		{
 			get;

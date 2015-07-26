@@ -1,10 +1,12 @@
 ﻿namespace Items
 {
 	using System.Collections.ObjectModel;
+    using System.Runtime.Serialization;
 
 	/// <summary>
 	/// Dictates what needs to be met in order for something to happen/be allowed to happen
 	/// </summary>
+    [DataContract]
 	public class Condition
 	{
 		/// <summary>
@@ -23,6 +25,7 @@
 		/// <value>
 		/// The name.
 		/// </value>
+        [DataMember]
 		public string Name
 		{
 			get;
@@ -35,7 +38,8 @@
 		/// </summary>
 		/// <value>
 		/// The inputs.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public Collection<object> Inputs
 		{
 			get;

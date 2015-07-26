@@ -81,7 +81,6 @@
 			// Check the relationship/target hasn't already been linked?
 			// Maybe allow an overload where you only specify the relationship? is there any instance where you'd need the target?
 			// What happens when an item is in a relationship with itself? lol
-
 			this.childLinks.Add(relationship, new ModelQueryItemLink(target));
 		}
 

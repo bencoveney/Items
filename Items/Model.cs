@@ -4,10 +4,12 @@
 	using System.Collections.Generic;
 	using System.Globalization;
 	using System.Linq;
+    using System.Runtime.Serialization;
 
 	/// <summary>
 	/// A collection of items and categories
 	/// </summary>
+    [DataContract]
 	public class Model
 	{
 		/// <summary>
@@ -26,6 +28,7 @@
 		/// <value>
 		/// The items.
 		/// </value>
+        [DataMember]
 		public NamedCollection<Item> Items
 		{
 			get;
@@ -37,7 +40,8 @@
 		/// </summary>
 		/// <value>
 		/// The categories.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public NamedCollection<Category> Categories
 		{
 			get;
@@ -49,7 +53,8 @@
 		/// </summary>
 		/// <value>
 		/// The relationships.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public NamedCollection<Relationship> Relationships
 		{
 			get;

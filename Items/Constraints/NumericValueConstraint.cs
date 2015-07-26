@@ -1,9 +1,10 @@
 ﻿namespace Items
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
 
 	/// <summary>
 	/// Lists the type of comparisons that can be performed on a
@@ -61,6 +62,7 @@
 	/// Can be used for bounds checking (for example must be greater than, must be less than)
 	/// </summary>
 	/// <typeparam name="T">The type of numeric value</typeparam>
+    [DataContract]
 	public class NumericValueConstraint<T>
 		: IConstraint
 	{
@@ -80,7 +82,8 @@
 		/// </summary>
 		/// <value>
 		/// The value.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public T Value
 		{
 			get;
@@ -92,19 +95,21 @@
 		/// </summary>
 		/// <value>
 		/// The comparison.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public NumericValueComparison Comparison
 		{
 			get;
 			private set;
 		}
 
-		/// <summary>
-		/// Gets or sets a value indicating whether this constraint only applies to instances when they are committed to the model.
-		/// </summary>
-		/// <value>
-		/// <c>true</c> if this instance is deferrable; otherwise, <c>false</c>.
-		/// </value>
+        /// <summary>
+        /// Gets or sets a value indicating whether this constraint only applies to instances when they are committed to the model.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is deferrable; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
 		public bool IsDeferrable
 		{
 			get;

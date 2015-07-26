@@ -1,14 +1,16 @@
 ﻿namespace Items
 {
-	using System.Collections.ObjectModel;
-	using System.Collections.Generic;
-	using System.Linq;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Runtime.Serialization;
 
 	/// <summary>
 	/// Used to define relations between objects
 	/// e.g. 1 fridge contains many bacons
 	/// TODO is in necessary to make a distinction between aggregation and composition
 	/// </summary>
+    [DataContract]
 	public class Relationship
 		: Thing
 	{
@@ -51,6 +53,7 @@
 		/// <value>
 		/// The links.
 		/// </value>
+        [DataMember]
 		public Collection<RelationshipLink> Links
 		{
 			get

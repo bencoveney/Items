@@ -1,13 +1,15 @@
 ﻿namespace Items
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
 
 	/// <summary>
 	/// A basic "thing". A container of data
 	/// </summary>
+    [DataContract]
 	public abstract class Thing
 		: INamedObject
 	{
@@ -42,6 +44,7 @@
 		/// Gets the name of the item
 		/// ReadOnly?
 		/// </summary>
+        [DataMember]
 		public string Name
 		{
 			get
@@ -66,7 +69,8 @@
 		/// Gets or sets a special case of unique attribute which can be used to identify the item
 		/// Should be in the list of attribute
 		/// should we require an identifier in order to perform lookups?
-		/// </summary>
+        /// </summary>
+        [DataMember]
 		public DataMember StringIdentifier
 		{
 			get
@@ -95,7 +99,8 @@
 		/// </summary>
 		/// <value>
 		/// The description.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public string Description
 		{
 			get;
@@ -106,7 +111,8 @@
 		/// Gets or sets a special case of unique attribute which can be used to identify the item
 		/// Should be in the list of attribute
 		/// should we require an identifier in order to perform lookups?
-		/// </summary>
+        /// </summary>
+        [DataMember]
 		public DataMember IntegerIdentifier
 		{
 			get
@@ -146,7 +152,8 @@
 		/// <summary>
 		/// Gets the data for the instance of the item
 		/// Should be dictionary, with the identifier being a key on the dictionary
-		/// </summary>
+        /// </summary>
+        [DataMember]
 		public NamedCollection<DataMember> Attributes
 		{
 			get;
@@ -158,7 +165,8 @@
 		/// </summary>
 		/// <value>
 		/// The details.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public ImplementationDetailsDictionary Details
 		{
 			get;

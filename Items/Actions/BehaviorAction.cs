@@ -1,13 +1,15 @@
 ﻿namespace Items
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
 
 	/// <summary>
 	/// An action which is a behavior execution.
 	/// </summary>
+    [DataContract]
 	public class BehaviorAction
 		: IAction
 	{
@@ -28,7 +30,8 @@
 		/// </summary>
 		/// <value>
 		/// The name.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public string Name
 		{
 			get;
@@ -40,7 +43,8 @@
 		/// </summary>
 		/// <value>
 		/// The details.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public ImplementationDetailsDictionary Details
 		{
 			get;
@@ -52,7 +56,8 @@
 		/// </summary>
 		/// <value>
 		/// The behavior.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public Behavior Behavior
 		{
 			get;

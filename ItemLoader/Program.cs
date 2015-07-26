@@ -4,7 +4,6 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using Items;
-	using ItemSerialiser;
 
 	/// <summary>
 	/// Launches the program
@@ -33,9 +32,6 @@
 			DatabaseModel.LoadFromDatabase(ConnectionString);
 
 			Model model = DatabaseModel.ConstructModel();
-
-			XmlCreator creator = new XmlCreator(model);
-			string output = creator.TransformText();
 		}
 	}
 }

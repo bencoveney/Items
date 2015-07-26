@@ -1,9 +1,10 @@
 ﻿namespace Items
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
 
 	/// <summary>
 	/// Categorizes whether a value is in a collection
@@ -36,7 +37,8 @@
 	/// Performs a comparison to all other values within an attribute for a given item
 	/// Can be used for unique constraints (not in attribute)
 	/// Can be used for foreign keys (in other item's attribute)
-	/// </summary>
+    /// </summary>
+    [DataContract]
 	public class AttributeConstraint
 		: IConstraint
 	{
@@ -56,7 +58,8 @@
 		/// </summary>
 		/// <value>
 		/// The attribute.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public DataMember Attribute
 		{
 			get;
@@ -68,7 +71,8 @@
 		/// </summary>
 		/// <value>
 		/// The comparison.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public CollectionComparison Comparison
 		{
 			get;
@@ -80,7 +84,8 @@
 		/// </summary>
 		/// <value>
 		/// <c>true</c> if this instance is deferrable; otherwise, <c>false</c>.
-		/// </value>
+        /// </value>
+        [DataMember]
 		public bool IsDeferrable
 		{
 			get;

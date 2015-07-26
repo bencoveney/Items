@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Items;
 using System.IO;
-using ItemSerialiser;
 
 namespace Manual
 {
@@ -23,9 +22,6 @@ namespace Manual
 			Model.AddItem(CreateContainer());
 			Model.AddItem(CreatePerson());
 			Model.AddCategory(CreateContainerCategory());
-
-			File.WriteAllText("Output.xml", new XmlCreator(Model).TransformText());
-			System.Diagnostics.Process.Start("Output.xml");
 		}
 
 		public static Item CreateKitchen()
