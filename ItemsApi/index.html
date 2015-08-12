@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-2.1.4.js" type="text/javascript"></script>
+</head>
+<body>
+    <ul>
+        <li><a href="/things/all">Things: All Things</a></li>
+        <li><a href="/things/items">Things: Only Items</a></li>
+        <li><a href="/api/Items/Item/Foodstuff">Selector: Specific Items</a></li>
+        <li><a href="#" id="post">Selector: Post Selection</a></li>
+    </ul>
+    <script>
+        $('#post').click(function (e) {
+            e.preventDefault();
+            var source = {
+            }
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "/api/Items/Data",
+                data: source,
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (error) {
+                    jsonValue = jQuery.parseJSON(error.responseText);
+                    //jError('An error has occurred while saving the new part source: ' + jsonValue, { TimeShown: 3000 });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

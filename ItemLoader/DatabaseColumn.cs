@@ -247,6 +247,11 @@ ORDER BY
 		/// <returns>The model friendly name of this attribute</returns>
 		public string GetAttributeName()
 		{
+			if (string.Equals(this.Name, this.Table.Name, System.StringComparison.InvariantCultureIgnoreCase))
+			{
+				return "Name";
+			}
+
 			// If this attribute's name begins with the table name, strip it off
 			if (this.Name.IndexOf(this.Table.Name) == 0)
 			{

@@ -1,0 +1,96 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="Items" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+
+namespace GeneratedCode
+{
+	public abstract class ThingBase
+	{
+	}
+
+	public abstract class ItemBase : ThingBase
+	{
+	}
+
+	public abstract class CategoryBase : ThingBase
+	{
+	}
+
+	public abstract class RelationshipBase : ThingBase
+	{
+	}
+
+<# foreach(Items.Item item in items) { #>
+	/// <summary>
+	/// <#= item.Description ?? item.Name #>
+	/// </summary>
+	public partial class <#= item.Name #>: ItemBase
+	{
+<# WriteConstructors(item); #>
+
+<# foreach(DataMember attribute in item.Attributes) { WriteDataMember(attribute); } #>
+	}
+
+<# } #>
+
+<# foreach(Items.Category category in categories) { #>
+	/// <summary>
+	/// <#= category.Description ?? category.Name #>
+	/// </summary>
+	public partial class <#= category.Name #>: CategoryBase
+	{
+<# WriteConstructors(category); #>
+
+<# foreach(DataMember attribute in category.Attributes) { WriteDataMember(attribute); } #>
+	}
+
+<# } #>
+
+<# foreach(Items.Relationship relationship in relationships) { #>
+	/// <summary>
+	/// <#= relationship.Description ?? relationship.Name #>
+	/// </summary>
+	public partial class <#= relationship.Name #>: RelationshipBase
+	{
+<# WriteConstructors(relationship); #>
+
+<# foreach(DataMember attribute in relationship.Attributes) { WriteDataMember(attribute); } #>
+	}
+
+<# } #>
+}
+
+<#+ public void WriteConstructors(Items.Thing thing){
+	if(thing.IntegerIdentifier != null)
+	{
+#>
+		public <#= thing.Name #> (<#= thing.IntegerIdentifier.DataType.Name #> <#= thing.IntegerIdentifier.Name #>) {
+			// TODO: Load from database using id to limit query
+		}
+
+<#+ }
+	if(thing.StringIdentifier != null) {
+#>
+		public <#= thing.Name #> (<#= thing.StringIdentifier.DataType.Name #> <#= thing.StringIdentifier.Name #>) {
+			// TODO: Load from database using name to limit query
+		}
+
+<#+ }
+} #>
+
+<#+ public void WriteDataMember(DataMember dataMember) { #>
+		/// <summary>
+		/// Bello!
+		/// </summary>
+		public <#= dataMember.DataType.Name #> <#= dataMember.Name #>
+		{
+			get;
+			set;
+		}
+
+<#+ } #>
