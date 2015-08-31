@@ -2,12 +2,12 @@
 {
 	using System;
 	using System.Globalization;
-    using System.Runtime.Serialization;
+	using System.Runtime.Serialization;
 
 	/// <summary>
 	/// Used by a relationship to indicate what thing (and the quantity of those things) is being related 
-    /// </summary>
-    [DataContract]
+	/// </summary>
+	[DataContract]
 	public class RelationshipLink
 	{
 		/// <summary>
@@ -25,7 +25,7 @@
 		/// </summary>
 		/// <param name="thing">The thing.</param>
 		/// <param name="amountLower">The the lowest amount of things which can be encompassed by this link (can't be negative).</param>
-		public RelationshipLink(Thing thing, int amountLower)
+		public RelationshipLink(IThing thing, int amountLower)
 			: this(thing, amountLower, null)
 		{
 		}
@@ -36,7 +36,7 @@
 		/// <param name="thing">The thing.</param>
 		/// <param name="amountLower">The lowest amount of things which can be encompassed by this link (can't be negative).</param>
 		/// <param name="amountUpper">The upper amount of things which can be encompassed by this link (can't be negative).</param>
-		public RelationshipLink(Thing thing, int amountLower, int? amountUpper)
+		public RelationshipLink(IThing thing, int amountLower, int? amountUpper)
 		{
 			if (thing == null)
 			{
@@ -59,7 +59,7 @@
 		/// or
 		/// AmountLower must be smaller than AmountUpper;value
 		/// </exception>
-        [DataMember]
+		[DataMember]
 		public int AmountLower
 		{
 			get
@@ -88,8 +88,8 @@
 		/// </summary>
 		/// <value>
 		/// The amount upper.
-        /// </value>
-        [DataMember]
+		/// </value>
+		[DataMember]
 		public int? AmountUpper
 		{
 			get
@@ -118,9 +118,9 @@
 		/// </summary>
 		/// <value>
 		/// The thing.
-        /// </value>
-        [DataMember]
-		public Thing Thing
+		/// </value>
+		[DataMember]
+		public IThing Thing
 		{
 			get;
 			private set;

@@ -17,7 +17,7 @@ namespace ItemsTests
 		[TestMethod()]
 		public void RelationshipLinkConstructorTestOnlyLower()
 		{
-			Thing thing = new Item("Test");
+			IThing thing = new Item("Test");
 			RelationshipLink relationshipLink = new RelationshipLink(thing, 53);
 
 			Assert.AreEqual(thing, relationshipLink.Thing);
@@ -31,7 +31,7 @@ namespace ItemsTests
 		[TestMethod()]
 		public void RelationshipLinkConstructorTestLowerAndUpper()
 		{
-			Thing thing = new Item("Test");
+			IThing thing = new Item("Test");
 			RelationshipLink relationshipLink = new RelationshipLink(thing, 62, 65);
 
 			Assert.AreEqual(thing, relationshipLink.Thing);
@@ -46,7 +46,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentException))]
 		public void RelationshipLinkConstructorTestLowerNegative()
 		{
-			Thing thing = new Item("Test");
+			IThing thing = new Item("Test");
 			RelationshipLink relationshipLink = new RelationshipLink(thing, -1);
 		}
 
@@ -57,7 +57,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentException))]
 		public void RelationshipLinkConstructorTestUpperNegative()
 		{
-			Thing thing = new Item("Test");
+			IThing thing = new Item("Test");
 			RelationshipLink relationshipLink = new RelationshipLink(thing, 5, -1);
 		}
 
@@ -68,7 +68,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void RelationshipLinkConstructorTestNullThing()
 		{
-			Thing thing = null;
+			IThing thing = null;
 			RelationshipLink relationshipLink = new RelationshipLink(thing, 80);
 		}
 
@@ -79,7 +79,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentException))]
 		public void RelationshipLinkConstructorUnordered()
 		{
-			Thing thing = new Item("Test");
+			IThing thing = new Item("Test");
 			RelationshipLink relationshipLink = new RelationshipLink(thing, 100, 78);
 		}
 
@@ -89,7 +89,7 @@ namespace ItemsTests
 		[TestMethod()]
 		public void ToStringTest()
 		{
-			Thing thing = new Item("Test Thing");
+			IThing thing = new Item("Test Thing");
 
 			RelationshipLink relationshipLink1 = new RelationshipLink(thing, 54);
 			Assert.AreEqual("Test Thing (54 - *)", relationshipLink1.ToString());
@@ -107,7 +107,7 @@ namespace ItemsTests
 		[TestMethod()]
 		public void AmountLowerTest()
 		{
-			Thing thing = new Item("Test");
+			IThing thing = new Item("Test");
 			RelationshipLink relationshipLink = new RelationshipLink(thing, 51);
 			Assert.AreEqual(51, relationshipLink.AmountLower);
 		}
@@ -119,7 +119,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentException))]
 		public void AmountLowerTestUnordered()
 		{
-			Thing thing = new Item("Test");
+			IThing thing = new Item("Test");
 			RelationshipLink_Accessor relationshipLink = new RelationshipLink_Accessor(thing, 40, 50);
 			relationshipLink.AmountLower = 60;
 		}
@@ -130,7 +130,7 @@ namespace ItemsTests
 		[TestMethod()]
 		public void AmountUpperTest()
 		{
-			Thing thing = new Item("Test");
+			IThing thing = new Item("Test");
 			RelationshipLink relationshipLink = new RelationshipLink(thing, 50, 56);
 			Assert.AreEqual(56, relationshipLink.AmountUpper);
 		}
@@ -141,7 +141,7 @@ namespace ItemsTests
 		[TestMethod()]
 		public void ThingTest()
 		{
-			Thing thing = new Item("Test");
+			IThing thing = new Item("Test");
 			RelationshipLink relationshipLink = new RelationshipLink(thing, 48);
 			Assert.AreEqual(thing, relationshipLink.Thing);
 		}

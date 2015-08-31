@@ -11,7 +11,7 @@
 	/// </summary>
 	[DataContract]
 	public abstract class Thing
-		: INamedObject
+		: IThing
 	{
 		/// <summary>
 		/// The backing variable for the string identifier
@@ -33,11 +33,10 @@
 		/// Creates the item
 		/// </summary>
 		/// <param name="name">The name.</param>
-		protected Thing(string name)
+		internal protected Thing(string name)
 		{
 			this.Name = name;
 			this.Attributes = new NamedCollection<DataMember>();
-			this.Details = new ImplementationDetailsDictionary();
 		}
 
 		/// <summary>
@@ -95,19 +94,6 @@
 		}
 
 		/// <summary>
-		/// Gets or sets the description.
-		/// </summary>
-		/// <value>
-		/// The description.
-		/// </value>
-		[DataMember]
-		public string Description
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
 		/// Gets or sets a special case of unique attribute which can be used to identify the item
 		/// Should be in the list of attribute
 		/// should we require an identifier in order to perform lookups?
@@ -150,24 +136,24 @@
 		}
 
 		/// <summary>
+		/// Gets or sets the description.
+		/// </summary>
+		/// <value>
+		/// The description.
+		/// </value>
+		[DataMember]
+		public string Description
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Gets the data for the instance of the item
 		/// Should be dictionary, with the identifier being a key on the dictionary
 		/// </summary>
 		[DataMember]
 		public NamedCollection<DataMember> Attributes
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// Gets the implementation specific details attached to the type
-		/// </summary>
-		/// <value>
-		/// The details.
-		/// </value>
-		[DataMember]
-		public ImplementationDetailsDictionary Details
 		{
 			get;
 			private set;
@@ -188,5 +174,60 @@
 
 			return model.Relationships.Where(relationship => relationship.Links.Any(link => link.Thing == this));
 		}
+	}
+
+	public interface IThing
+		: INamedObject
+	{
+		/// <summary>
+		/// Gets or sets a special case of unique attribute which can be used to identify the item
+		/// Should be in the list of attribute
+		/// should we require an identifier in order to perform lookups?
+		/// </summary>
+		DataMember StringIdentifier
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets a special case of unique attribute which can be used to identify the item
+		/// Should be in the list of attribute
+		/// should we require an identifier in order to perform lookups?
+		/// </summary>
+		DataMember IntegerIdentifier
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the description.
+		/// </summary>
+		/// <value>
+		/// The description.
+		/// </value>
+		string Description
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets the data for the instance of the item
+		/// Should be dictionary, with the identifier being a key on the dictionary
+		/// </summary>
+		NamedCollection<DataMember> Attributes
+		{
+			get;
+		}
+
+		/// <summary>
+		/// Gets the relationships which reference this thing.
+		/// </summary>
+		/// <param name="model">The model.</param>
+		/// <returns>A collection of relationships which reference this thing.</returns>
+		/// <exception cref="ArgumentNullException">model;model can not be null</exception>
+		IEnumerable<Relationship> GetReferenceRelationships(Model model);
 	}
 }

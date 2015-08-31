@@ -65,7 +65,7 @@ namespace GeneratedCode
 <# } #>
 }
 
-<#+ public void WriteConstructors(Items.Thing thing){
+<#+ public void WriteConstructors(Items.IThing thing){
 	if(thing.IntegerIdentifier != null)
 	{
 #>

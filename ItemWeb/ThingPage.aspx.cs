@@ -5,12 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Items;
+using ItemLoader;
 
 namespace ItemWeb
 {
 	public partial class ThingPage : System.Web.UI.Page
 	{
-		public Thing Thing
+		public IDbiThing Thing
 		{
 			get;
 			set;
@@ -29,7 +30,7 @@ namespace ItemWeb
 				ThingType = RouteData.Values["ThingType"].ToString();
 				string thingName = RouteData.Values["ThingName"].ToString();
 
-				Thing = Global.Model.Things.Single(modelThing => modelThing.Name == thingName);
+				Thing = Global.Model.Things.Single(modelThing => modelThing.Name == thingName) as IDbiThing;
 
 				if (Thing.GetType().ToString() != "Items." + ThingType)
 				{
@@ -54,11 +55,11 @@ namespace ItemWeb
 			}
 		}
 
-		protected void WriteType(IType type)
+		protected void WriteType(IDbiType type)
 		{
 			Type typeType = type.GetType();
 
-			if (typeType.IsGenericType && typeType.GetGenericTypeDefinition() == typeof(SystemType<>))
+			if (typeType.IsGenericType && typeType.GetGenericTypeDefinition() == typeof(DbiSystemType<>))
 			{
 				String pureDefinition = String.Format("The attribute stores <strong>{0}</strong> data.", typeType.GetGenericArguments()[0].Name);
 				Response.Write(pureDefinition);
@@ -264,70 +265,72 @@ namespace ItemWeb
 			}
 		}
 
-		protected void WriteSqlDetails(DataMember attribute)
+		protected void WriteSqlDetails(DbiDataMember attribute)
 		{
 			// TODO make these tabular, read them sensibly instead of all these ifs with the same content
 
-			if(attribute.Details.ContainsKey("SqlColumn"))
+			IDbiType dbiType = attribute.DataType as IDbiType;
+
+			if(!string.IsNullOrEmpty(attribute.SqlColumn))
 			{
 				Response.Write("<li>The column name is ");
-				Response.Write(attribute.Details["SqlColumn"]);
+				Response.Write(attribute.SqlColumn);
 				Response.Write(".</li>");
 			}
 
-			if(attribute.DataType.Details.ContainsKey("SqlDataType"))
+			if (string.IsNullOrEmpty(dbiType.SqlDataType))
 			{
 				Response.Write("<li>The data type is ");
-				Response.Write(attribute.DataType.Details["SqlDataType"]);
+				Response.Write(dbiType.SqlDataType);
 				Response.Write(".</li>");
 			}
 
-			if (attribute.DataType.Details.ContainsKey("SqlNumericPrecision"))
+			if (dbiType.SqlNumericPrecision.HasValue)
 			{
 				Response.Write("<li>The numeric precision is ");
-				Response.Write(attribute.DataType.Details["SqlNumericPrecision"]);
+				Response.Write(dbiType.SqlNumericPrecision.Value);
 				Response.Write(".</li>");
 			}
 
-			if (attribute.DataType.Details.ContainsKey("SqlNumericPrecisionRadix"))
+			if (dbiType.SqlNumericPrecisionRadix.HasValue)
 			{
 				Response.Write("<li>The numeric precision radix is ");
-				Response.Write(attribute.DataType.Details["SqlNumericPrecisionRadix"]);
+				Response.Write(dbiType.SqlNumericPrecisionRadix.Value);
 				Response.Write(".</li>");
 			}
 
-			if (attribute.DataType.Details.ContainsKey("SqlNumericScale"))
+			if (dbiType.SqlNumericScale.HasValue)
 			{
 				Response.Write("<li>The numeric scale is ");
-				Response.Write(attribute.DataType.Details["SqlNumericScale"]);
+				Response.Write(dbiType.SqlNumericScale.Value);
 				Response.Write(".</li>");
 			}
 
-			if (attribute.DataType.Details.ContainsKey("SqlDateTimePrecision"))
+			if (dbiType.SqlDateTimePrecision.HasValue)
 			{
 				Response.Write("<li>The date time precision is ");
-				Response.Write(attribute.DataType.Details["SqlDateTimePrecision"]);
+				Response.Write(dbiType.SqlDateTimePrecision.Value);
 				Response.Write(".</li>");
 			}
 
-			if (attribute.DataType.Details.ContainsKey("SqlMaxCharacters"))
+			if (dbiType.SqlMaxCharacters.HasValue)
 			{
 				Response.Write("<li>The maximum number of characters is ");
-				Response.Write(attribute.DataType.Details["SqlMaxCharacters"]);
+				Response.Write(dbiType.SqlMaxCharacters.Value);
 				Response.Write(".</li>");
 			}
 
-			if (attribute.DataType.Details.ContainsKey("SqlCharacterSet"))
+			if (!string.IsNullOrEmpty(dbiType.SqlCharacterSet))
 			{
 				Response.Write("<li>The character set is ");
-				Response.Write(attribute.DataType.Details["SqlCharacterSet"]);
+				Response.Write(dbiType.SqlCharacterSet);
 				Response.Write(".</li>");
 			}
 
-			if (attribute.DataType.Details.ContainsKey("SqlCollationName"))
+			if (!string.IsNullOrEmpty(dbiType.SqlCollationName))
 			{
 				Response.Write("<li>The collation name is ");
-				Response.Write(attribute.DataType.Details["SqlCollationName"]);
+				Response.Write(dbiType.SqlCollationName);
 				Response.Write(".</li>");
 			}
 		}
@@ -345,7 +348,7 @@ namespace ItemWeb
 			}
 		}
 
-		protected void WriteAttribute(DataMember attribute, bool isIdentifier)
+		protected void WriteAttribute(DbiDataMember attribute, bool isIdentifier)
 		{
 			Response.Write("<div class=\"col-sm-6\">");
 			if (isIdentifier)
@@ -372,7 +375,7 @@ namespace ItemWeb
 			Response.Write("<li class=\"list-group-item\">");
 			Response.Write("<h5 class=\"list-group-item-heading\">Data Type</h5>");
 			Response.Write("<p class=\"list-group-item-text\">");
-			WriteType(attribute.DataType);
+			WriteType(attribute.DataType as IDbiType);
 			Response.Write("</p>");
 			Response.Write("</li>");
 
@@ -393,15 +396,14 @@ namespace ItemWeb
 				Response.Write("</li>");
 			}
 
-			if (attribute.DataType.Details.ContainsKey("SqlDataType") || attribute.Details.ContainsKey("SqlColumn"))
-			{
-				Response.Write("<li class=\"list-group-item\">");
-				Response.Write("<h5 class=\"list-group-item-heading\">Sql Details</h5>");
-				Response.Write("<ul class=\"list-group-item-text\">");
-				WriteSqlDetails(attribute);
-				Response.Write("</ul>");
-				Response.Write("</li>");
-			}
+			IDbiType dbiType = attribute.DataType as IDbiType;
+
+			Response.Write("<li class=\"list-group-item\">");
+			Response.Write("<h5 class=\"list-group-item-heading\">Sql Details</h5>");
+			Response.Write("<ul class=\"list-group-item-text\">");
+			WriteSqlDetails(attribute as DbiDataMember);
+			Response.Write("</ul>");
+			Response.Write("</li>");
 
 			Response.Write("</ul>");
 
@@ -409,7 +411,7 @@ namespace ItemWeb
 			Response.Write("</div>");
 		}
 
-		protected void WriteRelationship(Relationship relationship)
+		protected void WriteRelationship(DbiRelationship relationship)
 		{
 			Response.Write("<div class=\"col-sm-6\">");
 			Response.Write("<div class=\"panel panel-default\">");
@@ -427,7 +429,7 @@ namespace ItemWeb
 
 			Response.Write("<div class=\"col-sm-5 text-left\">");
 			Response.Write("<p>");
-			WriteThingLink(relationship.LeftLink.Thing);
+			WriteThingLink(relationship.LeftLink.Thing as IDbiThing);
 			Response.Write(relationship.LeftLink);
 			Response.Write("</a>");
 			Response.Write("</p>");
@@ -439,7 +441,7 @@ namespace ItemWeb
 
 			Response.Write("<div class=\"col-sm-5 text-right\">");
 			Response.Write("<p>");
-			WriteThingLink(relationship.RightLink.Thing);
+			WriteThingLink(relationship.RightLink.Thing as IDbiThing);
 			Response.Write(relationship.RightLink);
 			Response.Write("</a>");
 			Response.Write("</p>");
@@ -447,27 +449,24 @@ namespace ItemWeb
 
 			Response.Write("</div>");
 
-			if(relationship.Details.ContainsKey("SqlCatalog") && relationship.Details.ContainsKey("SqlSchema") && relationship.Details.ContainsKey("SqlTable"))
+			Response.Write("<div class=\"row\">");
+			Response.Write("<div class=\"col-sm-12\">");
+
+			Response.Write("Represented by ");
+			Response.Write(relationship.SqlCatalog);
+			Response.Write(" ");
+			Response.Write(relationship.SqlSchema);
+			Response.Write(" ");
+			Response.Write(relationship.SqlTable);
+
+			if(!string.IsNullOrEmpty(relationship.SqlConstraint))
 			{
-				Response.Write("<div class=\"row\">");
-				Response.Write("<div class=\"col-sm-12\">");
-
-				Response.Write("Represented by ");
-				Response.Write(relationship.Details["SqlCatalog"]);
 				Response.Write(" ");
-				Response.Write(relationship.Details["SqlSchema"]);
-				Response.Write(" ");
-				Response.Write(relationship.Details["SqlTable"]);
-
-				if(relationship.Details.ContainsKey("SqlConstraint"))
-				{
-					Response.Write(" ");
-					Response.Write(relationship.Details["SqlConstraint"]);
-				}
-
-				Response.Write("</div>");
-				Response.Write("</div>");
+				Response.Write(relationship.SqlConstraint);
 			}
+
+			Response.Write("</div>");
+			Response.Write("</div>");
 
 			Response.Write("</div>");
 
@@ -475,7 +474,7 @@ namespace ItemWeb
 			Response.Write("</div>");
 		}
 
-		protected void WriteThingLink(Thing thing)
+		protected void WriteThingLink(IDbiThing thing)
 		{
 			Response.Write("<a href=\"../");
 			Response.Write(thing.GetType().Name);
@@ -491,22 +490,22 @@ namespace ItemWeb
 			Response.Write(" is represented by the database schema object ");
 			Response.Write(" represents the dbo ");
 
-			Response.Write(this.Thing.Details["SqlCatalog"]);
+			Response.Write(this.Thing.SqlCatalog);
 
 			Response.Write(".");
-			Response.Write(this.Thing.Details["SqlSchema"]);
+			Response.Write(this.Thing.SqlSchema);
 
 			Response.Write(".");
-			Response.Write(this.Thing.Details["SqlTable"]);
+			Response.Write(this.Thing.SqlTable);
 
-			if(this.Thing.Details.ContainsKey("SqlConstraint"))
+			if(string.IsNullOrEmpty(this.Thing.SqlConstraint))
 			{
 				Response.Write(".");
-				Response.Write(this.Thing.Details["SqlConstraint"]);
+				Response.Write(this.Thing.SqlConstraint);
 			}
 		}
 
-		protected void WriteBehaviors(Thing thing)
+		protected void WriteBehaviors(IDbiThing thing)
 		{
 			Item item = thing as Item;
 
@@ -524,7 +523,7 @@ namespace ItemWeb
 			}
 		}
 
-		protected void WriteAttributes(Thing thing)
+		protected void WriteAttributes(IDbiThing thing)
 		{
 			Item item = thing as Item;
 
@@ -535,14 +534,14 @@ namespace ItemWeb
 				Response.Write("<div class=\"row\">");
 				foreach (DataMember attribute in this.Thing.Attributes)
 				{
-					WriteAttribute(attribute, this.Thing.IntegerIdentifier == attribute || this.Thing.StringIdentifier == attribute);
+					WriteAttribute(attribute as DbiDataMember, this.Thing.IntegerIdentifier == attribute || this.Thing.StringIdentifier == attribute);
 				}
 				Response.Write("</div>");
 				Response.Write("</div>");
 			}
 		}
 
-		protected void WriteRelationships(Thing thing)
+		protected void WriteRelationships(IDbiThing thing)
 		{
 			Item item = thing as Item;
 
@@ -553,7 +552,7 @@ namespace ItemWeb
 				Response.Write("<div class=\"row\">");
 				foreach (Relationship relationship in this.Thing.GetReferenceRelationships(Global.Model))
 				{
-					WriteRelationship(relationship);
+					WriteRelationship(relationship as DbiRelationship);
 				}
 				Response.Write("</div>");
 				Response.Write("</div>");
@@ -584,23 +583,23 @@ namespace ItemWeb
 			Response.Write("<thead>");
 
 			Response.Write("<tbody>");
-			foreach (Items.Parameter parameter in behavior.Parameters)
+			foreach (DbiParameter parameter in behavior.Parameters.OfType<DbiParameter>())
 			{
 				Response.Write("<tr>");
 				Response.Write("<td>");
-				Response.Write(parameter.Details["SqlOrdinal"]);
+				Response.Write(parameter.SqlOrdinal);
 				Response.Write("</td>");
 				Response.Write("<td>");
 				Response.Write(parameter.Name);
 				Response.Write("</td>");
 				Response.Write("<td>");
-				Response.Write(parameter.Details["SqlMode"]);
+				Response.Write(parameter.SqlMode);
 				Response.Write("</td>");
 				Response.Write("<td>");
-				WriteParameterType(parameter.DataType);
+				WriteParameterType(parameter.DataType as IDbiType);
 				Response.Write("</td>");
 				Response.Write("<td class=\"text-uppercase\">");
-				Response.Write(parameter.DataType.Details["SqlDataType"]);
+				Response.Write((parameter.DataType as IDbiType).SqlDataType);
 				Response.Write("</td>");
 				Response.Write("</tr>");
 			}
@@ -612,14 +611,14 @@ namespace ItemWeb
 			Response.Write("</div>");
 		}
 
-		protected void WriteRelationshipSides(Thing thing)
+		protected void WriteRelationshipSides(IDbiThing thing)
 		{
-			if (thing.GetType() != typeof(Relationship))
+			if (thing.GetType() != typeof(DbiRelationship))
 			{
 				return;
 			}
 
-			Relationship relationship = (Relationship)thing;
+			DbiRelationship relationship = (DbiRelationship)thing;
 
 			Response.Write("<div class=\"section\">");
 			Response.Write("<div class=\"row\">");
@@ -656,7 +655,7 @@ namespace ItemWeb
 			Response.Write("</div>");
 		}
 
-		protected void WriteParameterType(IType type)
+		protected void WriteParameterType(IDbiType type)
 		{
 			Type typeType = type.GetType();
 

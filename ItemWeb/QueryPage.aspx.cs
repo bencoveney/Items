@@ -8,6 +8,7 @@ using Items;
 using System.Data.SqlClient;
 using ItemSelector;
 using System.Configuration;
+using ItemLoader;
 
 namespace ItemWeb
 {
@@ -15,7 +16,7 @@ namespace ItemWeb
 	{
 		public SqlDataReader reader;
 
-		public Thing Thing
+		public IThing Thing
 		{
 			get;
 			set;
@@ -69,9 +70,9 @@ namespace ItemWeb
 
 		public void ProduceTable()
 		{
-			ModelQuery query = new ModelQuery(Thing as Item);
+			ModelQuery query = new ModelQuery(Thing as DbiItem);
 
-			foreach (Relationship relationship in Relationships)
+			foreach (DbiRelationship relationship in Relationships)
 			{
 				query.JoinThroughRelationship(relationship);
 			}

@@ -1,15 +1,15 @@
 ﻿namespace Items
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.Serialization;
-    using System.Text;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Runtime.Serialization;
+	using System.Text;
 
 	/// <summary>
 	/// An attribute
 	/// </summary>
-    [DataContract]
+	[DataContract]
 	public class DataMember
 		: DataDefinition
 	{

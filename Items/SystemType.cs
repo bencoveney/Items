@@ -1,16 +1,16 @@
 ﻿namespace Items
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.Serialization;
-    using System.Text;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Runtime.Serialization;
+	using System.Text;
 
 	/// <summary>
 	/// Defines a type which exists in the system
 	/// </summary>
 	/// <typeparam name="T">The system type</typeparam>
-    [DataContract]
+	[DataContract]
 	public class SystemType<T>
 		: SystemTypeBase, IType
 	{
@@ -25,7 +25,7 @@
 		/// <summary>
 		/// Gets system type
 		/// </summary>
-        [DataMember]
+		[DataMember]
 		public Type DataType
 		{
 			get
@@ -37,7 +37,7 @@
 		/// <summary>
 		/// Gets the type's name through reflection
 		/// </summary>
-        [DataMember]
+		[DataMember]
 		public string Name
 		{
 			get

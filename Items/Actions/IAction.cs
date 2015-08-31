@@ -19,13 +19,5 @@
 		/// The name.
 		/// </value>
 		string Name { get; }
-
-		/// <summary>
-		/// Gets the implementation specific details.
-		/// </summary>
-		/// <value>
-		/// The details.
-		/// </value>
-		ImplementationDetailsDictionary Details { get; }
 	}
 }

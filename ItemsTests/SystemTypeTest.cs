@@ -18,7 +18,6 @@ namespace ItemsTests
 		public void SystemTypeConstructorTest()
 		{
 			SystemType<Int32> target = new SystemType<Int32>();
-			Assert.IsNotNull(target.Details);
 		}
 
 		/// <summary>
@@ -29,17 +28,6 @@ namespace ItemsTests
 		{
 			SystemType<Int32> target = new SystemType<Int32>(); // TODO: Initialize to an appropriate value
 			Assert.AreEqual(typeof(Int32), target.DataType);
-		}
-
-		/// <summary>
-		/// A test for Details
-		/// </summary>
-		[TestMethod()]
-		public void DetailsTest()
-		{
-			SystemType<Int32> target = new SystemType<Int32>();
-			target.Details.Add("Test", 5);
-			Assert.AreEqual(5, target.Details["Test"]);
 		}
 
 		/// <summary>

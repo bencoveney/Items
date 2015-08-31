@@ -13,9 +13,9 @@ namespace ItemsTests
 	[TestClass()]
 	public class ThingTest
 	{
-		internal IEnumerable<Thing> CreateThings()
+		internal IEnumerable<IThing> CreateThings()
 		{
-			List<Thing> things = new List<Thing>();
+			List<IThing> things = new List<IThing>();
 			things.Add(new Item("Test Item"));
 			things.Add(new Relationship("Test Relationship", new Item("Left"), new Item("Right")));
 			things.Add(new Category("Test Category"));
@@ -28,11 +28,11 @@ namespace ItemsTests
 		[TestMethod()]
 		public void GetReferenceRelationshipsTest()
 		{
-			Thing target = new Item("Referenced");
+			IThing target = new Item("Referenced");
 
 			// Build a model containing relationships which reference the target
 			Model model = new Model();
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				model.AddThing(thing);
 				model.AddRelationship(new Relationship("Test Relationship " + model.Relationships.Count, target, thing));
@@ -56,7 +56,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void GetReferenceRelationshipsTestNullModel()
 		{
-			Thing target = new Item("Referenced");
+			IThing target = new Item("Referenced");
 			target.GetReferenceRelationships(null);
 		}
 
@@ -67,7 +67,7 @@ namespace ItemsTests
 		[DeploymentItem("Items.dll")]
 		public void AttributesTest()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				Assert.IsNotNull(thing.Attributes);
 			}
@@ -80,7 +80,7 @@ namespace ItemsTests
 		[DeploymentItem("Items.dll")]
 		public void AttributesAddTest()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				DataMember dataMember = new DataMember("DataMember", new SystemType<Int16>(), NullConstraints.None);
 				thing.Attributes.Add(dataMember);
@@ -96,7 +96,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentException))]
 		public void AttributesAddDuplicateTest()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				DataMember dataMember1 = new DataMember("DataMember", new SystemType<Int16>(), NullConstraints.None);
 				DataMember dataMember2 = new DataMember("DataMember", new SystemType<Int16>(), NullConstraints.None);
@@ -111,52 +111,10 @@ namespace ItemsTests
 		[TestMethod()]
 		public void DescriptionTest()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				thing.Description = "Test Description";
 				Assert.AreEqual(thing.Description, "Test Description");
-			}
-		}
-
-		/// <summary>
-		/// A test for Details
-		/// </summary>
-		[TestMethod()]
-		[DeploymentItem("Items.dll")]
-		public void DetailsTest()
-		{
-			foreach (Thing thing in CreateThings())
-			{
-				Assert.IsNotNull(thing.Details);
-			}
-		}
-
-		/// <summary>
-		/// A test for Details
-		/// </summary>
-		[TestMethod()]
-		[DeploymentItem("Items.dll")]
-		public void DetailsAddTest()
-		{
-			foreach (Thing thing in CreateThings())
-			{
-				thing.Details.Add("Test", 1);
-				Assert.AreEqual(thing.Details["Test"], 1);
-			}
-		}
-
-		/// <summary>
-		/// A test for Details
-		/// </summary>
-		[TestMethod()]
-		[DeploymentItem("Items.dll")]
-		[ExpectedException(typeof(ArgumentException))]
-		public void DetailsAddDuplicateTest()
-		{
-			foreach (Thing thing in CreateThings())
-			{
-				thing.Details.Add("Test", 1);
-				thing.Details.Add("Test", 2);
 			}
 		}
 
@@ -166,7 +124,7 @@ namespace ItemsTests
 		[TestMethod()]
 		public void IntegerIdentifierTest()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				DataMember dataMember = new DataMember("Integer Identifier", new SystemType<Int32>(), NullConstraints.None);
 				thing.IntegerIdentifier = dataMember;
@@ -181,7 +139,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void IntegerIdentifierNullTest()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				thing.IntegerIdentifier = null;
 			}
@@ -194,7 +152,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentException))]
 		public void IntegerIdentifierNullable()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				thing.IntegerIdentifier = new DataMember("Test Member", new SystemType<int>(), NullConstraints.EmptyOrNotApplicable);
 			}
@@ -207,7 +165,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentException))]
 		public void IntegerIdentifierWrongTypeTest()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				DataMember dataMember = new DataMember("Integer Identifier", new SystemType<string>(), NullConstraints.None);
 				thing.IntegerIdentifier = dataMember;
@@ -221,7 +179,7 @@ namespace ItemsTests
 		[TestMethod()]
 		public void NameTest()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				Assert.AreEqual(thing.Name.IndexOf("Test"), 0);
 			}
@@ -243,7 +201,7 @@ namespace ItemsTests
 		[TestMethod()]
 		public void StringIdentifierTest()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				DataMember dataMember = new DataMember("String Identifier", new SystemType<string>(), NullConstraints.None);
 				thing.StringIdentifier = dataMember;
@@ -258,7 +216,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void StringIdentifierNullTest()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				thing.StringIdentifier = null;
 			}
@@ -271,7 +229,7 @@ namespace ItemsTests
 		[ExpectedException(typeof(ArgumentException))]
 		public void StringIdentifierWrongTypeTest()
 		{
-			foreach (Thing thing in CreateThings())
+			foreach (IThing thing in CreateThings())
 			{
 				DataMember dataMember = new DataMember("String Identifier", new SystemType<Int32>(), NullConstraints.None);
 				thing.StringIdentifier = dataMember;

@@ -90,7 +90,6 @@
 		/// <param name="connectionString">The connection string.</param>
 		public static void LoadFromDatabase(string connectionString)
 		{
-			InitialiseImplementationDetailSchemas();
 
 			// Load the database objects
 			DatabaseTable.LoadTables(connectionString);
@@ -108,22 +107,12 @@
 			// Populate base items
 			foreach (DatabaseTable table in Tables.Where(table => table.RepresentsItem))
 			{
-				Item item = new Item(table.Name);
-
-				// Add additional details
-				item.Details.Add("SqlCatalog", table.Catalog);
-				item.Details.Add("SqlSchema", table.Schema);
-				item.Details.Add("SqlTable", table.Name);
+				DbiItem item = new DbiItem(table.Name, table.Catalog, table.Schema, table.Name);
 
 				// Add columns (which aren't relationships)
 				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer))
 				{
-					DataMember dataAttribute = new DataMember(column.GetAttributeName(), column.Type.GetSystemType(), column.GetNullability());
-
-					// Populate implementation details
-					dataAttribute.Details.Add("SqlColumn", column.Name);
-					dataAttribute.Details.Add("OrdinalPosition", column.OrdinalPosition);
-					dataAttribute.Details.Add("DefaultValue", column.ColumnDefault);
+					DbiDataMember dataAttribute = new DbiDataMember(column.GetAttributeName(), column.Type.GetSystemType(), column.GetNullability(), column.Name, column.OrdinalPosition, column.ColumnDefault);
 
 					// Populate constraints which can be inferred from the type
 					foreach (IConstraint constraint in column.Type.GetConstraints())
@@ -162,22 +151,12 @@
 			// Populate categories
 			foreach (DatabaseTable table in Tables.Where(table => table.RepresentsCategory))
 			{
-				Category category = new Category(table.Name);
-
-				// Add additional details
-				category.Details.Add("SqlCatalog", table.Catalog);
-				category.Details.Add("SqlSchema", table.Schema);
-				category.Details.Add("SqlTable", table.Name);
+				DbiCategory category = new DbiCategory(table.Name, table.Catalog, table.Schema, table.Name);
 
 				// Add columns (which aren't relationships)
 				foreach (DatabaseColumn column in table.Columns.Where(dbColumn => !dbColumn.IsReferencer && !dbColumn.IsReferenced))
 				{
-					DataMember dataAttribute = new DataMember(column.GetAttributeName(), column.Type.GetSystemType(), column.GetNullability());
-
-					// Populate implementation details
-					dataAttribute.Details.Add("SqlColumn", column.Name);
-					dataAttribute.Details.Add("OrdinalPosition", column.OrdinalPosition);
-					dataAttribute.Details.Add("DefaultValue", column.ColumnDefault);
+					DbiDataMember dataAttribute = new DbiDataMember(column.GetAttributeName(), column.Type.GetSystemType(), column.GetNullability(), column.Name, column.OrdinalPosition, column.ColumnDefault);
 
 					// Populate constraints which can be inferred from the type
 					foreach (IConstraint constraint in column.Type.GetConstraints())
@@ -198,17 +177,12 @@
 				IEnumerable<DatabaseColumn> columnsWithForeignKeys = table.Columns.Where(column => column.IsReferencer);
 
 				DatabaseColumn leftColumn = columnsWithForeignKeys.OrderBy(column => column.OrdinalPosition).ToList()[0];
-				Thing leftThing = result.Things.Single(thing => leftColumn.ReferencedColumn.Table.IsThingMatch(thing));
+				IDbiThing leftThing = result.Things.OfType<IDbiThing>().Single(thing => leftColumn.ReferencedColumn.Table.IsThingMatch(thing));
 
 				DatabaseColumn rightColumn = columnsWithForeignKeys.OrderBy(column => column.OrdinalPosition).ToList()[1];
-				Thing rightThing = result.Things.Single(thing => rightColumn.ReferencedColumn.Table.IsThingMatch(thing));
+				IDbiThing rightThing = result.Things.OfType<IDbiThing>().Single(thing => rightColumn.ReferencedColumn.Table.IsThingMatch(thing));
 
-				Relationship relationship = new Relationship(table.Name, leftThing, rightThing);
-
-				// Add additional details
-				relationship.Details.Add("SqlCatalog", table.Catalog);
-				relationship.Details.Add("SqlSchema", table.Schema);
-				relationship.Details.Add("SqlTable", table.Name);
+				DbiRelationship relationship = new DbiRelationship(table.Name, leftThing, rightThing, table.Catalog, table.Schema, table.Name, string.Join(",", columnsWithForeignKeys.Select<DatabaseColumn, string>(column => column.Name)), null);
 
 				result.AddRelationship(relationship);
 
@@ -230,10 +204,10 @@
 				foreach (DatabaseColumn column in columnsWithForeignKeys)
 				{
 					// Get the thing for this table
-					Thing leftThing = result.Things.Single(table.IsThingMatch);
+					IDbiThing leftThing = result.Things.OfType<IDbiThing>().Single(table.IsThingMatch);
 
 					// Find the table being referenced by the foreign key
-					Thing rightThing = result.Things.Single(column.ReferencedColumn.Table.IsThingMatch);
+					IDbiThing rightThing = result.Things.OfType<IDbiThing>().Single(column.ReferencedColumn.Table.IsThingMatch);
 
 					// Find the constraint which is doing the referencing
 					// TODO move to DatabaseColumn property
@@ -252,14 +226,15 @@
 						leftMaximum = 1;
 					}
 
-					Relationship relationship = new Relationship(constraint.Name, new RelationshipLink(leftThing, leftMinimum, leftMaximum), new RelationshipLink(rightThing, 1, 1));
-
-					// Add additional details
-					relationship.Details.Add("SqlCatalog", table.Catalog);
-					relationship.Details.Add("SqlSchema", table.Schema);
-					relationship.Details.Add("SqlTable", table.Name);
-					relationship.Details.Add("SqlConstraint", constraint.Name);
-					relationship.Details.Add("SqlColumns", string.Join(", ", constraint.Columns.Select<DatabaseColumn, string>(relationshipColumn => relationshipColumn.Name)));
+					DbiRelationship relationship = new DbiRelationship(
+						constraint.Name,
+						new RelationshipLink(leftThing, leftMinimum, leftMaximum),
+						new RelationshipLink(rightThing, 1, 1),
+						table.Catalog,
+						table.Schema,
+						table.Name,
+						constraint.Name,
+						string.Join(", ", constraint.Columns.Select<DatabaseColumn, string>(relationshipColumn => relationshipColumn.Name)));
 
 					result.AddRelationship(relationship);
 				}
@@ -267,7 +242,7 @@
 
 			foreach (DatabaseRoutine routine in DatabaseModel.Routines)
 			{
-				Item item = result.Items.Single(routine.IsThingMatch);
+				DbiItem item = result.Items.Single(dbiItem => routine.IsThingMatch(dbiItem as IDbiThing)) as DbiItem;
 
 				string behaviorName = routine.Name;
 
@@ -281,11 +256,7 @@
 
 				foreach (DatabaseRoutineParameter routineParameter in routine.Parameters)
 				{
-					Parameter parameter = new Parameter(routineParameter.Name, routineParameter.Type.GetSystemType(), NullConstraints.NotApplicable);
-
-					// TODO Should these be 1st class properties of the parameter?
-					parameter.Details["SqlOrdinal"] = routineParameter.OrdinalPosition;
-					parameter.Details["SqlMode"] = routineParameter.Mode.ToString();
+					DbiParameter parameter = new DbiParameter(routineParameter.Name, routineParameter.Type.GetSystemType(), NullConstraints.NotApplicable, routineParameter.OrdinalPosition, routineParameter.Mode.ToString());
 
 					behavior.Parameters.Add(parameter);
 				}
@@ -296,31 +267,6 @@
 			PopulateAdditionalData(result);
 
 			return result;
-		}
-
-		/// <summary>
-		/// Initializes the implementation detail schemas.
-		/// </summary>
-		private static void InitialiseImplementationDetailSchemas()
-		{
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlCatalog", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlSchema", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlTable", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlConstraint", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(Thing), "SqlColumns", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "SqlColumn", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "OrdinalPosition", typeof(int));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "DefaultValue", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "SqlOrdinal", typeof(int));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(DataDefinition), "SqlMode", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlDataType", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlNumericPrecision", typeof(int));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlNumericPrecisionRadix", typeof(int));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlNumericScale", typeof(int?));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlMaxCharacters", typeof(int));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlCharacterSet", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlCollationName", typeof(string));
-			ImplementationDetailsDictionary.AddSchemaEntry(typeof(SystemTypeBase), "SqlDateTimePrecision", typeof(string));
 		}
 
 		/// <summary>

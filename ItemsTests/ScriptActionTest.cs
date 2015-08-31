@@ -20,21 +20,6 @@ namespace ItemsTests
 			ScriptAction scriptAction = new ScriptAction("Test Script", "scriptName.cs");
 			Assert.AreEqual("Test Script", scriptAction.Name);
 			Assert.AreEqual("scriptName.cs", scriptAction.ScriptName);
-			Assert.IsNotNull(scriptAction.Details);
-		}
-
-		/// <summary>
-		///A test for Details
-		///</summary>
-		[TestMethod()]
-		[DeploymentItem("Items.dll")]
-		public void DetailsTest()
-		{
-			ScriptAction scriptAction = new ScriptAction("Test Script", "scriptName.cs");
-			Assert.IsNotNull(scriptAction.Details);
-
-			scriptAction.Details["Test Key"] = "Test Value";
-			Assert.AreEqual("Test Value", scriptAction.Details["Test Key"]);
 		}
 
 		/// <summary>

@@ -6,6 +6,7 @@
 	using System.Globalization;
 	using System.Text;
 	using Items;
+	using ItemLoader;
 	
 	/// <summary>
 	/// A link to an item in the query
@@ -15,27 +16,27 @@
 		/// <summary>
 		/// The item this link points to
 		/// </summary>
-		private Item item;
+		private DbiItem item;
 
 		/// <summary>
 		/// The child links
 		/// </summary>
-		private Dictionary<Relationship, ModelQueryItemLink> childLinks;
+		private Dictionary<DbiRelationship, ModelQueryItemLink> childLinks;
 
 		/// <summary>
 		/// The selected data members
 		/// </summary>
-		private Collection<DataMember> selectedDataMembers;
+		private Collection<DbiDataMember> selectedDataMembers;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ModelQueryItemLink"/> class.
 		/// </summary>
 		/// <param name="item">The item.</param>
-		internal ModelQueryItemLink(Item item)
+		internal ModelQueryItemLink(DbiItem item)
 		{
 			this.item = item;
-			this.childLinks = new Dictionary<Relationship, ModelQueryItemLink>();
-			this.selectedDataMembers = new Collection<DataMember>();
+			this.childLinks = new Dictionary<DbiRelationship, ModelQueryItemLink>();
+			this.selectedDataMembers = new Collection<DbiDataMember>();
 		}
 
 		/// <summary>
@@ -44,7 +45,7 @@
 		/// <value>
 		/// The item.
 		/// </value>
-		internal Item Item
+		internal DbiItem Item
 		{
 			get
 			{
@@ -75,7 +76,7 @@
 		/// </summary>
 		/// <param name="relationship">The relationship.</param>
 		/// <param name="target">The target.</param>
-		internal void JoinThroughRelationship(Relationship relationship, Item target)
+		internal void JoinThroughRelationship(DbiRelationship relationship, DbiItem target)
 		{
 			// Check the relationship goes from the current item to the target
 			// Check the relationship/target hasn't already been linked?
@@ -89,7 +90,7 @@
 		/// </summary>
 		/// <param name="columns">The columns.</param>
 		/// <exception cref="ArgumentNullException">columns;columns cannot be null</exception>
-		internal void PopulateSelectedColumns(ref Dictionary<Item, IEnumerable<DataMember>> columns)
+		internal void PopulateSelectedColumns(ref Dictionary<DbiItem, IEnumerable<DbiDataMember>> columns)
 		{
 			if (columns == null)
 			{
@@ -97,7 +98,7 @@
 			}
 
 			// Work out which data members have been included from this link's items
-			IEnumerable<DataMember> dataMembers;
+			IEnumerable<DbiDataMember> dataMembers;
 			if (this.selectedDataMembers.Count > 0)
 			{
 				dataMembers = this.selectedDataMembers;
@@ -106,18 +107,18 @@
 			{
 				// If there are no data members defined, build up a selection of some.
 				// TODO finalise what we should do in this situation. The user might specifically not want to show rows from this table.
-				Collection<DataMember> identifiers = new Collection<DataMember>();
+				Collection<DbiDataMember> identifiers = new Collection<DbiDataMember>();
 
 				// If there is an integer identifier, show it
 				if (this.Item.IntegerIdentifier != null)
 				{
-					identifiers.Add(this.Item.IntegerIdentifier);
+					identifiers.Add(this.Item.IntegerIdentifier as DbiDataMember);
 				}
 
 				// If there is a string identifier, show it
 				if (this.Item.StringIdentifier != null)
 				{
-					identifiers.Add(this.Item.StringIdentifier);
+					identifiers.Add(this.Item.StringIdentifier as DbiDataMember);
 				}
 
 				dataMembers = identifiers;
@@ -141,7 +142,7 @@
 			const string JoinFormat = @"
 	{0} JOIN {1}.{2}.{3} ON {5}.{4} = {3}.{4}";
 
-			foreach (KeyValuePair<Relationship, ModelQueryItemLink> childLink in this.childLinks)
+			foreach (KeyValuePair<DbiRelationship, ModelQueryItemLink> childLink in this.childLinks)
 			{
 				// Work out if we are travelling from left to right
 				bool isLeftToRight = childLink.Key.LeftLink.Thing == this.item;
@@ -155,11 +156,11 @@
 					CultureInfo.InvariantCulture,
 					JoinFormat,
 					isInnerJoin ? "INNER" : "LEFT OUTER",
-					toLink.Thing.Details["SqlCatalog"],
-					toLink.Thing.Details["SqlSchema"],
-					toLink.Thing.Details["SqlTable"],
-					childLink.Key.Details["SqlColumns"],
-					fromLink.Thing.Details["SqlTable"]);
+					(toLink.Thing as IDbiThing).SqlCatalog,
+					(toLink.Thing as IDbiThing).SqlSchema,
+					(toLink.Thing as IDbiThing).SqlTable,
+					childLink.Key.SqlColumns,
+					(fromLink.Thing as IDbiThing).SqlTable);
 
 				childLink.Value.AppendJoins(stringBuilder);
 			}
@@ -169,7 +170,7 @@
 		/// Includes the column.
 		/// </summary>
 		/// <param name="dataMember">The data member.</param>
-		internal void IncludeDataMember(DataMember dataMember)
+		internal void IncludeDataMember(DbiDataMember dataMember)
 		{
 			this.selectedDataMembers.Add(dataMember);
 		}
@@ -178,7 +179,7 @@
 		/// Excludes the column.
 		/// </summary>
 		/// <param name="dataMember">The data member.</param>
-		internal void ExcludeDataMember(DataMember dataMember)
+		internal void ExcludeDataMember(DbiDataMember dataMember)
 		{
 			this.selectedDataMembers.Remove(dataMember);
 		}

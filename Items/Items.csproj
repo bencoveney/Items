@@ -67,7 +67,7 @@
     <Compile Include="Constraints\StringValueConstraint.cs" />
     <Compile Include="Constraints\IConstraint.cs" />
     <Compile Include="DataDefinition.cs" />
-    <Compile Include="ImplementationDetails.cs" />
+    <Compile Include="IDataDefinition.cs" />
     <Compile Include="INamedObject.cs" />
     <Compile Include="InvalidModelException.cs" />
     <Compile Include="SystemTypeBase.cs" />

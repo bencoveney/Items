@@ -10,7 +10,7 @@
 	/// </summary>
 	[DataContract]
 	public abstract class DataDefinition
-		: INamedObject
+		: INamedObject, IDataDefinition
 	{
 		/// <summary>
 		/// The backing variable for the name
@@ -23,13 +23,12 @@
 		/// <param name="name">The name.</param>
 		/// <param name="type">The type.</param>
 		/// <param name="nullConstraint">The emptiness.</param>
-		protected DataDefinition(string name, IType type, NullConstraints nullConstraint)
+		protected internal DataDefinition(string name, IType type, NullConstraints nullConstraint)
 		{
 			this.Name = name;
 			this.DataType = type;
 			this.NullConstraint = nullConstraint;
 			this.Constraints = new Collection<IConstraint>();
-			this.Details = new ImplementationDetailsDictionary();
 		}
 
 		/// <summary>
@@ -82,19 +81,6 @@
 		/// </summary>
 		[DataMember]
 		public NullConstraints NullConstraint
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// Gets the implementation specific details attached to the type
-		/// </summary>
-		/// <value>
-		/// The details.
-		/// </value>
-		[DataMember]
-		public ImplementationDetailsDictionary Details
 		{
 			get;
 			private set;

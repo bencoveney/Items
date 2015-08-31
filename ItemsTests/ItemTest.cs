@@ -20,7 +20,6 @@
 
 			Assert.IsNotNull(item.Attributes);
 			Assert.IsNotNull(item.Behaviors);
-			Assert.IsNotNull(item.Details);
 		}
 
 		/// <summary>

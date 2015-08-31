@@ -4,12 +4,12 @@
 	using System.Collections.Generic;
 	using System.Globalization;
 	using System.Linq;
-    using System.Runtime.Serialization;
+	using System.Runtime.Serialization;
 
 	/// <summary>
 	/// A collection of items and categories
 	/// </summary>
-    [DataContract]
+	[DataContract]
 	public class Model
 	{
 		/// <summary>
@@ -28,7 +28,7 @@
 		/// <value>
 		/// The items.
 		/// </value>
-        [DataMember]
+		[DataMember]
 		public NamedCollection<Item> Items
 		{
 			get;
@@ -40,8 +40,8 @@
 		/// </summary>
 		/// <value>
 		/// The categories.
-        /// </value>
-        [DataMember]
+		/// </value>
+		[DataMember]
 		public NamedCollection<Category> Categories
 		{
 			get;
@@ -53,8 +53,8 @@
 		/// </summary>
 		/// <value>
 		/// The relationships.
-        /// </value>
-        [DataMember]
+		/// </value>
+		[DataMember]
 		public NamedCollection<Relationship> Relationships
 		{
 			get;
@@ -67,11 +67,11 @@
 		/// <value>
 		/// The things.
 		/// </value>
-		public IEnumerable<Thing> Things
+		public IEnumerable<IThing> Things
 		{
 			get
 			{
-				return ((IEnumerable<Thing>)this.Items).Concat(this.Categories).Concat(this.Relationships);
+				return ((IEnumerable<IThing>)this.Items).Concat(this.Categories).Concat(this.Relationships);
 			}
 		}
 
@@ -122,7 +122,7 @@
 		/// </summary>
 		/// <param name="thing">The thing.</param>
 		/// <exception cref="System.ArgumentException">Unknown thing type;thing</exception>
-		public void AddThing(Thing thing)
+		public void AddThing(IThing thing)
 		{
 			if (thing == null)
 			{

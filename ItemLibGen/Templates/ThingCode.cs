@@ -9,7 +9,7 @@ namespace ItemLibGen.Templates
 {
 	partial class Thing : ThingBase
 	{
-		private IEnumerable<Items.Thing> items;
+		private IEnumerable<Items.IThing> items;
 		private IEnumerable<Items.Relationship> relationships;
 		private IEnumerable<Items.Category> categories;
 

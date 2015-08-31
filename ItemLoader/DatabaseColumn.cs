@@ -227,9 +227,9 @@ ORDER BY
 		/// </summary>
 		/// <param name="model">The model.</param>
 		/// <returns>The data member in the model that references this item.</returns>
-		public DataMember FindInModel(Model model)
+		public DbiDataMember FindInModel(Model model)
 		{
-			return model.Things.Single(thing => this.Table.IsThingMatch(thing)).Attributes.Single(attribute => attribute.Name == this.Name);
+			return model.Things.OfType<IDbiThing>().Single(thing => this.Table.IsThingMatch(thing)).Attributes.Single(attribute => attribute.Name == this.Name) as DbiDataMember;
 		}
 
 		/// <summary>

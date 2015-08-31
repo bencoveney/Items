@@ -55,7 +55,6 @@
     <Compile Include="ConditionTest.cs" />
     <Compile Include="DataDefinitionTest.cs" />
     <Compile Include="DataMemberTest.cs" />
-    <Compile Include="ImplementationDetailsDictionaryTest.cs" />
     <Compile Include="InvalidModelExceptionTest.cs" />
     <Compile Include="ItemTest.cs" />
     <Compile Include="ParameterTest.cs" />

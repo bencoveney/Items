@@ -24,7 +24,6 @@ namespace ItemsTests
 			Relationship relationship = new Relationship("Test", left, right);
 
 			Assert.IsNotNull(relationship.Attributes);
-			Assert.IsNotNull(relationship.Details);
 			Assert.IsNotNull(relationship.LeftLink);
 			Assert.IsNotNull(relationship.RightLink);
 		}
@@ -40,7 +39,6 @@ namespace ItemsTests
 			Relationship relationship = new Relationship("Test", leftLink, rightLink);
 
 			Assert.IsNotNull(relationship.Attributes);
-			Assert.IsNotNull(relationship.Details);
 			Assert.IsNotNull(relationship.LeftLink);
 			Assert.IsNotNull(relationship.RightLink);
 		}
@@ -92,8 +90,8 @@ namespace ItemsTests
 		[TestMethod()]
 		public void RelationshipLinkedThingsTest()
 		{
-			Thing leftThing = new Item("Left");
-			Thing rightThing = new Item("Right");
+			IThing leftThing = new Item("Left");
+			IThing rightThing = new Item("Right");
 			RelationshipLink leftLink = new RelationshipLink(leftThing, 0);
 			RelationshipLink rightLink = new RelationshipLink(rightThing, 0);
 			Relationship relationship = new Relationship("Test", leftLink, rightLink);

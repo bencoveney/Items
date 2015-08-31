@@ -194,44 +194,44 @@
 			switch (this.DataType.ToLower())
 			{
 				case "bit":
-					SystemType<bool> booleanType = new SystemType<bool>();
-					booleanType.Details["SqlDataType"] = this.DataType;
+					DbiSystemType<bool> booleanType = new DbiSystemType<bool>();
+					booleanType.SqlDataType = this.DataType;
 					type = booleanType;
 					break;
 
 				case "bigint":
-					SystemType<long> int64Type = new SystemType<long>();
-					int64Type.Details["SqlDataType"] = this.DataType;
-					int64Type.Details["SqlNumericPrecision"] = this.NumericPrecision.Value;
-					int64Type.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix.Value;
-					int64Type.Details["SqlNumericScale"] = this.NumericScale.Value;
+					DbiSystemType<long> int64Type = new DbiSystemType<long>();
+					int64Type.SqlDataType = this.DataType;
+					int64Type.SqlNumericPrecision = this.NumericPrecision.Value;
+					int64Type.SqlNumericPrecisionRadix = this.NumericPrecisionRadix.Value;
+					int64Type.SqlNumericScale = this.NumericScale.Value;
 					type = int64Type;
 					break;
 
 				case "int":
-					SystemType<int> int32Type = new SystemType<int>();
-					int32Type.Details["SqlDataType"] = this.DataType;
-					int32Type.Details["SqlNumericPrecision"] = this.NumericPrecision.Value;
-					int32Type.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix.Value;
-					int32Type.Details["SqlNumericScale"] = this.NumericScale.Value;
+					DbiSystemType<int> int32Type = new DbiSystemType<int>();
+					int32Type.SqlDataType = this.DataType;
+					int32Type.SqlNumericPrecision = this.NumericPrecision.Value;
+					int32Type.SqlNumericPrecisionRadix = this.NumericPrecisionRadix.Value;
+					int32Type.SqlNumericScale = this.NumericScale.Value;
 					type = int32Type;
 					break;
 
 				case "smallint":
-					SystemType<short> int16Type = new SystemType<short>();
-					int16Type.Details["SqlDataType"] = this.DataType;
-					int16Type.Details["SqlNumericPrecision"] = this.NumericPrecision.Value;
-					int16Type.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix.Value;
-					int16Type.Details["SqlNumericScale"] = this.NumericScale.Value;
+					DbiSystemType<short> int16Type = new DbiSystemType<short>();
+					int16Type.SqlDataType = this.DataType;
+					int16Type.SqlNumericPrecision = this.NumericPrecision.Value;
+					int16Type.SqlNumericPrecisionRadix = this.NumericPrecisionRadix.Value;
+					int16Type.SqlNumericScale = this.NumericScale.Value;
 					type = int16Type;
 					break;
 
 				case "tinyint":
-					SystemType<byte> byteType = new SystemType<byte>();
-					byteType.Details["SqlDataType"] = this.DataType;
-					byteType.Details["SqlNumericPrecision"] = this.NumericPrecision.Value;
-					byteType.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix.Value;
-					byteType.Details["SqlNumericScale"] = this.NumericScale.Value;
+					DbiSystemType<byte> byteType = new DbiSystemType<byte>();
+					byteType.SqlDataType = this.DataType;
+					byteType.SqlNumericPrecision = this.NumericPrecision.Value;
+					byteType.SqlNumericPrecisionRadix = this.NumericPrecisionRadix.Value;
+					byteType.SqlNumericScale = this.NumericScale.Value;
 					type = byteType;
 					break;
 
@@ -241,27 +241,27 @@
 				case "nvarchar":
 				case "text":
 				case "ntext":
-					SystemType<string> stringType = new SystemType<string>();
-					stringType.Details["SqlDataType"] = this.DataType;
-					stringType.Details["SqlMaxCharacters"] = this.CharacterMaximumLength;
-					stringType.Details["SqlCharacterSet"] = this.CharacterSetName;
-					stringType.Details["SqlCollationName"] = this.CollationName;
+					DbiSystemType<string> stringType = new DbiSystemType<string>();
+					stringType.SqlDataType = this.DataType;
+					stringType.SqlMaxCharacters = this.CharacterMaximumLength;
+					stringType.SqlCharacterSet = this.CharacterSetName;
+					stringType.SqlCollationName = this.CollationName;
 					type = stringType;
 					break;
 
 				case "datetime":
 				case "datetime2":
 				case "smalldatetime":
-					SystemType<DateTime> dateTimeType = new SystemType<DateTime>();
-					dateTimeType.Details["SqlDataType"] = this.DataType;
-					dateTimeType.Details["SqlDateTimePrecision"] = this.DateTimePrecision.Value;
+					DbiSystemType<DateTime> dateTimeType = new DbiSystemType<DateTime>();
+					dateTimeType.SqlDataType = this.DataType;
+					dateTimeType.SqlDateTimePrecision = this.DateTimePrecision.Value;
 					type = dateTimeType;
 					break;
 
 				case "datetimeoffset":
-					SystemType<DateTimeOffset> dateTimeOffsetType = new SystemType<DateTimeOffset>();
-					dateTimeOffsetType.Details["SqlDataType"] = this.DataType;
-					dateTimeOffsetType.Details["SqlDateTimePrecision"] = this.DateTimePrecision.Value;
+					DbiSystemType<DateTimeOffset> dateTimeOffsetType = new DbiSystemType<DateTimeOffset>();
+					dateTimeOffsetType.SqlDataType = this.DataType;
+					dateTimeOffsetType.SqlDateTimePrecision = this.DateTimePrecision.Value;
 					type = dateTimeOffsetType;
 					break;
 
@@ -269,29 +269,29 @@
 				case "money":
 				case "numeric":
 				case "smallmoney":
-					SystemType<decimal> decimalType = new SystemType<decimal>();
-					decimalType.Details["SqlDataType"] = this.DataType;
-					decimalType.Details["SqlNumericPrecision"] = this.NumericPrecision.Value;
-					decimalType.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix.Value;
-					decimalType.Details["SqlNumericScale"] = this.NumericScale.Value;
+					DbiSystemType<decimal> decimalType = new DbiSystemType<decimal>();
+					decimalType.SqlDataType = this.DataType;
+					decimalType.SqlNumericPrecision = this.NumericPrecision.Value;
+					decimalType.SqlNumericPrecisionRadix = this.NumericPrecisionRadix.Value;
+					decimalType.SqlNumericScale = this.NumericScale.Value;
 					type = decimalType;
 					break;
 
 				case "float":
-					SystemType<double> doubleType = new SystemType<double>();
-					doubleType.Details["SqlDataType"] = this.DataType;
-					doubleType.Details["SqlNumericPrecision"] = this.NumericPrecision.Value;
-					doubleType.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix.Value;
-					doubleType.Details["SqlNumericScale"] = this.NumericScale;
+					DbiSystemType<double> doubleType = new DbiSystemType<double>();
+					doubleType.SqlDataType = this.DataType;
+					doubleType.SqlNumericPrecision = this.NumericPrecision.Value;
+					doubleType.SqlNumericPrecisionRadix = this.NumericPrecisionRadix.Value;
+					doubleType.SqlNumericScale = this.NumericScale;
 					type = doubleType;
 					break;
 
 				case "real":
-					SystemType<float> singleType = new SystemType<float>();
-					singleType.Details["SqlDataType"] = this.DataType;
-					singleType.Details["SqlNumericPrecision"] = this.NumericPrecision.Value;
-					singleType.Details["SqlNumericPrecisionRadix"] = this.NumericPrecisionRadix.Value;
-					singleType.Details["SqlNumericScale"] = this.NumericScale.Value;
+					DbiSystemType<float> singleType = new DbiSystemType<float>();
+					singleType.SqlDataType = this.DataType;
+					singleType.SqlNumericPrecision = this.NumericPrecision.Value;
+					singleType.SqlNumericPrecisionRadix = this.NumericPrecisionRadix.Value;
+					singleType.SqlNumericScale = this.NumericScale.Value;
 					type = singleType;
 					break;
 
@@ -301,32 +301,32 @@
 				case "rowversion":
 				case "timestamp":
 				case "varbinary":
-					SystemType<byte[]> byteArrayType = new SystemType<byte[]>();
-					byteArrayType.Details["SqlDataType"] = this.DataType;
+					DbiSystemType<byte[]> byteArrayType = new DbiSystemType<byte[]>();
+					byteArrayType.SqlDataType = this.DataType;
 					type = byteArrayType;
 					break;
 
 				case "sql_variant":
-					SystemType<object> objectType = new SystemType<object>();
-					objectType.Details["SqlDataType"] = this.DataType;
+					DbiSystemType<object> objectType = new DbiSystemType<object>();
+					objectType.SqlDataType = this.DataType;
 					type = objectType;
 					break;
 
 				case "time":
-					SystemType<TimeSpan> timeSpanType = new SystemType<TimeSpan>();
-					timeSpanType.Details["SqlDataType"] = this.DataType;
+					DbiSystemType<TimeSpan> timeSpanType = new DbiSystemType<TimeSpan>();
+					timeSpanType.SqlDataType = this.DataType;
 					type = timeSpanType;
 					break;
 
 				case "uniqueidentifier":
-					SystemType<Guid> guidType = new SystemType<Guid>();
-					guidType.Details["SqlDataType"] = this.DataType;
+					DbiSystemType<Guid> guidType = new DbiSystemType<Guid>();
+					guidType.SqlDataType = this.DataType;
 					type = guidType;
 					break;
 
 				default:
-					SystemType<object> defaultType = new SystemType<object>();
-					defaultType.Details["SqlDataType"] = this.DataType;
+					DbiSystemType<object> defaultType = new DbiSystemType<object>();
+					defaultType.SqlDataType = this.DataType;
 					type = defaultType;
 					break;
 			}

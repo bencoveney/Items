@@ -186,12 +186,12 @@ WHERE
 		/// </summary>
 		/// <param name="thing">The thing.</param>
 		/// <returns>A value indicating whether the thing is based on this table</returns>
-		public bool IsThingMatch(Thing thing)
+		public bool IsThingMatch(IDbiThing thing)
 		{
-			return (string)thing.Details["SqlCatalog"] == this.Catalog
-				&& (string)thing.Details["SqlSchema"] == this.Schema
-				&& (string)thing.Details["SqlTable"] == this.Name
-				&& !thing.Details.ContainsKey("SqlColumns");
+			return thing.SqlCatalog == this.Catalog
+				&& thing.SqlSchema == this.Schema
+				&& thing.SqlTable == this.Name
+				&& string.IsNullOrEmpty(thing.SqlColumns);
 		}
 
 		/// <summary>

@@ -7,6 +7,7 @@
 	using System.Linq;
 	using System.Text;
 	using Items;
+	using ItemLoader;
 
 	/// <summary>
 	/// A query against the model data
@@ -22,7 +23,7 @@
 		/// Initializes a new instance of the <see cref="ModelQuery"/> class.
 		/// </summary>
 		/// <param name="rootItem">The root item.</param>
-		public ModelQuery(Item rootItem)
+		public ModelQuery(DbiItem rootItem)
 		{
 			this.rootItemLink = new ModelQueryItemLink(rootItem);
 		}
@@ -32,7 +33,7 @@
 		/// </summary>
 		/// <param name="dataMember">The data member.</param>
 		/// <exception cref="ArgumentNullException">dataMember;dataMember cannot be null</exception>
-		public void IncludeDataMember(DataMember dataMember)
+		public void IncludeDataMember(DbiDataMember dataMember)
 		{
 			// Check for nulls
 			if (dataMember == null)
@@ -49,7 +50,7 @@
 		/// </summary>
 		/// <param name="dataMember">The data member.</param>
 		/// <exception cref="ArgumentNullException">dataMember;dataMember cannot be null</exception>
-		public void ExcludedDataMember(DataMember dataMember)
+		public void ExcludedDataMember(DbiDataMember dataMember)
 		{
 			// Check for nulls
 			if (dataMember == null)
@@ -65,7 +66,7 @@
 		/// Joins the through relationship.
 		/// </summary>
 		/// <param name="relationship">The relationship.</param>
-		public void JoinThroughRelationship(Relationship relationship)
+		public void JoinThroughRelationship(DbiRelationship relationship)
 		{
 			// Check a relationship was provided
 			if (relationship == null)
@@ -73,13 +74,13 @@
 				throw new ArgumentNullException("relationship", "relationship cannot be null");
 			}
 
-			if (string.IsNullOrEmpty(relationship.Details["SqlConstraint"] as string))
+			if (string.IsNullOrEmpty(relationship.SqlConstraint as string))
 			{
 				throw new NotSupportedException("Currently only foreign key relationships are supported");
 			}
 
 			// Check the relationship is a link between two Items
-			if (relationship.LinkedThings.OfType<Item>().Count() != 2)
+			if (relationship.LinkedThings.OfType<DbiItem>().Count() != 2)
 			{
 				throw new NotSupportedException("Currently only two items can be linked");
 			}
@@ -91,7 +92,7 @@
 			}
 
 			// Check the relationship is going from an item we have to an item we don't
-			IEnumerable<Item> allItems = this.GetAllItems();
+			IEnumerable<DbiItem> allItems = this.GetAllItems();
 			if (allItems.Count(item => relationship.LinkedThings.Contains(item)) != 1)
 			{
 				throw new InvalidOperationException("The relationship must contain exactly one Thing which already exists in the query");
@@ -104,11 +105,11 @@
 			// At this point the only thing left to work out is whether the link follows the relationship from left to right or vice versa
 			if (linkFrom.Item == relationship.LeftLink.Thing)
 			{
-				linkFrom.JoinThroughRelationship(relationship, relationship.RightLink.Thing as Item);
+				linkFrom.JoinThroughRelationship(relationship, relationship.RightLink.Thing as DbiItem);
 			}
 			else
 			{
-				linkFrom.JoinThroughRelationship(relationship, relationship.LeftLink.Thing as Item);
+				linkFrom.JoinThroughRelationship(relationship, relationship.LeftLink.Thing as DbiItem);
 			}
 		}
 
@@ -126,18 +127,18 @@
 			queryText.AppendFormat(CultureInfo.InvariantCulture, SelectStatement);
 			
 			// Work out which columns are being selected
-			Dictionary<Item, IEnumerable<DataMember>> queryColumns = new Dictionary<Item, IEnumerable<DataMember>>();
+			Dictionary<DbiItem, IEnumerable<DbiDataMember>> queryColumns = new Dictionary<DbiItem, IEnumerable<DbiDataMember>>();
 			this.rootItemLink.PopulateSelectedColumns(ref queryColumns);
 
 			// Build the statements for the columns in the select statement
 			// Iterate through the items
 			Collection<string> columnClauses = new Collection<string>();
-			foreach (KeyValuePair<Item, IEnumerable<DataMember>> itemWithColumns in queryColumns)
+			foreach (KeyValuePair<DbiItem, IEnumerable<DbiDataMember>> itemWithColumns in queryColumns)
 			{
 				// Iterate through the data members for those items
-				foreach (DataMember column in itemWithColumns.Value)
+				foreach (DbiDataMember column in itemWithColumns.Value)
 				{
-					columnClauses.Add(string.Format(CultureInfo.InvariantCulture, @"{0}.{1} AS ""{0} {1}""", itemWithColumns.Key.Details["SqlTable"], column.Details["SqlColumn"]));
+					columnClauses.Add(string.Format(CultureInfo.InvariantCulture, @"{0}.{1} AS ""{0} {1}""", itemWithColumns.Key.SqlTable, column.SqlColumn));
 				}
 			}
 
@@ -153,7 +154,7 @@
 				@"
 FROM
 	{0}", 
-				this.rootItemLink.Item.Details["SqlTable"]);
+				this.rootItemLink.Item.SqlTable);
 
 			// Add all the joins to the FROM clause
 			this.rootItemLink.AppendJoins(queryText);
@@ -164,9 +165,9 @@ FROM
 		/// Gets all items included in the query.
 		/// </summary>
 		/// <returns>A collection of all items included in the query.</returns>
-		internal IEnumerable<Item> GetAllItems()
+		internal IEnumerable<DbiItem> GetAllItems()
 		{
-			return this.GetAllLinks().Select<ModelQueryItemLink, Item>(link => link.Item);
+			return this.GetAllLinks().Select<ModelQueryItemLink, DbiItem>(link => link.Item);
 		}
 
 		/// <summary>
@@ -184,7 +185,7 @@ FROM
 		/// <param name="dataMember">The data member.</param>
 		/// <returns>The link which contains the specified data member.</returns>
 		/// <exception cref="ArgumentException">The specified data member could not be found in the current query;dataMember</exception>
-		private ModelQueryItemLink GetLinkContainingDataMember(DataMember dataMember)
+		private ModelQueryItemLink GetLinkContainingDataMember(DbiDataMember dataMember)
 		{
 			// Attempt to find the link containing the data member
 			try

@@ -181,7 +181,7 @@ namespace GeneratedCode
         }
         
         #line 68 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
- public void WriteConstructors(Items.Thing thing){
+ public void WriteConstructors(Items.IThing thing){
 	if(thing.IntegerIdentifier != null)
 	{
 

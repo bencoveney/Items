@@ -27,11 +27,11 @@
 			Initialize();
 
 			// Create the query object by specifying a starting thing
-			ModelQuery query = new ModelQuery(model.Items["Foodstuff"]);
+			ModelQuery query = new ModelQuery(model.Items["Foodstuff"] as DbiItem);
 			
 			// Follow the relationship to another item
-			query.JoinThroughRelationship(model.Relationships["FK_Foodstuff_PersonID"]);
-			query.JoinThroughRelationship(model.Relationships["FK_Person_KitchenID"]);
+			query.JoinThroughRelationship(model.Relationships["FK_Foodstuff_PersonID"] as DbiRelationship);
+			query.JoinThroughRelationship(model.Relationships["FK_Person_KitchenID"] as DbiRelationship);
 
 			string querySql = query.BuildSql();
 			Console.Write(querySql);
@@ -51,33 +51,6 @@
 			DatabaseModel.LoadFromDatabase(ConnectionString);
 
 			model = DatabaseModel.ConstructModel();
-
-			RequireImplementationDetailSchemas();
-		}
-
-		/// <summary>
-		/// Asserts the schema of required implementation details
-		/// </summary>
-		private static void RequireImplementationDetailSchemas()
-		{
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(Thing), "SqlCatalog", typeof(string));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(Thing), "SqlSchema", typeof(string));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(Thing), "SqlTable", typeof(string));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(Thing), "SqlConstraint", typeof(string));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(Thing), "SqlColumns", typeof(string));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(DataDefinition), "SqlColumn", typeof(string));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(DataDefinition), "OrdinalPosition", typeof(int));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(DataDefinition), "DefaultValue", typeof(string));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(DataDefinition), "SqlOrdinal", typeof(int));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(DataDefinition), "SqlMode", typeof(string));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlDataType", typeof(string));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlNumericPrecision", typeof(int));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlNumericPrecisionRadix", typeof(int));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlNumericScale", typeof(int?));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlMaxCharacters", typeof(int));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlCharacterSet", typeof(string));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlCollationName", typeof(string));
-			ImplementationDetailsDictionary.RequireSchemaEntry(typeof(SystemTypeBase), "SqlDateTimePrecision", typeof(string));
 		}
 	}
 }

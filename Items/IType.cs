@@ -17,17 +17,6 @@
 		{
 			get;
 		}
-
-		/// <summary>
-		/// Gets the implementation specific details attached to the type
-		/// </summary>
-		/// <value>
-		/// The details.
-		/// </value>
-		ImplementationDetailsDictionary Details
-		{
-			get;
-		}
 	}
 
 	// Should IType have a name? would it be better just to have "Item" for item and remove name

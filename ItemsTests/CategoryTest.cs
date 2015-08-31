@@ -20,7 +20,6 @@
 
 			Assert.AreEqual(category.Name, "Test");
 			Assert.IsNotNull(category.Attributes);
-			Assert.IsNotNull(category.Details);
 		}
 	}
 }

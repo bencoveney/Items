@@ -250,11 +250,11 @@ FROM
 		/// </summary>
 		/// <param name="thing">The thing.</param>
 		/// <returns>A value indicating whether the thing is based on this table</returns>
-		public bool IsThingMatch(Thing thing)
+		public bool IsThingMatch(IDbiThing thing)
 		{
 			return this.Name.IndexOf(thing.Name) == 0
-				&& (string)thing.Details["SqlCatalog"] == this.Catalog
-				&& (string)thing.Details["SqlSchema"] == this.Schema;
+				&& (string)thing.SqlCatalog == this.Catalog
+				&& (string)thing.SqlSchema == this.Schema;
 		}
 
 		/// <summary>

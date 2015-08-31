@@ -21,7 +21,6 @@ namespace ItemsTests
 			BehaviorAction behaviorAction = new BehaviorAction("Test Action", behavior);
 			Assert.AreEqual("Test Action", behaviorAction.Name);
 			Assert.AreEqual(behavior, behaviorAction.Behavior);
-			Assert.IsNotNull(behaviorAction.Details);
 		}
 
 		/// <summary>
@@ -34,21 +33,6 @@ namespace ItemsTests
 			Behavior behavior = new Behavior("Test Behavior");
 			BehaviorAction behaviorAction = new BehaviorAction("Test Action", behavior);
 			Assert.AreEqual(behavior, behaviorAction.Behavior);
-		}
-
-		/// <summary>
-		///A test for Details
-		///</summary>
-		[TestMethod()]
-		[DeploymentItem("Items.dll")]
-		public void DetailsTest()
-		{
-			Behavior behavior = new Behavior("Test Behavior");
-			BehaviorAction behaviorAction = new BehaviorAction("Test Action", behavior);
-			Assert.IsNotNull(behaviorAction.Details);
-
-			behaviorAction.Details["Test Key"] = "Test Value";
-			Assert.AreEqual("Test Value", behaviorAction.Details["Test Key"]);
 		}
 
 		/// <summary>

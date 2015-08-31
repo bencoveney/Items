@@ -1,15 +1,15 @@
 ﻿namespace Items
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.Serialization;
-    using System.Text;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Runtime.Serialization;
+	using System.Text;
 
 	/// <summary>
 	/// Defines a thing at the level of the database table/entity/action
 	/// </summary>
-    [DataContract]
+	[DataContract]
 	public class Item
 		: Thing
 	{
@@ -24,15 +24,15 @@
 			this.Behaviors = new NamedCollection<Behavior>();
 		}
 
-        /// <summary>
-        /// Gets the list of actions the item can perform (or static actions related to the behavior)
-        /// should static actions be a specific type of behavior which don't take the item as a parameter?
-        /// should be Dictionary
-        /// </summary>
-        /// <value>
-        /// The behaviors.
-        /// </value>
-        [DataMember]
+		/// <summary>
+		/// Gets the list of actions the item can perform (or static actions related to the behavior)
+		/// should static actions be a specific type of behavior which don't take the item as a parameter?
+		/// should be Dictionary
+		/// </summary>
+		/// <value>
+		/// The behaviors.
+		/// </value>
+		[DataMember]
 		public NamedCollection<Behavior> Behaviors
 		{
 			get;

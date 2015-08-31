@@ -56,9 +56,18 @@
     <Compile Include="DatabaseRoutineParameter.cs" />
     <Compile Include="DatabaseTable.cs" />
     <Compile Include="DatabaseType.cs" />
+    <Compile Include="DerivedItemClasses\DbiCategory.cs" />
+    <Compile Include="DerivedItemClasses\DbiDataMember.cs" />
+    <Compile Include="DerivedItemClasses\DbiItem.cs" />
+    <Compile Include="DerivedItemClasses\DbiParameter.cs" />
+    <Compile Include="DerivedItemClasses\DbiRelationship.cs" />
+    <Compile Include="DerivedItemClasses\DbiSystemType.cs" />
+    <Compile Include="DerivedItemClasses\IDbiDataDefinition.cs" />
+    <Compile Include="DerivedItemClasses\IDbiThing.cs" />
+    <Compile Include="DerivedItemClasses\IDbiType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlDataReaderExtensions.cs" />
+    <Compile Include="Extensions\SqlDataReaderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Items\Items.csproj">

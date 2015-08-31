@@ -20,21 +20,6 @@ namespace ItemsTests
 			StoredProcedureAction storedProcedureAction = new StoredProcedureAction("Test Procedure", "MyProc");
 			Assert.AreEqual("Test Procedure", storedProcedureAction.Name);
 			Assert.AreEqual("MyProc", storedProcedureAction.StoredProcedureName);
-			Assert.IsNotNull(storedProcedureAction.Details);
-		}
-
-		/// <summary>
-		///A test for Details
-		///</summary>
-		[TestMethod()]
-		[DeploymentItem("Items.dll")]
-		public void DetailsTest()
-		{
-			StoredProcedureAction storedProcedureAction = new StoredProcedureAction("Test Procedure", "MyProc");
-			Assert.IsNotNull(storedProcedureAction.Details);
-
-			storedProcedureAction.Details["Test Key"] = "Test Value";
-			Assert.AreEqual("Test Value", storedProcedureAction.Details["Test Key"]);
 		}
 
 		/// <summary>

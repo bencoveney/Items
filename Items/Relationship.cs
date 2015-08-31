@@ -1,16 +1,16 @@
 ﻿namespace Items
 {
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
-    using System.Runtime.Serialization;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Linq;
+	using System.Runtime.Serialization;
 
 	/// <summary>
 	/// Used to define relations between objects
 	/// e.g. 1 fridge contains many bacons
 	/// TODO is in necessary to make a distinction between aggregation and composition
 	/// </summary>
-    [DataContract]
+	[DataContract]
 	public class Relationship
 		: Thing
 	{
@@ -25,7 +25,7 @@
 		/// <param name="name">The name.</param>
 		/// <param name="left">The left.</param>
 		/// <param name="right">The right.</param>
-		public Relationship(string name, Thing left, Thing right)
+		public Relationship(string name, IThing left, IThing right)
 			: base(name)
 		{
 			this.relationshipLinks = new RelationshipLink[2];
@@ -53,7 +53,7 @@
 		/// <value>
 		/// The links.
 		/// </value>
-        [DataMember]
+		[DataMember]
 		public Collection<RelationshipLink> Links
 		{
 			get
@@ -68,11 +68,11 @@
 		/// <value>
 		/// The linked things.
 		/// </value>
-		public IEnumerable<Thing> LinkedThings
+		public IEnumerable<IThing> LinkedThings
 		{
 			get
 			{
-				return this.Links.Select<RelationshipLink, Thing>(link => link.Thing);
+				return this.Links.Select<RelationshipLink, IThing>(link => link.Thing);
 			}
 		}
 
