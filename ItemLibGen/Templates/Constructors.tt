@@ -1,0 +1,38 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="Items" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+
+namespace GeneratedCode
+{
+<# foreach(Items.Thing thing in things) { #>
+	/// <summary>
+	/// <#= thing.Description ?? thing.Name #>
+	/// </summary>
+	partial class <#= thing.Name #>
+	{
+<# WriteConstructors(thing); #>
+	}
+<# } #>
+}
+
+<#+ public void WriteConstructors(Items.IThing thing){
+	if(thing.IntegerIdentifier != null)
+	{
+#>
+		public <#= thing.Name #> (<#= thing.IntegerIdentifier.DataType.Name #> <#= thing.IntegerIdentifier.Name #>) {
+			// TODO: Load from database using id to limit query
+		}
+
+<#+ }
+	if(thing.StringIdentifier != null) {
+#>
+		public <#= thing.Name #> (<#= thing.StringIdentifier.DataType.Name #> <#= thing.StringIdentifier.Name #>) {
+			// TODO: Load from database using name to limit query
+		}
+<#+ }
+} #>

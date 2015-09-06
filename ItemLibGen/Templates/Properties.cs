@@ -19,9 +19,9 @@ namespace ItemLibGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
+    #line 1 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
-    public partial class Thing : ThingBase
+    public partial class Properties : PropertiesBase
     {
 #line hidden
         /// <summary>
@@ -31,91 +31,103 @@ namespace ItemLibGen.Templates
         {
             this.Write("\r\nusing System;\r\n\r\nnamespace GeneratedCode\r\n{\r\n");
             
-            #line 12 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
- foreach(ItemLoader.DbiItem item in items) { 
+            #line 12 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+ foreach(Items.Thing thing in things) { 
             
             #line default
             #line hidden
             this.Write("\t/// <summary>\r\n\t/// ");
             
-            #line 14 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.Description ?? item.Name));
+            #line 14 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(thing.Description ?? thing.Name));
             
             #line default
             #line hidden
-            this.Write("\r\n\t/// </summary>\r\n\tpublic partial class ");
+            this.Write("\r\n\t/// </summary>\r\n\tpartial class ");
             
-            #line 16 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            #line 16 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(thing.Name));
             
             #line default
             #line hidden
-            this.Write(": ItemBase\r\n\t{\r\n\t}\r\n\r\n");
+            this.Write("\r\n\t{\r\n");
             
-            #line 20 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
+            #line 18 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+ foreach(DataMember attribute in thing.Attributes) { WriteDataMember(attribute); } 
+            
+            #line default
+            #line hidden
+            this.Write("\t}\r\n");
+            
+            #line 20 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\r\n");
-            
-            #line 22 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
- foreach(ItemLoader.DbiRelationship relationship in relationships) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t/// <summary>\r\n\t/// ");
-            
-            #line 24 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.Description ?? relationship.Name));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t/// </summary>\r\n\tpublic partial class ");
-            
-            #line 26 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.Name));
-            
-            #line default
-            #line hidden
-            this.Write(": RelationshipBase\r\n\t{\r\n\t}\r\n\r\n");
-            
-            #line 30 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 32 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
- foreach(ItemLoader.DbiCategory category in categories) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t/// <summary>\r\n\t/// ");
-            
-            #line 34 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(category.Description ?? category.Name));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t/// </summary>\r\n\tpublic partial class ");
-            
-            #line 36 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(category.Name));
-            
-            #line default
-            #line hidden
-            this.Write(": CategoryBase\r\n\t{\r\n\t}\r\n\r\n");
-            
-            #line 40 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Thing.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("}\r\n");
+            this.Write("}\r\n\r\n");
             return this.GenerationEnvironment.ToString();
         }
+        
+        #line 23 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+ public void WriteDataMember(DataMember dataMember) { 
+        
+        #line default
+        #line hidden
+        
+        #line 23 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write("\t\t/// <summary>\r\n\t\t/// The ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 25 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 25 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write("\r\n\t\t/// </summary>\r\n\t\tpublic ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 27 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.DataType.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 27 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(" ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 27 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 27 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write("\r\n\t\t{\r\n\t\t\tget;\r\n\t\t\tset;\r\n\t\t}\r\n\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 33 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+ } 
+        
+        #line default
+        #line hidden
     }
     
     #line default
@@ -125,7 +137,7 @@ namespace ItemLibGen.Templates
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
-    public class ThingBase
+    public class PropertiesBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;
