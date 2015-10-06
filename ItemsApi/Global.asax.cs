@@ -18,9 +18,7 @@ namespace ItemsApi
 		{
 			GlobalConfiguration.Configure(WebApiConfig.Register);
 
-			DatabaseModel.LoadFromDatabase(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-
-			Model = DatabaseModel.ConstructModel();
+			Model = Factory.ConstructModel(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 		}
 	}
 }

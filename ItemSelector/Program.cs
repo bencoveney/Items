@@ -48,9 +48,7 @@
 		/// </summary>
 		public static void Initialize()
 		{
-			DatabaseModel.LoadFromDatabase(ConnectionString);
-
-			model = DatabaseModel.ConstructModel();
+			model = ItemLoader.Factory.ConstructModel(ConnectionString);
 		}
 	}
 }

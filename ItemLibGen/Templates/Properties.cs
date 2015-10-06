@@ -53,13 +53,16 @@ namespace ItemLibGen.Templates
             this.Write("\r\n\t{\r\n");
             
             #line 18 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
- foreach(DataMember attribute in thing.Attributes) { WriteDataMember(attribute); } 
+ foreach(DataMember attribute in thing.Attributes) {
+	WriteBackingVariable(attribute);
+	WriteDataMember(attribute);
+} 
             
             #line default
             #line hidden
             this.Write("\t}\r\n");
             
-            #line 20 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+            #line 23 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
  } 
             
             #line default
@@ -68,62 +71,152 @@ namespace ItemLibGen.Templates
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 23 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
- public void WriteDataMember(DataMember dataMember) { 
+        #line 26 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+ public void WriteBackingVariable(DataMember dataMember) { 
         
         #line default
         #line hidden
         
-        #line 23 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
-this.Write("\t\t/// <summary>\r\n\t\t/// The ");
+        #line 26 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write("\t\t/// <summary>\r\n\t\t/// The backing variable for the ");
 
         
         #line default
         #line hidden
         
-        #line 25 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+        #line 28 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.Name));
 
         
         #line default
         #line hidden
         
-        #line 25 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
-this.Write("\r\n\t\t/// </summary>\r\n\t\tpublic ");
+        #line 28 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(" property\r\n\t\t/// This is unsafe and might not have been loaded. Use the property " +
+        "for access.\r\n\t\t/// </summary>\r\n\t\tprivate ");
 
         
         #line default
         #line hidden
         
-        #line 27 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+        #line 31 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.DataType.Name));
 
         
         #line default
         #line hidden
         
-        #line 27 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
-this.Write(" ");
+        #line 31 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(" _");
 
         
         #line default
         #line hidden
         
-        #line 27 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+        #line 31 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.Name));
 
         
         #line default
         #line hidden
         
-        #line 27 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
-this.Write("\r\n\t\t{\r\n\t\t\tget;\r\n\t\t\tset;\r\n\t\t}\r\n\r\n");
+        #line 31 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(";\r\n\r\n");
 
         
         #line default
         #line hidden
         
         #line 33 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+ } 
+        
+        #line default
+        #line hidden
+        
+        #line 35 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+ public void WriteDataMember(DataMember dataMember) { 
+        
+        #line default
+        #line hidden
+        
+        #line 35 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write("\t\t/// <summary>\r\n\t\t/// The ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 37 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 37 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write("\r\n\t\t/// </summary>\r\n\t\tpublic ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 39 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.DataType.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 39 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(" ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 39 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 39 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write("\r\n\t\t{\r\n\t\t\tget\r\n\t\t\t{\r\n\t\t\t\tEnsurePopulated();\r\n\r\n\t\t\t\treturn this._");
+
+        
+        #line default
+        #line hidden
+        
+        #line 45 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 45 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(";\r\n\t\t\t}\r\n\t\t\tset\r\n\t\t\t{\r\n\t\t\t\tthis._");
+
+        
+        #line default
+        #line hidden
+        
+        #line 49 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 49 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
+this.Write(" = value;\r\n\t\t\t}\r\n\t\t}\r\n\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 53 "C:\Users\Ben\Desktop\Items\ItemLibGen\Templates\Properties.tt"
  } 
         
         #line default

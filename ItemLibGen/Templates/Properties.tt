@@ -1,0 +1,53 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="Items" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+
+namespace GeneratedCode
+{
+<# foreach(Items.Thing thing in things) { #>
+	/// <summary>
+	/// <#= thing.Description ?? thing.Name #>
+	/// </summary>
+	partial class <#= thing.Name #>
+	{
+<# foreach(DataMember attribute in thing.Attributes) {
+	WriteBackingVariable(attribute);
+	WriteDataMember(attribute);
+} #>
+	}
+<# } #>
+}
+
+<#+ public void WriteBackingVariable(DataMember dataMember) { #>
+		/// <summary>
+		/// The backing variable for the <#= dataMember.Name #> property
+		/// This is unsafe and might not have been loaded. Use the property for access.
+		/// </summary>
+		private <#= dataMember.DataType.Name #> _<#= dataMember.Name #>;
+
+<#+ } #>
+
+<#+ public void WriteDataMember(DataMember dataMember) { #>
+		/// <summary>
+		/// The <#= dataMember.Name #>
+		/// </summary>
+		public <#= dataMember.DataType.Name #> <#= dataMember.Name #>
+		{
+			get
+			{
+				EnsurePopulated();
+
+				return this._<#= dataMember.Name #>;
+			}
+			set
+			{
+				this._<#= dataMember.Name #> = value;
+			}
+		}
+
+<#+ } #>

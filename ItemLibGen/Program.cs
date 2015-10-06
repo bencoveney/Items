@@ -1,5 +1,4 @@
-﻿using ItemLoader;
-using Items;
+﻿using Items;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TextTemplating;
 using System.CodeDom.Compiler;
+using ItemLoader;
 
 namespace ItemLibGen
 {
@@ -20,7 +20,7 @@ namespace ItemLibGen
 		/// <summary>
 		/// The model which code will be generated for
 		/// </summary>
-		public static Model Model;
+		public static Items.Model Model;
 
 		/// <summary>
 		/// The program entry point
@@ -47,9 +47,7 @@ namespace ItemLibGen
 		/// </summary>
 		private static void Initialise()
 		{
-			DatabaseModel.LoadFromDatabase(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-
-			Model = DatabaseModel.ConstructModel();
+			Program.Model = Factory.ConstructModel(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 		}
 
 		/// <summary>

@@ -24,15 +24,54 @@ namespace GeneratedCode
 	if(thing.IntegerIdentifier != null)
 	{
 #>
-		public <#= thing.Name #> (<#= thing.IntegerIdentifier.DataType.Name #> <#= thing.IntegerIdentifier.Name #>) {
+		public <#= thing.Name #>(<#= thing.IntegerIdentifier.DataType.Name #> <#= thing.IntegerIdentifier.Name #>)
+		{
+			// Assign the identifier dataMember
+			this.<#= thing.IntegerIdentifier.Name #> = <#= thing.IntegerIdentifier.Name #>;
+			
+			// Provide a way of populating the others
+			this.Populate += this.PopulateFromIntegerIdentifier;
+		}
+
+		private void PopulateFromIntegerIdentifier()
+		{
 			// TODO: Load from database using id to limit query
+			throw new NotImplementedException();
 		}
 
 <#+ }
 	if(thing.StringIdentifier != null) {
 #>
-		public <#= thing.Name #> (<#= thing.StringIdentifier.DataType.Name #> <#= thing.StringIdentifier.Name #>) {
-			// TODO: Load from database using name to limit query
+		public <#= thing.Name #>(<#= thing.StringIdentifier.DataType.Name #> <#= thing.StringIdentifier.Name #>) {
+			// Assign the identifier dataMember
+			this.<#= thing.StringIdentifier.Name #> = <#= thing.StringIdentifier.Name #>;
+			
+			// Provide a way of populating the others
+			this.Populate += this.PopulateFromStringIdentifier;
+		}
+
+		private void PopulateFromStringIdentifier()
+		{
+			// TODO: Load from database using id to limit query
+			throw new NotImplementedException();
 		}
 <#+ }
-} #>
+#>
+		public <#= thing.Name #>(<#+
+			foreach(DataMember attribute in thing.Attributes) {
+				#><#= attribute.DataType.Name #> <#= attribute.Name #><#+
+				if(attribute != thing.Attributes.Last()) {
+					#>, <#+
+				}
+			}
+		#>)
+		{
+			// TODO: Assign datamembers
+<#+
+			foreach(DataMember attribute in thing.Attributes) { #>
+			this.<#= attribute.Name #> = <#= attribute.Name #>;
+<#+
+			} #>
+		}
+<#+ }
+#>

@@ -25,9 +25,7 @@ namespace ItemWeb
 			RouteTable.Routes.MapPageRoute("Query", "Query/{ThingName}/{*Relationships}", "~/QueryPage.aspx");
 			RouteTable.Routes.MapPageRoute("Thing", "Docs/{ThingType}/{ThingName}", "~/ThingPage.aspx");
 
-			DatabaseModel.LoadFromDatabase(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-
-			Model = DatabaseModel.ConstructModel();
+			Model = Factory.ConstructModel(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 		}
 
 		/// <summary>
