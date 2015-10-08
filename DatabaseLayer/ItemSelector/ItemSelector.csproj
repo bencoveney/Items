@@ -65,7 +65,7 @@
       <Project>{E9352BC3-224D-44F6-A2D9-3D7A8599ACA8}</Project>
       <Name>ItemLoader</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Items\Items.csproj">
+    <ProjectReference Include="..\..\Items\Items.csproj">
       <Project>{A09F7505-DD95-4F3F-A449-BCBAA897FA9D}</Project>
       <Name>Items</Name>
     </ProjectReference>

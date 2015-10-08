@@ -141,11 +141,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ItemLoader\ItemLoader.csproj">
+    <ProjectReference Include="..\..\DatabaseLayer\ItemLoader\ItemLoader.csproj">
       <Project>{e9352bc3-224d-44f6-a2d9-3d7a8599aca8}</Project>
       <Name>ItemLoader</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Items\Items.csproj">
+    <ProjectReference Include="..\..\Items\Items.csproj">
       <Project>{a09f7505-dd95-4f3f-a449-bcbaa897fa9d}</Project>
       <Name>Items</Name>
     </ProjectReference>
