@@ -4,7 +4,7 @@
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.Linq;
-    using System.Runtime.Serialization;
+	using System.Runtime.Serialization;
 
 	/// <summary>
 	/// Specific class for behavior collections which guarantees unique names

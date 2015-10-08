@@ -1,10 +1,10 @@
 ﻿namespace Items
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.Serialization;
-    using System.Text;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Runtime.Serialization;
+	using System.Text;
 
 	/// <summary>
 	/// Lists the types of comparison that can be performed against a string
@@ -80,7 +80,7 @@
 	/// <summary>
 	/// Performs a string comparison against the specified static value
 	/// </summary>
-    [DataContract]
+	[DataContract]
 	public class StringValueConstraint
 		: IConstraint
 	{
@@ -104,7 +104,7 @@
 		/// <value>
 		/// The value.
 		/// </value>
-        [DataMember]
+		[DataMember]
 		public string Value
 		{
 			get;
@@ -116,8 +116,8 @@
 		/// </summary>
 		/// <value>
 		/// The comparison.
-        /// </value>
-        [DataMember]
+		/// </value>
+		[DataMember]
 		public StringComparison Comparison
 		{
 			get;
@@ -129,8 +129,8 @@
 		/// </summary>
 		/// <value>
 		/// The comparer.
-        /// </value>
-        [DataMember]
+		/// </value>
+		[DataMember]
 		public StringComparer Comparer
 		{
 			get;
@@ -142,8 +142,8 @@
 		/// </summary>
 		/// <value>
 		/// <c>true</c> if this instance is deferrable; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember]
+		/// </value>
+		[DataMember]
 		public bool IsDeferrable
 		{
 			get;

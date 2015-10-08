@@ -1,15 +1,15 @@
 ﻿namespace Items
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.Serialization;
-    using System.Text;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Runtime.Serialization;
+	using System.Text;
 
 	/// <summary>
 	/// Performs a comparison against the value of the specified attribute on this item instance
 	/// </summary>
-    [DataContract]
+	[DataContract]
 	public class AttributeValueConstraint
 		: IConstraint
 	{
@@ -18,8 +18,8 @@
 		/// </summary>
 		/// <value>
 		/// <c>true</c> if this instance is deferrable; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember]
+		/// </value>
+		[DataMember]
 		public bool IsDeferrable
 		{
 			get;
