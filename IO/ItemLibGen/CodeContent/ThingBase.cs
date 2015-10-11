@@ -10,12 +10,12 @@ namespace GeneratedCode
 		/// <summary>
 		/// A flag indicating whether this instance is manifested in the database
 		/// </summary>
-		private bool IsManifested = false;
+		protected bool IsManifested = false;
 
 		/// <summary>
 		/// A flag indicating whether this object has been populated from the database.
 		/// </summary>
-		private bool IsPopulated = false;
+		protected bool IsPopulated = false;
 
 		/// <summary>
 		/// The action used to manifest itself in the database.
@@ -47,6 +47,11 @@ namespace GeneratedCode
 		{
 			if(!IsPopulated)
 			{
+				if (Populate == null)
+				{
+					throw new Exception("No means of population has been provided");
+				}
+
 				Populate();
 
 				this.IsPopulated = true;

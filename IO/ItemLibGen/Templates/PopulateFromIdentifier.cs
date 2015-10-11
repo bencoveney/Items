@@ -10,6 +10,7 @@
 namespace ItemLibGen.Templates
 {
     using Items;
+    using ItemLoader;
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace ItemLibGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
+    #line 1 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
-    public partial class Constructors : ConstructorsBase
+    public partial class PopulateFromIdentifier : PopulateFromIdentifierBase
     {
 #line hidden
         /// <summary>
@@ -29,368 +30,235 @@ namespace ItemLibGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\nusing System;\r\n\r\nnamespace GeneratedCode\r\n{\r\n");
+            this.Write("\r\nusing System;\r\nusing System.Data.SqlClient;\r\n\r\nnamespace GeneratedCode\r\n{\r\n");
             
-            #line 12 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
+            #line 14 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
  foreach(Items.Thing thing in things) { 
             
             #line default
             #line hidden
             this.Write("\t/// <summary>\r\n\t/// ");
             
-            #line 14 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
+            #line 16 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(thing.Description ?? thing.Name));
             
             #line default
             #line hidden
             this.Write("\r\n\t/// </summary>\r\n\tpartial class ");
             
-            #line 16 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
+            #line 18 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(thing.Name));
             
             #line default
             #line hidden
-            this.Write("\r\n\t{\r\n");
+            this.Write("\r\n\t{\r\n\t\tprivate void PopulateFromStringIdentifier()\r\n\t\t{\r\n");
             
-            #line 18 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
- WriteConstructors(thing); 
+            #line 22 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+ if(!(thing is IDbiThing)) { 
             
             #line default
             #line hidden
-            this.Write("\t}\r\n");
+            this.Write("\t\t\tthrow new NotImplementedException(\"Cannot load non-database based things from " +
+                    "the database\").\r\n");
             
-            #line 20 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
+            #line 24 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+ } else if(thing.StringIdentifier == null) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\tthrow new NotImplementedException(\"");
+            
+            #line 25 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(thing.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" does not have a string identifier\");\r\n");
+            
+            #line 26 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+ } else { 
+            
+            #line default
+            #line hidden
+            this.Write(@"			using (SqlConnection connection = new SqlConnection(""Data Source=BENSDESKTOP\\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True""))
+			{
+				connection.Open();
+
+				// Query the database for the table data
+				using (SqlCommand command = new SqlCommand(""");
+            
+            #line 32 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ProduceSqlForStringIdentifier((IDbiThing)thing)));
+            
+            #line default
+            #line hidden
+            this.Write("\", connection))\r\n\t\t\t\t{\r\n\t\t\t\t\tcommand.Parameters.AddWithValue(\"identifier\", this._" +
+                    "");
+            
+            #line 34 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(thing.StringIdentifier.Name));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n\r\n\t\t\t\t\tusing (SqlDataReader reader = command.ExecuteReader())\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t" +
+                    "while (reader.Read())\r\n\t\t\t\t\t\t{\r\n");
+            
+            #line 40 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+
+	int i = 0;
+	foreach(DbiDataMember dataMember in thing.Attributes.OfType<DbiDataMember>())
+	{
+
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\tthis._");
+            
+            #line 45 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" = (");
+            
+            #line 45 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.DataType.Name));
+            
+            #line default
+            #line hidden
+            this.Write(")reader.GetValue(");
+            
+            #line 45 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(i));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 46 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+
+		i++;
+	}
+
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t}\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}\r\n");
+            
+            #line 54 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("}\r\n\r\n");
-            return this.GenerationEnvironment.ToString();
-        }
-        
-        #line 23 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
- public void WriteConstructors(Items.IThing thing){
-	if(thing.IntegerIdentifier != null)
+            this.Write("\t\t}\r\n\r\n\t\tprivate void PopulateFromIntegerIdentifier()\r\n\t\t{\r\n");
+            
+            #line 59 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+ if(!(thing is IDbiThing)) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\tthrow new NotImplementedException(\"Cannot load non-database based things from " +
+                    "the database\").\r\n");
+            
+            #line 61 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+ } else if(thing.IntegerIdentifier == null) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\tthrow new NotImplementedException(\"");
+            
+            #line 62 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(thing.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" does not have a integer identifier\");\r\n");
+            
+            #line 63 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+ } else { 
+            
+            #line default
+            #line hidden
+            this.Write(@"			using (SqlConnection connection = new SqlConnection(""Data Source=BENSDESKTOP\\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True""))
+			{
+				connection.Open();
+
+				// Query the database for the table data
+				using (SqlCommand command = new SqlCommand(""");
+            
+            #line 69 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ProduceSqlForIntegerIdentifier((IDbiThing)thing)));
+            
+            #line default
+            #line hidden
+            this.Write("\", connection))\r\n\t\t\t\t{\r\n\t\t\t\t\tcommand.Parameters.AddWithValue(\"identifier\", this._" +
+                    "");
+            
+            #line 71 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(thing.IntegerIdentifier.Name));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n\r\n\t\t\t\t\tusing (SqlDataReader reader = command.ExecuteReader())\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t" +
+                    "while (reader.Read())\r\n\t\t\t\t\t\t{\r\n");
+            
+            #line 77 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+
+	int i = 0;
+	foreach(DbiDataMember dataMember in thing.Attributes.OfType<DbiDataMember>())
 	{
 
-        
-        #line default
-        #line hidden
-        
-        #line 26 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write("\t\tpublic ");
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\tthis._");
+            
+            #line 82 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" = (");
+            
+            #line 82 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(dataMember.DataType.Name));
+            
+            #line default
+            #line hidden
+            this.Write(")reader.GetValue(");
+            
+            #line 82 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(i));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 83 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
 
-        
-        #line default
-        #line hidden
-        
-        #line 27 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(thing.Name));
+		i++;
+	}
 
-        
-        #line default
-        #line hidden
-        
-        #line 27 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write("(");
-
-        
-        #line default
-        #line hidden
-        
-        #line 27 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(thing.IntegerIdentifier.DataType.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 27 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(" ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 27 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(thing.IntegerIdentifier.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 27 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(")\r\n\t\t{\r\n\t\t\t// Assign the identifier dataMember\r\n\t\t\tthis.");
-
-        
-        #line default
-        #line hidden
-        
-        #line 30 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(thing.IntegerIdentifier.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 30 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(" = ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 30 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(thing.IntegerIdentifier.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 30 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(";\r\n\t\t\t\r\n\t\t\t// Provide a way of populating the others\r\n\t\t\tthis.Populate += this.Po" +
-        "pulateFromIntegerIdentifier;\r\n\t\t}\r\n\r\n");
-
-        
-        #line default
-        #line hidden
-        
-        #line 36 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
- }
-	if(thing.StringIdentifier != null) {
-
-        
-        #line default
-        #line hidden
-        
-        #line 38 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write("\t\tpublic ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 39 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(thing.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 39 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write("(");
-
-        
-        #line default
-        #line hidden
-        
-        #line 39 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(thing.StringIdentifier.DataType.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 39 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(" ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 39 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(thing.StringIdentifier.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 39 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(") {\r\n\t\t\t// Assign the identifier dataMember\r\n\t\t\tthis.");
-
-        
-        #line default
-        #line hidden
-        
-        #line 41 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(thing.StringIdentifier.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 41 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(" = ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 41 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(thing.StringIdentifier.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 41 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(";\r\n\t\t\t\r\n\t\t\t// Provide a way of populating the others\r\n\t\t\tthis.Populate += this.Po" +
-        "pulateFromStringIdentifier;\r\n\t\t}\r\n");
-
-        
-        #line default
-        #line hidden
-        
-        #line 46 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
- }
-
-        
-        #line default
-        #line hidden
-        
-        #line 47 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write("\t\tpublic ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 48 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(thing.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 48 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write("(");
-
-        
-        #line default
-        #line hidden
-        
-        #line 48 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-
-			foreach(DataMember attribute in thing.Attributes) {
-				
-        
-        #line default
-        #line hidden
-        
-        #line 50 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(attribute.DataType.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 50 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(" ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 50 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 50 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-
-				if(attribute != thing.Attributes.Last()) {
-					
-        
-        #line default
-        #line hidden
-        
-        #line 52 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(", ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 52 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-
-				}
-			}
-		
-        
-        #line default
-        #line hidden
-        
-        #line 55 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(")\r\n\t\t{\r\n\t\t\t// TODO: Assign datamembers\r\n");
-
-        
-        #line default
-        #line hidden
-        
-        #line 58 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-
-			foreach(DataMember attribute in thing.Attributes) { 
-        
-        #line default
-        #line hidden
-        
-        #line 59 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write("\t\t\tthis.");
-
-        
-        #line default
-        #line hidden
-        
-        #line 60 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 60 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(" = ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 60 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 60 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write(";\r\n\r\n\t\t\tthis.IsPopulated = true;\r\n");
-
-        
-        #line default
-        #line hidden
-        
-        #line 63 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-
-			} 
-        
-        #line default
-        #line hidden
-        
-        #line 64 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
-this.Write("\t\t}\r\n");
-
-        
-        #line default
-        #line hidden
-        
-        #line 66 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\Constructors.tt"
- }
-
-        
-        #line default
-        #line hidden
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t}\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}\r\n");
+            
+            #line 91 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t}\r\n\t}\r\n\r\n");
+            
+            #line 95 "C:\Users\Ben\Desktop\Items\IO\ItemLibGen\Templates\PopulateFromIdentifier.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("}\r\n");
+            return this.GenerationEnvironment.ToString();
+        }
     }
     
     #line default
@@ -400,7 +268,7 @@ this.Write("\t\t}\r\n");
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
-    public class ConstructorsBase
+    public class PopulateFromIdentifierBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

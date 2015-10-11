@@ -91,6 +91,12 @@
     </Compile>
     <Compile Include="ITemplate.cs" />
     <Compile Include="Templates\ConstructorsCode.cs" />
+    <Compile Include="Templates\PopulateFromIdentifier.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PopulateFromIdentifier.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\PopulateFromIdentifierCode.cs" />
     <Compile Include="Templates\Properties.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -103,6 +109,13 @@
       <DependentUpon>Thing.tt</DependentUpon>
     </Compile>
     <Compile Include="Templates\ThingCode.cs" />
+    <Compile Include="TestAttribute.cs" />
+    <Content Include="TestScripts\PopulateFromIdentifierTest.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestScripts\BasicTest.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -110,6 +123,10 @@
     <None Include="Templates\Constructors.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>Constructors.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\PopulateFromIdentifier.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>PopulateFromIdentifier.cs</LastGenOutput>
     </None>
     <None Include="Templates\Properties.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ItemLoader
+namespace ItemLibGen
 {
-	class Program
+	[AttributeUsage(AttributeTargets.Method)]
+	public class TestAttribute : Attribute
 	{
-		static void Main()
-		{
-			Console.WriteLine("buh");
-		}
 	}
 }

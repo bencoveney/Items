@@ -33,12 +33,6 @@ namespace GeneratedCode
 			this.Populate += this.PopulateFromIntegerIdentifier;
 		}
 
-		private void PopulateFromIntegerIdentifier()
-		{
-			// TODO: Load from database using id to limit query
-			throw new NotImplementedException();
-		}
-
 <#+ }
 	if(thing.StringIdentifier != null) {
 #>
@@ -48,12 +42,6 @@ namespace GeneratedCode
 			
 			// Provide a way of populating the others
 			this.Populate += this.PopulateFromStringIdentifier;
-		}
-
-		private void PopulateFromStringIdentifier()
-		{
-			// TODO: Load from database using id to limit query
-			throw new NotImplementedException();
 		}
 <#+ }
 #>
@@ -70,6 +58,8 @@ namespace GeneratedCode
 <#+
 			foreach(DataMember attribute in thing.Attributes) { #>
 			this.<#= attribute.Name #> = <#= attribute.Name #>;
+
+			this.IsPopulated = true;
 <#+
 			} #>
 		}

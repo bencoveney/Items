@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E9352BC3-224D-44F6-A2D9-3D7A8599ACA8}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ItemLoader</RootNamespace>
     <AssemblyName>ItemLoader</AssemblyName>
@@ -44,7 +44,8 @@
     <AssemblyOriginatorKeyFile>ItemsKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ItemLoader.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DatabaseObjects, Version=0.1.1.0, Culture=neutral, PublicKeyToken=c1be2965e93851b1, processorArchitecture=MSIL">
@@ -70,7 +71,6 @@
     <Compile Include="IDbiDataDefinition.cs" />
     <Compile Include="IDbiThing.cs" />
     <Compile Include="IDbiType.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

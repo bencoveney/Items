@@ -1,0 +1,96 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="Items" #>
+<#@ import namespace="ItemLoader" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Data.SqlClient;
+
+namespace GeneratedCode
+{
+<# foreach(Items.Thing thing in things) { #>
+	/// <summary>
+	/// <#= thing.Description ?? thing.Name #>
+	/// </summary>
+	partial class <#= thing.Name #>
+	{
+		private void PopulateFromStringIdentifier()
+		{
+<# if(!(thing is IDbiThing)) { #>
+			throw new NotImplementedException("Cannot load non-database based things from the database").
+<# } else if(thing.StringIdentifier == null) { #>
+			throw new NotImplementedException("<#= thing.Name #> does not have a string identifier");
+<# } else { #>
+			using (SqlConnection connection = new SqlConnection("Data Source=BENSDESKTOP\\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True"))
+			{
+				connection.Open();
+
+				// Query the database for the table data
+				using (SqlCommand command = new SqlCommand("<#= ProduceSqlForStringIdentifier((IDbiThing)thing) #>", connection))
+				{
+					command.Parameters.AddWithValue("identifier", this._<#= thing.StringIdentifier.Name #>);
+
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+<#
+	int i = 0;
+	foreach(DbiDataMember dataMember in thing.Attributes.OfType<DbiDataMember>())
+	{
+#>
+							this._<#= dataMember.Name #> = (<#= dataMember.DataType.Name #>)reader.GetValue(<#= i #>);
+<#
+		i++;
+	}
+#>
+						}
+					}
+				}
+			}
+<# } #>
+		}
+
+		private void PopulateFromIntegerIdentifier()
+		{
+<# if(!(thing is IDbiThing)) { #>
+			throw new NotImplementedException("Cannot load non-database based things from the database").
+<# } else if(thing.IntegerIdentifier == null) { #>
+			throw new NotImplementedException("<#= thing.Name #> does not have a integer identifier");
+<# } else { #>
+			using (SqlConnection connection = new SqlConnection("Data Source=BENSDESKTOP\\SQLEXPRESS;Initial Catalog=ItemsDB;Integrated Security=True"))
+			{
+				connection.Open();
+
+				// Query the database for the table data
+				using (SqlCommand command = new SqlCommand("<#= ProduceSqlForIntegerIdentifier((IDbiThing)thing) #>", connection))
+				{
+					command.Parameters.AddWithValue("identifier", this._<#= thing.IntegerIdentifier.Name #>);
+
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+<#
+	int i = 0;
+	foreach(DbiDataMember dataMember in thing.Attributes.OfType<DbiDataMember>())
+	{
+#>
+							this._<#= dataMember.Name #> = (<#= dataMember.DataType.Name #>)reader.GetValue(<#= i #>);
+<#
+		i++;
+	}
+#>
+						}
+					}
+				}
+			}
+<# } #>
+		}
+	}
+
+<# } #>
+}
