@@ -1,12 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup Label="Build">
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <CodeAnalysisRuleSet>analysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
   <PropertyGroup Label="Package">
     <OutputType>Exe</OutputType>
     <AssemblyName>Items</AssemblyName>
@@ -17,14 +15,11 @@
     <Description>Items is a toolkit designed for building (and applying) domain specific models backed by database schemas.</Description>
     <RootNamespace>Items</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup Label="Exclude">
     <Compile Remove="legacy\**" />
   </ItemGroup>
-  
   <ItemGroup Label="References">
     <PackageReference Include="Microsoft.Data.Sqlite" Version="2.0.0-preview1-final" />
     <PackageReference Include="StyleCop.Analyzers" PrivateAssets="All" Version="1.0.1" />
   </ItemGroup>
-
 </Project>

@@ -3,18 +3,14 @@ Items
 
 Items is a toolkit designed for building (and applying) domain specific models backed by database schemas.
 
-Included Projects
------------------
-
-- **Items:** The model building objects.
-- **Database Layer:**
-  - **ItemLoader:** Item classes specific to a database context, with factory functionality for building a model from them.
-  - **ItemsDB:** An example database schema which can be used to test the database layer.
-  - **ItemSelector** Query generation for database layer items.
-- **IO**
-  - **ItemLibGen:** Code generator which produces a C# dll for a given model.
-  - **ItemsApi:** WebAPI wesite project to replace ItemWeb.
-  - **ItemWeb**: ASP website which generates and displays a model.
+Project files
+-------------
+- `/core` The model building objects.
+- `/legacy` Old projects that have not been updated.
+  - `/ItemLibGen` Code generator which produces a C# dll for a given model.
+  - `/ItemLoader` Item classes specific to a database context, with factory functionality for building a model from them.
+  - `/ItemSelector` Query generation for database layer items.
+  - `/ItemTests` Unit test code.
 
 TODO List
 ---------
