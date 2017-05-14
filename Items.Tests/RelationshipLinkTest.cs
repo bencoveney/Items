@@ -113,18 +113,6 @@ namespace ItemsTests
 		}
 
 		/// <summary>
-		/// A test for AmountLower
-		/// </summary>
-		[TestMethod()]
-		[ExpectedException(typeof(ArgumentException))]
-		public void AmountLowerTestUnordered()
-		{
-			IThing thing = new Item("Test");
-			RelationshipLink_Accessor relationshipLink = new RelationshipLink_Accessor(thing, 40, 50);
-			relationshipLink.AmountLower = 60;
-		}
-
-		/// <summary>
 		/// A test for AmountUpper
 		/// </summary>
 		[TestMethod()]

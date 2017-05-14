@@ -31,8 +31,8 @@ namespace ItemsTests
 		[DeploymentItem("Items.dll")]
 		public void ComparerTest()
 		{
-			StringValueConstraint stringValueConstraint = new StringValueConstraint(Items.StringComparison.EndWith, StringComparer.InvariantCultureIgnoreCase, "Test Value");
-			Assert.AreEqual(StringComparer.InvariantCultureIgnoreCase, stringValueConstraint.Comparer);
+			StringValueConstraint stringValueConstraint = new StringValueConstraint(Items.StringComparison.EndWith, StringComparer.OrdinalIgnoreCase, "Test Value");
+			Assert.AreEqual(StringComparer.OrdinalIgnoreCase, stringValueConstraint.Comparer);
 		}
 
 		/// <summary>
